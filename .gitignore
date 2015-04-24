@@ -12,6 +12,7 @@
 /tmp/
 .sass-cache
 /log/*
+.env.sh
 
 ## Specific to RubyMotion:
 .dat*

@@ -1,5 +1,5 @@
-Sysopia CHANGELOG
-============================
+Global Names Checklist CHANGELOG
+================================
 
 0.0.1
 -----

@@ -18,7 +18,7 @@ configure do
   helpers Sinatra::RedirectWithFlash
 
   use Rack::MethodOverride
-  use Rack::Session::Cookie, secret: Sysopia.conf.session_secret
+  use Rack::Session::Cookie, secret: Checklist.conf.session_secret
   use Rack::Timeout
   Rack::Timeout.timeout = 9_000_000
 

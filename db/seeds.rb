@@ -1,8 +1,8 @@
 require "csv"
-require_relative "../lib/sysopia"
+require_relative "..//environment"
 
-unless [:development, :test, :production].include? Sysopia.env
-  puts "Use: SYSOPIA=your_env.sh bundle exec rake seed"
+unless [:development, :test, :production].include? Checklist.env
+  puts "Use: ENV_FILE=your_env.sh bundle exec rake seed"
   puts "your_env.sh should include all environment variables from" \
        "config/env.sh"
   exit
@@ -15,7 +15,7 @@ class Seeder
   def initialize
     @db = ActiveRecord::Base.connection
     common_dir = File.join(__dir__, "seed")
-    @env_dir = File.join(common_dir, Sysopia.env.to_s)
+    @env_dir = File.join(common_dir, Checklist.env.to_s)
     @path = @columns = nil
     @offset = Time.new.strftime("%s").to_i - MAX_TIMESTAMP
   end
@@ -29,7 +29,7 @@ class Seeder
     end
     rescue ActiveRecord::StatementInvalid
       fail "\nBefore adding seeds run:\n" \
-           "bundle exec SYSOPIA=your_env.sh rake db:migrate \n\n"
+           "bundle exec RACK_ENV=your_env.sh rake db:migrate \n\n"
   end
 
   private
@@ -71,4 +71,4 @@ end
 
 s = Seeder.new
 s.walk_path(s.env_dir)
-puts "You added seeds data to %s tables" % Sysopia.env.upcase
+puts "You added seeds data to %s tables" % Checklist.env.upcase

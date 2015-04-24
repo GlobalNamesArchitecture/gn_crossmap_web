@@ -5,7 +5,7 @@ require "rspec"
 require "git"
 require "rspec/core/rake_task"
 require "sinatra/activerecord/rake"
-require_relative "lib/sysopia"
+require_relative "lib/checklist"
 
 task default: :spec
 
@@ -38,8 +38,8 @@ end
 
 desc "prepares everything for tests"
 task :testup do
-  system("rake db:migrate SYSOPIA_ENV=test")
-  system("rake seed SYSOPIA_ENV=test")
+  system("rake db:migrate RACK_ENV=test")
+  system("rake seed RACK_ENV=test")
 end
 
 desc "create release on github"
@@ -47,7 +47,7 @@ task(:release) do
   require "git"
   begin
     g = Git.open(File.dirname(__FILE__))
-    new_tag = Sysopia.version
+    new_tag = Checklist.version
     g.add_tag("v#{new_tag}")
     g.add(all: true)
     g.commit("Releasing version #{new_tag}")
@@ -64,5 +64,5 @@ end
 
 desc "open an irb session preloaded with this library"
 task :console do
-  sh "irb -I lib -I extra -r sysopia.rb"
+  sh "irb -I lib -I extra -r environment.rb"
 end

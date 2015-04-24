@@ -4,7 +4,7 @@ end
 
 get "/" do
   data = Stat.last_day
-  ct = Sysopia::ChartTable.new(data)
+  ct = Checklist::ChartTable.new(data)
   @mem_data = ct.table("memory_taken")
   @load_data = ct.table("load_one")
   @ioread_data = ct.table("io_read")

@@ -9,8 +9,8 @@ require "capybara/webkit"
 require "byebug"
 require_relative "support/helpers"
 
-ENV["SYSOPIA_ENV"] = ENV["RACK_ENV"] = "test"
-require_relative "../application.rb"
+ENV["RACK_ENV"] = "test"
+require_relative "../app.rb"
 
 Capybara.javascript_driver = :webkit
 Capybara.app = Sinatra::Application
