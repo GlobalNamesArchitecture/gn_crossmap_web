@@ -26,4 +26,5 @@ configure do
                                               "config",
                                               "compass.config"))
   set :scss, Compass.sass_engine_options
+  set :bind, "0.0.0.0"
 end

@@ -14,14 +14,11 @@ gem "sinatra-flash", "~> 0.3"
 gem "sinatra-redirect-with-flash", "~> 0.2"
 gem "haml", "~> 4.0"
 gem "childprocess", "~> 0.5"
+gem "unicorn", "~> 4.8"
 
 group :development do
   gem "byebug", "~> 3.5"
   gem "sinatra-reloader", "~> 1.0"
-end
-
-group :production do
-  gem "unicorn", "~> 4.8"
 end
 
 group :test do

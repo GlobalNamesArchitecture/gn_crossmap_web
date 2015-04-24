@@ -57,14 +57,14 @@ module Checklist
         key, val = l.strip.split("=")
         val && key
       end.compact
-      e_real = ENV.keys.select { |k| k =~ /^(CHECKLIST_|RACK_ENV)/ }
+      e_real = ENV.keys.select { |k| k =~ /^(RACKAPP_|RACK_ENV)/ }
       missing = e_required - e_real
       extra = e_real - e_required
       return [missing, extra]
     end
 
     def env_empty?
-      ENV.keys.select { |k| k =~ /CHECKLIST_/ }.empty?
+      ENV.keys.select { |k| k =~ /RACKAPP_/ }.empty?
     end
 
     def init_conf

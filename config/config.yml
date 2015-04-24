@@ -1,12 +1,12 @@
-session_secret: <%= ENV["CHECKLIST_SESSION_SECRET"] %>
+session_secret: <%= ENV["RACKAPP_SESSION_SECRET"] %>
 database:
   common: &common
     adapter: mysql2
     encoding: utf8
     reconnect: true
-    host: <%= ENV["CHECKLIST_DB_HOST"] %>
-    username: <%= ENV["CHECKLIST_DB_USERNAME"] %>
-    password: <%= ENV["CHECKLIST_DB_PASSWORD"] %>
+    host: <%= ENV["RACKAPP_DB_HOST"] %>
+    username: <%= ENV["RACKAPP_DB_USERNAME"] %>
+    password: <%= ENV["RACKAPP_DB_PASSWORD"] %>
 
   development:
     <<: *common

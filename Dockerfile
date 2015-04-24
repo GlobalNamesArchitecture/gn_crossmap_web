@@ -4,12 +4,15 @@ MAINTAINER Dmitry Mozzherin
 ENV LAST_FULL_REBUILD 2015-04-22
 
 RUN apt-get update -qq && \
-    apt-get install -y build-essential libqt4-dev \
-    vim libmysqlclient-dev  && \
+    apt-get install -y build-essential libqt4-dev git vim \
+    libmysqlclient-dev  && \
     mkdir /app
 
 WORKDIR /app
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 RUN bundle install
-CMD "rackup"
+
+COPY . /app
+
+CMD ["/app/app.rb"]
