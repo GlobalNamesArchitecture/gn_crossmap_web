@@ -1,8 +1,9 @@
 web:
   build: .
+  name: "checklist"
   volumes:
     - .:/app
   ports:
     - "9292:9292"
   env_file:
-    - '.env.sh'
+    - ".env.sh"

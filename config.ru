@@ -1,5 +1,5 @@
-ENV['CHECKLIST_ENV'] = (ENV['RACK_ENV'] || 'development')
-require './application.rb'
+ENV['RACK_ENV'] || "development"
+require './app.rb'
 
 set :run, false
 

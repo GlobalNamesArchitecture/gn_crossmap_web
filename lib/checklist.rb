@@ -33,11 +33,11 @@ module Checklist
     end
 
     def prepare_env
-      missing, extra = self.check_env
+      missing, extra = check_env
       return if (missing + extra).empty?
       if env_empty?
         read_env
-        missing, extra = self.check_env
+        missing, extra = check_env
       end
       fail("Missing env variables: #{missing.join(', ')}") unless missing.empty?
       fail("Extra env variables: #{extra.join(', ')}") unless extra.empty?
@@ -53,7 +53,7 @@ module Checklist
     private
 
     def check_env
-      e_required = open(File.join(__dir__, "config", "env.sh")).map do |l|
+      e_required = open(File.join(ROOT_PATH, "config", "env.sh")).map do |l|
         key, val = l.strip.split("=")
         val && key
       end.compact
@@ -63,8 +63,12 @@ module Checklist
       return [missing, extra]
     end
 
+    def env_empty?
+      ENV.keys.select { |k| k =~ /CHECKLIST_/ }.empty?
+    end
+
     def init_conf
-      raw_conf = File.read(File.join(__dir__, "config", "config.yml"))
+      raw_conf = File.read(File.join(ROOT_PATH, "config", "config.yml"))
       conf = YAML.load(ERB.new(raw_conf).result)
       OpenStruct.new(
         session_secret:   conf["session_secret"],
@@ -73,7 +77,7 @@ module Checklist
     end
 
     def read_env
-      env_file = DEFAULT_ENV__FILE
+      env_file = DEFAULT_ENV_FILE
       env_file = ENV["ENV_FILE"] if ENV["ENV_FILE"]
       open(env_file).each do |l|
         key, val = l.strip.split("=")

@@ -4,8 +4,8 @@ MAINTAINER Dmitry Mozzherin
 ENV LAST_FULL_REBUILD 2015-04-22
 
 RUN apt-get update -qq && \
-    apt-get install -y build-essential \
-    vim mysql-client  && \
+    apt-get install -y build-essential libqt4-dev \
+    vim libmysqlclient-dev  && \
     mkdir /app
 
 WORKDIR /app

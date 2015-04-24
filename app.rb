@@ -9,7 +9,7 @@ require "sinatra/redirect_with_flash"
 require "haml"
 require "sass"
 
-require_relative "lib/checklist"
+require_relative "environment"
 require_relative "routes"
 require_relative "helpers"
 
