@@ -1,5 +1,5 @@
 app_dir = "/app"
-ENV["RACK_ENV"]="production"
+ENV["RACK_ENV"] = "production" # not sure about this
 
 working_directory app_dir
 
@@ -9,6 +9,5 @@ stderr_path "#{app_dir}/log/unicorn.stderr.log"
 stdout_path "#{app_dir}/log/unicorn.stdout.log"
 
 worker_processes ENV["RACKAPP_UNICORN_WORKERS"].to_i
-listen 8080, :tcp_nopush => true
+listen 8080, tcp_nopush: true
 timeout 30
-

@@ -1,5 +1,5 @@
 require "csv"
-require_relative "..//environment"
+require_relative "../environment"
 
 unless [:development, :test, :production].include? Checklist.env
   puts "Use: ENV_FILE=your_env.sh bundle exec rake seed"
@@ -8,9 +8,11 @@ unless [:development, :test, :production].include? Checklist.env
   exit
 end
 
+# Seeder populates database tables with data prerecorded and stored in csv
+# files
 class Seeder
-  MAX_TIMESTAMP = 1425598175
-  attr :env_dir
+  MAX_TIMESTAMP = 1_425_598_175
+  attr_reader :env_dir
 
   def initialize
     @db = ActiveRecord::Base.connection
@@ -22,37 +24,37 @@ class Seeder
 
   def walk_path(path)
     @path = path
-    files = Dir.entries(@path).map {|e| e.to_s}.select {|e| e.match /csv$/}
+    files = Dir.entries(@path).map(&:to_s).select { |e| e.match(/csv$/) }
     puts("Files: #{files}")
     files.each do |file|
       add_seeds(file)
     end
     rescue ActiveRecord::StatementInvalid
-      fail "\nBefore adding seeds run:\n" \
-           "bundle exec RACK_ENV=your_env.sh rake db:migrate \n\n"
+      raise "\nBefore adding seeds run:\n" \
+            "bundle exec RACK_ENV=your_env.sh rake db:migrate \n\n"
   end
 
   private
 
   def add_seeds(file)
     table = file.gsub(/\.csv/, "")
-    @db.execute("truncate table %s" % table)
+    @db.execute("truncate table #{table}")
     data_slice_for table, file do |data|
-      @db.execute("insert ignore into %s values %s" % [table, data]) if data
+      @db.execute("insert ignore into #{table} values #{data}") if data
     end
   end
 
   def data_slice_for(table, file)
     all_data = collect_data(file, table)
     all_data.each_slice(1_000) do |s|
-      data = s.empty? ? nil : "(#{s.join("), (")})"
+      data = s.empty? ? nil : "(#{s.join('), (')})"
       yield data
     end
   end
 
   def collect_data(file, table)
-    @columns = @db.select_values("show columns from %s" % table)
-    csv_args = { col_sep: "\t"}
+    @columns = @db.select_values("show columns from #{table}")
+    csv_args = { col_sep: "\t" }
     CSV.open(File.join(@path, file), csv_args).map do |row|
       row = get_row(row, table)
       (@columns.size - row.size).times { row << "null" }
@@ -71,4 +73,4 @@ end
 
 s = Seeder.new
 s.walk_path(s.env_dir)
-puts "You added seeds data to %s tables" % Checklist.env.upcase
+puts "You added seeds data to #{Checklist.env.upcase} tables"

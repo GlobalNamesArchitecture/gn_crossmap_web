@@ -1,4 +1,4 @@
-require 'erb'
+require "erb"
 require "ostruct"
 require "yaml"
 require "active_record"
@@ -60,7 +60,7 @@ module Checklist
       e_real = ENV.keys.select { |k| k =~ /^(RACKAPP_|RACK_ENV)/ }
       missing = e_required - e_real
       extra = e_real - e_required
-      return [missing, extra]
+      [missing, extra]
     end
 
     def env_empty?
@@ -72,7 +72,7 @@ module Checklist
       conf = YAML.load(ERB.new(raw_conf).result)
       OpenStruct.new(
         session_secret:   conf["session_secret"],
-        database:         conf["database"],
+        database:         conf["database"]
       )
     end
 

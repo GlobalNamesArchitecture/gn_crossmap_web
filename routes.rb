@@ -5,4 +5,3 @@ end
 get "/" do
   haml :home
 end
-
