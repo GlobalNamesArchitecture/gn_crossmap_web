@@ -8,5 +8,5 @@ dependencies:
 
 test:
   override:
-    - docker-compose run -d --no-deps web
-    - rake
+    - docker-compose up
+    - docker-compose run web rake
