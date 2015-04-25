@@ -51,6 +51,10 @@ module Checklist
       end
     end
 
+    def token
+      rand(1e16..9e16).to_i.to_s(16)
+    end
+
     private
 
     def check_env

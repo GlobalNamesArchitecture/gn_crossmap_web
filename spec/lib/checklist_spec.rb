@@ -35,9 +35,17 @@ describe Checklist do
     end
 
     context "env cannot make all RACKAPP_.. vars" do
-      it "rasies error" do
+      it "raises error" do
         allow(ENV).to receive(:keys) { [] }
         expect { subject.prepare_env }.to raise_error
+      end
+    end
+
+    context "env has unknown RACKAPP_.. vars" do
+      it "rasies error" do
+        ENV["RACKAPP_TOOMANY"] = "yeah"
+        expect { subject.prepare_env }.to raise_error
+        ENV.delete("RACKAPP_TOOMANY")
       end
     end
   end
@@ -50,6 +58,14 @@ describe Checklist do
     it "has configuration data" do
       expect(subject.conf).to respond_to :database
       expect(subject.conf).to respond_to :session_secret
+    end
+  end
+
+  describe ".token" do
+    it "creates a random token" do
+      token = subject.token
+      expect(token.size).to be > 8
+      expect(token).to be_kind_of String
     end
   end
 end
