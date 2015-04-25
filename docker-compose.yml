@@ -10,8 +10,8 @@ web:
     - db
   command: "/app/app.rb -o 0.0.0.0"
 db:
-  image: library/mysql:5.6
+  image: gnames/mariadb:10.0
   ports:
     - "127.0.0.1:13306:3306"
   environment:
-    - MYSQL_ROOT_PASSWORD=""
+    - MDB_ADMIN_PASSWORD="test"
