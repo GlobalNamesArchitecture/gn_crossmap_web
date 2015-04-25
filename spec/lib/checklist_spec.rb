@@ -27,6 +27,21 @@ describe Checklist do
     end
   end
 
+  describe ".prepare_env" do
+    context "env is fine" do
+      it "returns false" do
+        expect(subject.prepare_env).to be true
+      end
+    end
+
+    context "env cannot make all RACKAPP_.. vars" do
+      it "rasies error" do
+        allow(ENV).to receive(:keys) { [] }
+        expect { subject.prepare_env }.to raise_error
+      end
+    end
+  end
+
   describe ".conf" do
     it "returns app's configuration in OpenStruct" do
       expect(subject.conf).to be_kind_of OpenStruct

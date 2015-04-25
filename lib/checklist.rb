@@ -34,13 +34,14 @@ module Checklist
 
     def prepare_env
       missing, extra = check_env
-      return if (missing + extra).empty?
+      return true if (missing + extra).empty?
       if env_empty?
         read_env
         missing, extra = check_env
       end
       fail("Missing env variables: #{missing.join(', ')}") unless missing.empty?
       fail("Extra env variables: #{extra.join(', ')}") unless extra.empty?
+      true
     end
 
     def prepare_load_path
