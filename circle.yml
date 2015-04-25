@@ -5,7 +5,9 @@ machine:
 dependencies:
   override:
     - sudo pip install -U docker-compose
-
+database:
+  override:
+    - echo "nothing needed"
 test:
   override:
     - docker-compose up
