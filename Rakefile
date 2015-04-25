@@ -17,8 +17,9 @@ end
 RuboCop::RakeTask.new
 
 include ActiveRecord::Tasks
-ActiveRecord::Base.configurations =
-  YAML.load(File.read("config/config.yml"))["database"]
+raw_conf = File.read(File.join(__dir__, "config", "config.yml"))
+conf = YAML.load(ERB.new(raw_conf).result)
+ActiveRecord::Base.configurations = conf["database"]
 
 namespace :db do
   desc "create all the databases from config.yml"
