@@ -11,5 +11,5 @@ database:
     - echo "nothing needed"
 test:
   override:
-    - docker-compose up
+    - docker-compose build
     - docker-compose run web rake
