@@ -15,4 +15,4 @@ RUN bundle install
 
 COPY . /app
 
-CMD ["/app/app.rb"]
+CMD ["unicorn", "-c", "/app/config/docker/unicorn.rb"]

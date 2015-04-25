@@ -9,4 +9,4 @@ if Checklist.env == :production
   Checklist.logger = Logger::WARN
 end
 
-Checklist.db_connection
+# Checklist.db_connection
