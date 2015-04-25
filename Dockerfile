@@ -5,7 +5,7 @@ ENV LAST_FULL_REBUILD 2015-04-22
 
 RUN apt-get update -qq && \
     apt-get install -y build-essential libqt4-dev git vim \
-    libmysqlclient-dev  && \
+    libmysqlclient-dev  mysql-client && \
     mkdir /app
 
 WORKDIR /app

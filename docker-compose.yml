@@ -12,6 +12,6 @@ web:
 db:
   image: gnames/mariadb:10.0
   ports:
-    - "127.0.0.1:13306:3306"
+    - "13306:3306"
   environment:
-    - MDB_ADMIN_PASSWORD="test"
+    - MDB_ADMIN_PASSWORD=test
