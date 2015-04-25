@@ -4,14 +4,17 @@ require "rake"
 require "rspec"
 require "git"
 require "rspec/core/rake_task"
+require "rubocop/rake_task"
 require "sinatra/activerecord/rake"
 require_relative "lib/checklist"
 
-task default: :spec
+task default: [:rubocop, :spec]
 
 RSpec::Core::RakeTask.new do |t|
   t.pattern = "spec/**/*spec.rb"
 end
+
+RuboCop::RakeTask.new
 
 include ActiveRecord::Tasks
 ActiveRecord::Base.configurations =
@@ -52,8 +55,8 @@ task(:release) do
     g.add(all: true)
     g.commit(":shipit: Releasing version #{new_tag}")
     g.push(tags: true)
-  rescue Git::GitExecuteError
-    puts "'v#{new_tag}' already exists, update your version."
+  rescue Git::GitExecuteError => e
+    puts e
   end
 end
 
@@ -64,5 +67,5 @@ end
 
 desc "open an irb session preloaded with this library"
 task :console do
-  sh "irb -r ./environment.rb"
+  sh "irb -r pp -r ./environment.rb"
 end
