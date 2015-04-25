@@ -3,10 +3,8 @@ require_relative "lib/checklist"
 Checklist.prepare_load_path
 Checklist.prepare_env
 
-if Checklist.env == :production
-  log_file = File.join(settings.root, "log", "production.log")
-  Checklist.logger = Logger.new(log_file, 10, 1_024_000)
-  Checklist.logger = Logger::WARN
-end
+log_file = File.join(settings.root, "log", "#{Checklist.env.to_s}.log")
+Checklist.logger = Logger.new(log_file, 10, 1_024_000)
+Checklist.logger = Logger::WARN
 
 Checklist.db_connection
