@@ -50,7 +50,7 @@ task(:release) do
     new_tag = Checklist.version
     g.add_tag("v#{new_tag}")
     g.add(all: true)
-    g.commit("Releasing version #{new_tag}")
+    g.commit(":shipit: Releasing version #{new_tag}")
     g.push(tags: true)
   rescue Git::GitExecuteError
     puts "'v#{new_tag}' already exists, update your version."
@@ -64,5 +64,5 @@ end
 
 desc "open an irb session preloaded with this library"
 task :console do
-  sh "irb -I lib -I extra -r environment.rb"
+  sh "irb -r ./environment.rb"
 end
