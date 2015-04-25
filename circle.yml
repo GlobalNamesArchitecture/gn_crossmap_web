@@ -5,6 +5,7 @@ machine:
 dependencies:
   override:
     - sudo pip install -U docker-compose
+    - cp config/env.sh .env.sh
 database:
   override:
     - echo "nothing needed"

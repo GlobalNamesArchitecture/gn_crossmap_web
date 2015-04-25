@@ -5,5 +5,5 @@ web:
   ports:
     - "4567:4567"
   env_file:
-    - ".env.sh"
+    - "config/env.sh"
   command: "/app/app.rb -o 0.0.0.0"
