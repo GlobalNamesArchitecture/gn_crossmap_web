@@ -45,16 +45,14 @@ end
 desc "create release on github"
 task(:release) do
   require "git"
-  begin
-    g = Git.open(File.dirname(__FILE__))
-    new_tag = Checklist.version
-    g.add_tag("v#{new_tag}")
-    g.add(all: true)
-    g.commit(":shipit: Releasing version #{new_tag}")
-    g.push(tags: true)
-  rescue Git::GitExecuteError
-    puts "'v#{new_tag}' already exists, update your version."
-  end
+  g = Git.open(File.dirname(__FILE__))
+  new_tag = Checklist.version
+  g.add_tag("v#{new_tag}")
+  g.add(all: true)
+  g.commit(":shipit: Releasing version #{new_tag}")
+  g.push(tags: true)
+rescue Git::GitExecuteError
+  puts "'v#{new_tag}' already exists, update your version."
 end
 
 desc "populate seed data for tests"
