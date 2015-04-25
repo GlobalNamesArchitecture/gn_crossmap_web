@@ -6,4 +6,12 @@ web:
     - "4567:4567"
   env_file:
     - "config/env.sh"
+  links:
+    - db
   command: "/app/app.rb -o 0.0.0.0"
+db:
+  image: library/mysql:5.6
+  ports:
+    - "127.0.0.1:13306:3306"
+  environment:
+    - MYSQL_ROOT_PASSWORD=""
