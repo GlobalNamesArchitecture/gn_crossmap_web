@@ -1,7 +1,7 @@
 require "csv"
 require_relative "../environment"
 
-unless [:development, :test, :production].include? Checklist.env
+unless [:development, :test, :production].include? Gnc.env
   puts "Use: ENV_FILE=your_env.sh bundle exec rake seed"
   puts "your_env.sh should include all environment variables from" \
        "config/env.sh"
@@ -17,7 +17,7 @@ class Seeder
   def initialize
     @db = ActiveRecord::Base.connection
     common_dir = File.join(__dir__, "seed")
-    @env_dir = File.join(common_dir, Checklist.env.to_s)
+    @env_dir = File.join(common_dir, Gnc.env.to_s)
     @path = @columns = nil
     @offset = Time.new.strftime("%s").to_i - MAX_TIMESTAMP
   end
@@ -73,4 +73,4 @@ end
 
 s = Seeder.new
 s.walk_path(s.env_dir)
-puts "You added seeds data to #{Checklist.env.upcase} tables"
+puts "You added seeds data to #{Gnc.env.upcase} tables"

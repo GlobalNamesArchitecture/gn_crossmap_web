@@ -6,7 +6,7 @@ require "git"
 require "rspec/core/rake_task"
 require "rubocop/rake_task"
 require "sinatra/activerecord/rake"
-require_relative "lib/checklist"
+require_relative "lib/gnc"
 
 task default: [:rubocop, :spec]
 
@@ -51,7 +51,7 @@ task(:release) do
   begin
     require "git"
     g = Git.open(File.dirname(__FILE__))
-    new_tag = Checklist.version
+    new_tag = Gnc.version
     g.add_tag("v#{new_tag}")
     g.add(all: true)
     g.commit(":shipit: Releasing version #{new_tag}")

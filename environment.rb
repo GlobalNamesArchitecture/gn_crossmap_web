@@ -1,10 +1,10 @@
-require_relative "lib/checklist"
+require_relative "lib/gnc"
 
-Checklist.prepare_load_path
-Checklist.prepare_env
+Gnc.prepare_load_path
+Gnc.prepare_env
 
-log_file = File.join(settings.root, "log", "#{Checklist.env}.log")
-Checklist.logger = Logger.new(log_file, 10, 1_024_000)
-Checklist.logger.level = Logger::WARN
+log_file = File.join(settings.root, "log", "#{Gnc.env}.log")
+Gnc.logger = Logger.new(log_file, 10, 1_024_000)
+Gnc.logger.level = Logger::WARN
 
-Checklist.db_connection
+Gnc.db_connection

@@ -1,5 +1,5 @@
-# Checklist version constant
-module Checklist #:nodoc
+# Gnc version constant
+module Gnc #:nodoc
   VERSION = "0.0.3"
 
   def self.version

@@ -1,4 +1,4 @@
-describe Checklist do
+describe Gnc do
   describe ".version" do
     it "returns current version" do
       expect(subject.version).to match(/^[\d]+\.[\d]+\.[\d]+$/)
@@ -7,17 +7,17 @@ describe Checklist do
 
   describe ".logger" do
     it "returns a logger" do
-      expect(Checklist.logger).to be_kind_of Logger
+      expect(Gnc.logger).to be_kind_of Logger
     end
   end
 
   describe ".logger=" do
     it "creates a new logger" do
-      id = Checklist.logger.object_id
-      info = Checklist.logger.to_s
-      Checklist.logger = Logger.new("/dev/null")
-      expect(Checklist.logger.object_id).to_not eq id
-      expect(Checklist.logger.to_s).to_not eq info
+      id = Gnc.logger.object_id
+      info = Gnc.logger.to_s
+      Gnc.logger = Logger.new("/dev/null")
+      expect(Gnc.logger.object_id).to_not eq id
+      expect(Gnc.logger.to_s).to_not eq info
     end
   end
 

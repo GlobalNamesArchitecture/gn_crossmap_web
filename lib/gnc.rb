@@ -2,12 +2,12 @@ require "erb"
 require "ostruct"
 require "yaml"
 require "active_record"
-require_relative "checklist/errors"
-require_relative "checklist/version"
+require_relative "gnc/errors"
+require_relative "gnc/version"
 
-# Checklist module defines project's name space, sets environment
-# and connection to the database
-module Checklist
+# Gnc (Global Names Checklist) module defines project's name space, sets
+# environment and connection to the database
+module Gnc
   ROOT_PATH = File.join(__dir__, "..")
   DEFAULT_ENV_FILE = File.join(ROOT_PATH, "config", "env.sh")
 
