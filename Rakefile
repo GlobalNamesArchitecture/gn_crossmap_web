@@ -6,7 +6,7 @@ require "git"
 require "rspec/core/rake_task"
 require "rubocop/rake_task"
 require "sinatra/activerecord/rake"
-require_relative "lib/gnc"
+require_relative "environment"
 
 task default: [:rubocop, :spec]
 
