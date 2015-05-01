@@ -12,6 +12,6 @@ database:
 test:
   override:
     - docker-compose build
-    - docker-compose RACK_ENV=test run web rake db:create
-    - cocker-compose RACK_ENV=test run web rake db:migrate
+    - docker-compose run RACK_ENV=test web rake db:create
+    - cocker-compose run RACK_ENV=test web rake db:migrate
     - docker-compose run web rake
