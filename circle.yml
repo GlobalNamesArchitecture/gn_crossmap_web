@@ -11,7 +11,7 @@ database:
     - echo "nothing needed"
 test:
   override:
-    - docker-compose build
-    - docker-compose run RACK_ENV=test web rake db:create
-    - cocker-compose run RACK_ENV=test web rake db:migrate
-    - docker-compose run web rake
+    - bundle exec docker-compose build
+    - bundle exec docker-compose run RACK_ENV=test web rake db:create
+    - bundle exec docker-compose run RACK_ENV=test web rake db:migrate
+    - bundle exec docker-compose run web rake
