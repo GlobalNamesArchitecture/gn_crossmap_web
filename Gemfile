@@ -4,7 +4,7 @@ gem "rake", "~> 10.3"
 gem "activerecord", "~> 4.2"
 gem "mysql2", "~> 0.3"
 gem "rack", "~> 1.6"
-gem "rack-timeout", "~> 0.0.4"
+gem "rack-timeout", "~> 0.2"
 gem "compass", "~> 1.0"
 gem "sass", "~>3.4"
 gem "zen-grids", "~> 1.4"
@@ -17,7 +17,7 @@ gem "childprocess", "~> 0.5"
 gem "unicorn", "~> 4.8"
 
 group :development do
-  gem "byebug", "~> 3.5"
+  gem "byebug", "~> 4.0"
   gem "sinatra-reloader", "~> 1.0"
 end
 
