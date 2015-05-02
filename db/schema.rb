@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(version: 20150428033943) do
 
   create_table "checklists", force: :cascade do |t|
-    t.string   "location",   limit: 255
+    t.string   "filename",   limit: 255
     t.string   "token",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"

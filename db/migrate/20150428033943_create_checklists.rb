@@ -1,7 +1,7 @@
 class CreateChecklists < ActiveRecord::Migration
   def change
     create_table :checklists do |t|
-      t.string :location
+      t.string :filename
       t.string :token
 
       t.timestamps

@@ -1,4 +1,5 @@
 session_secret: <%= ENV["RACKAPP_SESSION_SECRET"] %>
+server: <%= ENV["RACKAPP_SERVER"] %>
 database:
   common: &common
     adapter: mysql2

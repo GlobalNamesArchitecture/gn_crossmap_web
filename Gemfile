@@ -32,4 +32,5 @@ group :test do
   gem "git", "~> 1.2"
   gem "rack-test", "~> 0.6"
   gem "rubocop", "~> 0.29"
+  gem "factory_girl", "~> 4.5"
 end

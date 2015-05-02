@@ -1,0 +1,18 @@
+%h1 Checklist
+
+%table
+  %tr
+    %th
+      List
+    %td= @checklist.filename
+  %tr
+    %th
+      URL
+    %td http://#{Gnc.conf.server}/checklists?token=#{@checklist.token}
+
+%table
+  - @checklist.transpose(10).each do |row|
+    %tr
+      %th= row[0]
+      - row[1..-1].each do |data|
+        %td= data

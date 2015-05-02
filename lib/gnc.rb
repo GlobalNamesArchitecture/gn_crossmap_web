@@ -2,8 +2,10 @@ require "erb"
 require "ostruct"
 require "yaml"
 require "active_record"
+require "csv"
 require_relative "gnc/errors"
 require_relative "gnc/version"
+require_relative "gnc/uploader"
 
 # Gnc (Global Names Checklist) module defines project's name space, sets
 # environment and connection to the database
@@ -77,7 +79,8 @@ module Gnc
       conf = YAML.load(ERB.new(raw_conf).result)
       OpenStruct.new(
         session_secret:   conf["session_secret"],
-        database:         conf["database"]
+        database:         conf["database"],
+        server:           conf["server"]
       )
     end
 
