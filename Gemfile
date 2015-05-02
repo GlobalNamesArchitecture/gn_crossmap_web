@@ -26,7 +26,7 @@ group :test do
   gem "webmock", "~> 1.20"
   gem "capybara-webkit", "~> 1.1"
   gem "capybara", "~> 2.4"
-  gem "coveralls", "~> 0.7", require: false
+  gem "codeclimate-test-reporter", require: nil
   gem "travis-lint", "~> 2.0"
   gem "launchy", "~> 2.4"
   gem "git", "~> 1.2"
