@@ -11,9 +11,7 @@ database:
     - echo "nothing needed"
 test:
   override:
-    - "docker-compose up":
-        background: true
-    - sleep 200
+    - docker-compose run -d db
     - docker-compose run -e RACK_ENV=test web rake db:create
     - docker-compose run -e RACK_ENV=test web rake db:migrate
     - docker-compose run web rake
