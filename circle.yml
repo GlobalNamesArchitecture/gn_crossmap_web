@@ -1,3 +1,7 @@
+general:
+  branches:
+    ignore:
+      - gh-pages
 machine:
   services:
     - docker
@@ -8,9 +12,6 @@ dependencies:
 database:
   override:
     - echo "nothing needed"
-branches:
-  only:
-    - master
 test:
   override:
     - docker-compose run -d db

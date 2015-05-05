@@ -3,9 +3,12 @@ require "ostruct"
 require "yaml"
 require "active_record"
 require "csv"
+require "rest_client"
+require "fileutils"
 require_relative "gnc/errors"
 require_relative "gnc/version"
 require_relative "gnc/uploader"
+require_relative "gnc/data_source"
 
 # Gnc (Global Names Checklist) module defines project's name space, sets
 # environment and connection to the database

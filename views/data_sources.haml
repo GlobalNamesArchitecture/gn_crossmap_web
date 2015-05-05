@@ -1,0 +1,11 @@
+%h2 Data Sources
+
+%p Select a data source you want to compare with your checklist
+
+%table
+  - @data_sources.each do |ds|
+    %tr
+      %td
+        @ds.title
+      %td
+        @ds.description[0..500]

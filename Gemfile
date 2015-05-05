@@ -15,6 +15,7 @@ gem "sinatra-redirect-with-flash", "~> 0.2"
 gem "haml", "~> 4.0"
 gem "childprocess", "~> 0.5"
 gem "unicorn", "~> 4.8"
+gem "rest-client", "~> 1.8"
 
 group :development do
   gem "byebug", "~> 4.0"

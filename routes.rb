@@ -14,5 +14,11 @@ end
 
 get "/checklists/:token" do
   @checklist = Checklist.find_by_token(params[:token])
+  session[:token] = params[:token]
   haml :checklist
+end
+
+get "/checklists/:token/data_sources" do
+  @data_sources = Gnc::DataSource.fetch
+  haml :data_sources
 end

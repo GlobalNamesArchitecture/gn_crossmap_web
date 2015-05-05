@@ -8,3 +8,9 @@ def params(file_name, content_type = "text/comma-separated-values")
       "filename=\"wellformed-semicolon.csv\"\r\n" \
       "Content-Type: #{content_type}\r\nContent-Length: 34191\r\n" } }
 end
+
+def checklist_file(token)
+  file = File.join(__dir__, "..", "files", "wellformed-semicolon.csv")
+  dest = File.join(__dir__, "..", "..", "uploads", token)
+  FileUtils.cp(file, dest)
+end
