@@ -4,7 +4,7 @@ class CreateChecklists < ActiveRecord::Migration
       t.string :filename
       t.string :token
 
-      t.timestamps, null: false
+      t.timestamps null: false
     end
   end
 end
