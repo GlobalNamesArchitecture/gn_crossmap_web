@@ -1,5 +1,5 @@
-ENV['RACK_ENV'] || "development"
-require './app.rb'
+ENV["RACK_ENV"] || "development"
+require "./app.rb"
 
 set :run, false
 
