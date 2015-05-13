@@ -2,10 +2,14 @@
 
 %p Select a data source you want to compare with your checklist
 
-%table
-  - @data_sources.each do |ds|
-    %tr
-      %td
-        @ds.title
-      %td
-        @ds.description[0..500]
+%form{ method: :post, action: :resolve } 
+  %input{ type: :hidden, name: :token, value: @token }
+  %table
+    - @data_sources.each do |ds|
+      %tr
+        %td
+          %radio{ name: :data_source, value: ds.id }
+        %td
+          ds.title
+        %td
+          ds.description[0..500]

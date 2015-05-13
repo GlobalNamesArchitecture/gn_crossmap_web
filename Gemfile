@@ -16,6 +16,7 @@ gem "haml", "~> 4.0"
 gem "childprocess", "~> 0.5"
 gem "unicorn", "~> 4.8"
 gem "rest-client", "~> 1.8"
+gem "gn_crossmap", "~> 0.1"
 
 group :development do
   gem "byebug", "~> 4.0"

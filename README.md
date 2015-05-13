@@ -16,3 +16,10 @@ A tool to map one checklist to another
 [6]: https://codeclimate.com/github/GlobalNamesArchitecture/checklist
 [7]: https://gemnasium.com/GlobalNamesArchitecture/checklist.png
 [8]: https://gemnasium.com/GlobalNamesArchitecture/checklist
+
+Testing
+-------
+
+* install docker
+* install docker-compose
+* run 'bundle exec tests'
