@@ -1,4 +1,4 @@
-web:
+app:
   build: .
   volumes:
     - .:/app
@@ -9,7 +9,7 @@ web:
     - "config/env.sh"
   links:
     - db
-  command: "/app/app.rb -o 0.0.0.0"
+  command: "rackup -o 0.0.0.0"
 db:
   image: gnames/mariadb:10.0
   ports:
