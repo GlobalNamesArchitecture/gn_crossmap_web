@@ -1,26 +1,24 @@
-Global Names Checklist
-======================
+# Global Names Checklist
 
 A tool to map one checklist to another
 
-[![Continuous Integration Status][1]][2]
-[![Code Climate][3]][4]
-[![Test Coverage][5]][6]
-[![Dependency Status][7]][8]
+[![Continuous Integration Status][ci-svg]][ci]
+[![Code Climate][code-svg]][code]
+[![Test Coverage][test-svg]][test]
+[![Dependency Status][deps-svg]][deps]
 
-Testing
--------
+## Testing
 
 * install docker
 * install docker-compose
 * run 'bundle exec tests'
 
-[1]: https://circleci.com/gh/GlobalNamesArchitecture/checklist.svg?style=shield
-[2]: https://circleci.com/gh/GlobalNamesArchitecture/checklist
-[3]: https://codeclimate.com/github/GlobalNamesArchitecture/checklist/badges/gpa.svg
-[4]: https://codeclimate.com/github/GlobalNamesArchitecture/checklist
-[5]: https://codeclimate.com/github/GlobalNamesArchitecture/checklist/badges/coverage.svg
-[6]: https://codeclimate.com/github/GlobalNamesArchitecture/checklist
-[7]: https://gemnasium.com/GlobalNamesArchitecture/checklist.png
-[8]: https://gemnasium.com/GlobalNamesArchitecture/checklist
+[ci-svg]: https://circleci.com/gh/GlobalNamesArchitecture/checklist.svg?style=shield
+[ci]: https://circleci.com/gh/GlobalNamesArchitecture/checklist
+[code-svg]: https://codeclimate.com/github/GlobalNamesArchitecture/checklist/badges/gpa.svg
+[code]: https://codeclimate.com/github/GlobalNamesArchitecture/checklist
+[test-svg]: https://codeclimate.com/github/GlobalNamesArchitecture/checklist/badges/coverage.svg
+[test]: https://codeclimate.com/github/GlobalNamesArchitecture/checklist
+[deps-svg]: https://gemnasium.com/GlobalNamesArchitecture/checklist.svg
+[deps]: https://gemnasium.com/GlobalNamesArchitecture/checklist
 
