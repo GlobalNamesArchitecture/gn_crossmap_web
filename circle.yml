@@ -3,11 +3,14 @@ general:
     ignore:
       - gh-pages
 machine:
+  pre:
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
+  timezone: UTC
   services:
     - docker
 dependencies:
   override:
-    - sudo pip install -U docker-compose
+    - sudo pip install docker-compose
     - cp config/env.sh .env.sh
 database:
   override:
