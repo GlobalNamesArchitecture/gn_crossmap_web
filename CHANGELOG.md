@@ -1,15 +1,17 @@
-Global Names Checklist CHANGELOG
-================================
-0.0.3
------
-- [dimus][1] - Tests and continuous integration with CircleCI
+# Global Names Checklist CHANGELOG
 
-0.0.2
------
-- [dimus][1] - Docker workflow is set
+## 0.0.4-SNAPSHOT
 
-0.0.1
------
-- [dimus][1] - Initial commit
+- @dimus - update gems to more recent
 
-[1]: https://github.com/dimus
+## 0.0.3
+
+- @dimus - Tests and continuous integration with CircleCI
+
+## 0.0.2
+
+- @dimus - Docker workflow is set
+
+## 0.0.1
+
+- @dimus - Initial commit
