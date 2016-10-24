@@ -1,18 +1,25 @@
-app:
-  build: .
-  volumes:
-    - .:/app
-  ports:
-    - "4567:4567"
-    - "9292:9292"
-  env_file:
-    - "config/env.sh"
-  links:
-    - db
-  command: "rackup -o 0.0.0.0"
-db:
-  image: gnames/mariadb:10.0
-  ports:
-    - "127.0.0.1:13306:3306"
-  environment:
-    - MDB_ADMIN_PASSWORD=admin
+version: "2"
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "4567:4567"
+      - "9292:9292"
+    env_file:
+      - "config/env.sh"
+    links:
+      - db
+    command: "rackup -o 0.0.0.0"
+  db:
+    image: gnames/mariadb:10.0
+    ports:
+      - "127.0.0.1:13306:3306"
+    environment:
+      - MDB_ADMIN_PASSWORD=admin
+    volumes:
+      - mariadb:/var/lib/mysql
+volumes:
+  mariadb:
+    external: false
