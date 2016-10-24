@@ -17,8 +17,10 @@ notify:
     # gitter hook
     - url: https://webhooks.gitter.im/e/448e1ef7669c919cdc5f
 test:
-  override:
-    - docker-compose run -d db
+  pre:
+    - docker-compose up -d
     - docker-compose run -e RACK_ENV=test app rake db:create
     - docker-compose run -e RACK_ENV=test app rake db:migrate
+  override:
     - docker-compose run app rake
+    - mv ./junit.xml $CIRCLE_TEST_REPORTS/rspec
