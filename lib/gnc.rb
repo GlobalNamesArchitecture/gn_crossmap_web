@@ -44,8 +44,8 @@ module Gnc
         read_env
         missing, extra = check_env
       end
-      fail("Missing env variables: #{missing.join(', ')}") unless missing.empty?
-      fail("Extra env variables: #{extra.join(', ')}") unless extra.empty?
+      raise("Missing env vars: #{missing.join(', ')}") unless missing.empty?
+      raise("Extra env variables: #{extra.join(', ')}") unless extra.empty?
       true
     end
 

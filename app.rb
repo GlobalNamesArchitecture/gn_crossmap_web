@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require "zen-grids"
-require "rack/timeout"
+require "rack/timeout/base"
 require "sinatra"
 require "sinatra/base"
 require "sinatra/flash"
