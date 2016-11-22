@@ -1,23 +1,23 @@
 %h3 Overview
 
-%p 
-  GN Checklist application allows biologists to upload a comma-delimited
-  checklist, normalize it's columns according to Darwin Core Standard, and then
-  crossmap scientific names other lists and biological databases. This process
-  will allow you to check for misspelled, outdated or wrong names in your data.
-  You will also be able to find out how much names from your list are known by
-  other data sources.
+%p
+  Global Names Crossmap Web application allows biologists to upload a
+  comma-delimited checklist, normalize it's columns according to Darwin Core
+  Standard, and then crossmap scientific names other lists and biological
+  databases. This process will allow you to check for misspelled, outdated or
+  wrong names in your data.  You will also be able to find out how much names
+  from your list are known by other data sources.
 
 %h3 Step 1
 
 %p
-  If your checklist is in Excel or similar format &ndash; first save it as a
+  If your names list is in Excel or similar format &ndash; first save it as a
   %b comma-separated
   file. Most of popular programs like MS Excel, Google Sheets, LibreOffice Calc
   have the ability to do such export.
 
 %p
-  Your checklist can have information about hierarchy. It is important to
+  Your name list can have information about hierarchy. It is important to
   preserve headers of the columns &ndash; it will make normalization process
   easier. Please note that columns do not have to correspond to Darwin Core
   terms, they just have to be clearly understandable by you.
@@ -29,6 +29,6 @@
 
 %form{ method: "post", enctype: "multipart/form-data" }
   .item
-    %input{ type: "file", name: "checklist_file" }
+    %input{ type: "file", name: "name_list_file" }
   .item
     %input{ type: "submit", value: "Upload" }

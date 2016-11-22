@@ -1,6 +1,7 @@
-# Global Names Checklist
+# Global Names Crossmap Web Interface
 
-A tool to map one checklist to another
+A web-based GUI to `gn_crossmap` gem. This gem allows comparison of one list of
+names against another.
 
 [![Continuous Integration Status][ci-svg]][ci]
 [![Code Climate][code-svg]][code]
@@ -13,12 +14,12 @@ A tool to map one checklist to another
 * install docker-compose
 * run 'bundle exec tests'
 
-[ci-svg]: https://circleci.com/gh/GlobalNamesArchitecture/checklist.svg?style=shield
-[ci]: https://circleci.com/gh/GlobalNamesArchitecture/checklist
-[code-svg]: https://codeclimate.com/github/GlobalNamesArchitecture/checklist/badges/gpa.svg
-[code]: https://codeclimate.com/github/GlobalNamesArchitecture/checklist
-[test-svg]: https://codeclimate.com/github/GlobalNamesArchitecture/checklist/badges/coverage.svg
-[test]: https://codeclimate.com/github/GlobalNamesArchitecture/checklist
-[deps-svg]: https://gemnasium.com/GlobalNamesArchitecture/checklist.svg
-[deps]: https://gemnasium.com/GlobalNamesArchitecture/checklist
+[ci-svg]: https://circleci.com/gh/GlobalNamesArchitecture/gn_crossmap_web.svg?style=shield
+[ci]: https://circleci.com/gh/GlobalNamesArchitecture/gn_crossmap_web
+[code-svg]: https://codeclimate.com/github/GlobalNamesArchitecture/gn_crossmap_web/badges/gpa.svg
+[code]: https://codeclimate.com/github/GlobalNamesArchitecture/gn_crossmap_web
+[test-svg]: https://codeclimate.com/github/GlobalNamesArchitecture/gn_crossmap_web/badges/coverage.svg
+[test]: https://codeclimate.com/github/GlobalNamesArchitecture/gn_crossmap_web
+[deps-svg]: https://gemnasium.com/GlobalNamesArchitecture/gn_crossmap_web.svg
+[deps]: https://gemnasium.com/GlobalNamesArchitecture/gn_crossmap_web
 

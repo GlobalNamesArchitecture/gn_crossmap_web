@@ -1,4 +1,4 @@
-# Global Names Checklist CHANGELOG
+# Global Names Crossmap Web CHANGELOG
 
 ## 0.0.4-SNAPSHOT
 

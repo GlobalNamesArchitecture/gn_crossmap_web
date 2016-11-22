@@ -1,14 +1,16 @@
-describe "/checklists/:token" do
-  let(:checklist) { create(:checklist) }
+# frozen_string_literal: true
+
+describe "/crossmaps/:token" do
+  let(:crossmap) { create(:crossmap) }
 
   it "renders" do
-    visit("/checklists/#{checklist.token}")
+    visit("/crossmaps/#{crossmap.token}")
     expect(page.status_code).to eq 200
-    expect(page.body).to match checklist.token
+    expect(page.body).to match crossmap.token
   end
 
   it "has link to data sources" do
-    visit("/checklists/#{checklist.token}")
+    visit("/crossmaps/#{crossmap.token}")
     click_link("Select Data Source")
     expect(page.status_code).to eq 200
     expect(page.body).to match "Data Sources"

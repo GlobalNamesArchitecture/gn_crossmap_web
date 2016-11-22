@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Gnc::DataSource do
   subject { Gnc::DataSource }
 

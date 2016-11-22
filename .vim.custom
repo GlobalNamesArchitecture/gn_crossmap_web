@@ -1,7 +1,7 @@
 function! Layout()
     " Rough num columns to decide between laptop and big monitor screens
     let numcol = 2
-    if winwidth(0) >= 220
+    if winwidth(0) >= 195
         let numcol = 3
     endif
 
@@ -18,6 +18,11 @@ function! Layout()
     vertical resize 84
     edit README.md
     tabe README.md
+
+    if numcol == 3
+        vsp README.md
+    endif
+
     vsp term://bash
     wincmd l
     vertical resize 84

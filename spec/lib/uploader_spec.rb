@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Gnc::Uploader do
   let(:data) { params("wellformed-semicolon.csv")["checklist_file"] }
   subject { Gnc::Uploader.new(data) }

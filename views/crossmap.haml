@@ -1,12 +1,12 @@
-%h1 Checklist
+%h1 Crossmap
 
 %ul
   %li Step 1: Prepare CSV File
   %li Step 2: Upload CSV File
   %li Step 3: Map Terms to Columns
   %li
-    Step 4: 
-    %a{href: "/checklists/:token/data_sources"}
+    Step 4:
+    %a{href: "/settings/#{params[:token]}"}
       Select Data Source
   %li Step 5: Receive a Crossmap
 
@@ -14,14 +14,14 @@
   %tr
     %th
       List
-    %td= @checklist.filename
+    %td= @crossmap.filename
   %tr
     %th
       URL
-    %td http://#{Gnc.conf.server}/checklists?token=#{@checklist.token}
+    %td http://#{Gnc.conf.server}/crossmaps/#{@crossmap.token}
 
 %table
-  - @checklist.transpose(10).each do |row|
+  - @crossmap.transpose(10).each do |row|
     %tr
       %th= row[0]
       - row[1..-1].each do |data|

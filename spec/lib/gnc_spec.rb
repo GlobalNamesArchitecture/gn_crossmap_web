@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Gnc do
   describe ".version" do
     it "returns current version" do
@@ -37,14 +39,14 @@ describe Gnc do
     context "env cannot make all RACKAPP_.. vars" do
       it "raises error" do
         allow(ENV).to receive(:keys) { [] }
-        expect { subject.prepare_env }.to raise_error
+        expect { subject.prepare_env }.to raise_error RuntimeError
       end
     end
 
     context "env has unknown RACKAPP_.. vars" do
       it "rasies error" do
         ENV["RACKAPP_TOOMANY"] = "yeah"
-        expect { subject.prepare_env }.to raise_error
+        expect { subject.prepare_env }.to raise_error RuntimeError
         ENV.delete("RACKAPP_TOOMANY")
       end
     end

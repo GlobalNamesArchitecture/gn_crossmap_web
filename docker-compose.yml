@@ -5,17 +5,15 @@ services:
     volumes:
       - .:/app
     ports:
-      - "4567:4567"
-      - "9292:9292"
+      - "0.0.0.0:8080:8080"
     env_file:
       - "config/env.sh"
     links:
       - db
-    command: "rackup -o 0.0.0.0"
   db:
     image: gnames/mariadb:10.0
     ports:
-      - "127.0.0.1:13306:3306"
+      - "0.0.0.0:13306:3306"
     environment:
       - MDB_ADMIN_PASSWORD=admin
     volumes:

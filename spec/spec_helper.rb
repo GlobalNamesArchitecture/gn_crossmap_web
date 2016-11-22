@@ -1,5 +1,11 @@
-require "codeclimate-test-reporter"
-CodeClimate::TestReporter.start
+# frozen_string_literal: true
+
+require "simplecov"
+SimpleCov.start do
+  add_filter "/spec/"
+  add_filter "/bin/"
+  add_filter "/coverage/"
+end
 
 require "rack/test"
 require "capybara"
@@ -15,7 +21,7 @@ ENV["RACK_ENV"] = "test"
 require_relative "../app.rb"
 
 Capybara.javascript_driver = :webkit
-Capybara.app = Sinatra::Application
+Capybara.app = Gnc::App
 
 RSpec.configure do |c|
   c.include Capybara::DSL

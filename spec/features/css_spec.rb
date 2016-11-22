@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe "/css" do
   it "renders" do
     visit "/css/app.css"

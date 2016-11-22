@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Gnc
   # DataSource gets data about data resources from resolver
-  class DataSource
+  module DataSource
     def self.fetch
       url = "http://resolver.globalnames.org/data_sources.json"
       res = JSON.parse(RestClient.get(url))

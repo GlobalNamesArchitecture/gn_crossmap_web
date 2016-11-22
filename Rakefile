@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "bundler"
 require "active_record"
 require "rake"
@@ -6,7 +8,7 @@ require "git"
 require "rspec/core/rake_task"
 require "rubocop/rake_task"
 require "sinatra/activerecord/rake"
-require_relative "environment"
+require_relative "app"
 
 task default: [:rubocop, :spec]
 
@@ -68,5 +70,5 @@ end
 
 desc "open an irb session preloaded with this library"
 task :console do
-  sh "irb -r pp -r ./environment.rb"
+  sh "irb -r pp -r ./app.rb"
 end

@@ -1,24 +1,43 @@
-get "/css/:filename.css" do
-  scss :"sass/#{params[:filename]}"
-end
+# frozen_string_literal: true
 
-get "/" do
-  haml :home
-end
+module Gnc
+  # Sinatra App namespace
+  class App < Sinatra::Application
+    get "/css/:filename.css" do
+      scss :"sass/#{params[:filename]}"
+    end
 
-post "/" do
-  uploader = Gnc::Uploader.new(params["checklist_file"])
-  checklist = uploader.save_checklist
-  redirect "checklists/#{checklist.token}"
-end
+    get "/" do
+      haml :home
+    end
 
-get "/checklists/:token" do
-  @checklist = Checklist.find_by_token(params[:token])
-  session[:token] = params[:token]
-  haml :checklist
-end
+    post "/" do
+      uploader = Gnc::Uploader.new(params["name_list_file"])
+      crossmap = uploader.save_list_file
+      redirect "crossmaps/#{crossmap.token}"
+    end
 
-get "/checklists/:token/data_sources" do
-  @data_sources = Gnc::DataSource.fetch
-  haml :data_sources
+    get "/crossmaps/:token" do
+      @crossmap = Crossmap.find_by_token(params[:token])
+      haml :crossmap
+    end
+
+    get "/settings/:token" do
+      @data_sources = Gnc::DataSource.fetch
+      haml :settings
+    end
+
+    post "/crossmaps" do
+      crossmap = Crossmap.find_by_token(params[:token])
+      crossmap.update(data_source_id: params[:data_source_id])
+      redirect "/resolver/#{params[:token]}"
+    end
+
+    get "/resolver/:token" do
+      @data = Crossmap.find_by_token(params[:token])
+      crossmapper = Gnc::Crossmapper.new(@data)
+      @outfile = crossmapper.run
+      haml :resolver
+    end
+  end
 end

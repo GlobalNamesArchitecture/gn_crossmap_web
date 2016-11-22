@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 require "csv"
-require_relative "../environment"
+require_relative "../app"
 
 unless [:development, :test, :production].include? Gnc.env
   puts "Use: ENV_FILE=your_env.sh bundle exec rake seed"

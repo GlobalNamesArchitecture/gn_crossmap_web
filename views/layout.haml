@@ -2,21 +2,21 @@
 %html
   %head
     %title
-      Checklist
-    %link{ rel: 'stylesheet', href: '/css/app.css', type: 'text/css' }
+      Crossmap
+    %link{ rel: "stylesheet", href: "/css/app.css", type: "text/css" }
 
-    %script{ src: 'http://code.jquery.com/jquery-1.9.1.js' }
-    %script{ src: 'http://code.jquery.com/ui/1.10.3/jquery-ui.js' }
-    %script{ src: 'https://www.google.com/jsapi' }
+    %script{ src: "http://code.jquery.com/jquery-1.9.1.js" }
+    %script{ src: "http://code.jquery.com/ui/1.10.3/jquery-ui.js" }
+    %script{ src: "https://www.google.com/jsapi" }
   %body
     .container
       .header
-        %h1{ id: 'title' }
-          %a{ href: '/' } Global Names Checklist
+        %h1{ id: "title" }
+          %a{ href: "/" } Global Names Crossmap Web
         .menu
           %ul
             %li
-              %a{ href: '/' } Home
+              %a{ href: "/" } Home
     .container
     .container
       #content
@@ -24,9 +24,9 @@
 
     .container
       #footer
-        %a{ href: 'https://github.com/GlobalNamesArchitecture/checklist/blob/master/LICENSE' } 
+        %a{ href: "https://github.com/GlobalNamesArchitecture/gn_crossmap_web/blob/master/LICENSE" }
           MIT License
         |
-        %a{ href: 'https://github.com/GlobalNamesArchitecture/checklist/releases' }
+        %a{ href: "https://github.com/GlobalNamesArchitecture/gn_crossmap_web/releases" }
           Version
           = Gnc.version
