@@ -24,6 +24,7 @@ require_relative "lib/gnc/uploader"
 require_relative "lib/gnc/data_source"
 require_relative "lib/gnc/crossmapper"
 require_relative "lib/gnc/job_logger"
+require_relative "lib/gnc/file_inspector"
 
 Gnc.prepare_load_path
 Gnc.prepare_env

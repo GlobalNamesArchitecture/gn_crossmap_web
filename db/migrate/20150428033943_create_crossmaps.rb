@@ -9,6 +9,7 @@ class CreateCrossmaps < ActiveRecord::Migration
       t.string :output
       t.string :token
       t.integer :data_source_id
+      t.string :col_sep
       t.boolean :skip_original, default: false
       t.string :status, default: :init
 

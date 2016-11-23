@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20150428033943) do
     t.string   "output",         limit: 255
     t.string   "token",          limit: 255
     t.integer  "data_source_id", limit: 4
+    t.string   "col_sep",        limit: 255
     t.boolean  "skip_original",              default: false
     t.string   "status",         limit: 255, default: "init"
     t.datetime "created_at",                                  null: false

@@ -13,6 +13,8 @@ module Gnc
 
     post "/" do
       uploader = Gnc::Uploader.new(params["name_list_file"])
+      logger.info "!!!!!!!!!!!!!!!!!!"
+      logger.info params
       crossmap = uploader.save_list_file
       redirect "crossmaps/#{crossmap.token}"
     end

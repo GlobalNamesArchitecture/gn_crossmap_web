@@ -10,7 +10,7 @@ RUN apt-get update && \
     apt-get install -y ruby2.3 ruby2.3-dev build-essential git vim \
     qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base \
     gstreamer1.0-tools gstreamer1.0-x npm nodejs nodejs-legacy\
-    libmysqlclient-dev  mysql-client && \
+    libmysqlclient-dev  mysql-client libmagic-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
