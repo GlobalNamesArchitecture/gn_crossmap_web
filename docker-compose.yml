@@ -5,13 +5,11 @@ services:
     volumes:
       - .:/app
     ports:
-      - "0.0.0.0:8080:8080"
       - "0.0.0.0:9292:9292"
     env_file:
       - "config/env.sh"
     links:
       - db
-    command: "rackup -o 0.0.0.0"
   db:
     image: gnames/mariadb:10.0
     ports:

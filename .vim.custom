@@ -12,20 +12,23 @@ function! Layout()
 
     set colorcolumn=81
     vsp term://bash
-    sp term://bash
+    sp term://docker-compose\ up
     resize 8
     wincmd l
     vertical resize 84
     edit README.md
-    tabe README.md
 
+    tabe README.md
     if numcol == 3
         vsp README.md
     endif
-
     vsp term://bash
     wincmd l
     vertical resize 84
+
+    tabe README.md
+    vsp term://docker-compose\ run\ app\ bundle\ exec\ guard
+
     tabfirst
 endfunction
 

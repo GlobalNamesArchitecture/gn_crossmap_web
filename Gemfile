@@ -23,7 +23,6 @@ gem "zen-grids", "~> 1.4"
 
 group :development do
   gem "byebug", "~> 4.0"
-  gem "guard", "~> 2.14"
   gem "sinatra-reloader", "~> 1.0"
 end
 

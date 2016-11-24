@@ -17,7 +17,7 @@ type Msg
 
 
 view model =
-    Html.text "setting up Elm..."
+    Html.text "setting up FILE INFO"
 
 
 main =

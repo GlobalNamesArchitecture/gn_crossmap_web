@@ -22,12 +22,14 @@ ENV LC_ALL en_US.UTF-8
 
 RUN echo 'gem: --no-rdoc --no-ri >> "$HOME/.gemrc"'
 
-RUN gem install bundler && mkdir /app && mkdir /var/run/sshd
+RUN gem install --no-rdoc --no-ri bundler guard guard-shell && \
+    mkdir /app && mkdir /var/run/sshd
 WORKDIR /app
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 RUN bundle install
+RUN npm install -g elm@0.18
 
 COPY . /app
 
-CMD ["unicorn", "-c", "/app/config/docker/unicorn.rb"]
+CMD ["/app/exe/docker_startup.sh"]
