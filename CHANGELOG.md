@@ -1,7 +1,13 @@
 # Global Names Crossmap Web CHANGELOG
 
-## 0.0.4-SNAPSHOT
+## 0.0.5 (WORK IN PROGRESS)
 
+## 0.0.4
+
+2016-11-24
+
+- @dimus - validation of csv file
+- @dimus - get basic workflow from uploading file to downloading result  #7
 - @dimus - update gems to more recent
 
 ## 0.0.3
