@@ -1,6 +1,8 @@
 ## App
 *.csv
 /public/crossmaps/*
+assets/elm/elm-stuff
+/public/js/main.js
 
 ## General
 *.gem

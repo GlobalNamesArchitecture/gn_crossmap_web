@@ -21,7 +21,7 @@ module Gnc
         else
           ["", 0]
         end
-      rescue CSV::MalformedCSVError
+      rescue MalformedCSVError
         ["", 0]
       end
 

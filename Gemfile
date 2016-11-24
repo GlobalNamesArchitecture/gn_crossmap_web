@@ -5,7 +5,6 @@ source "https://rubygems.org"
 gem "activerecord", "~> 4.2.7.1"
 gem "childprocess", "~> 0.5"
 gem "compass", "~> 1.0"
-gem "ruby-filemagic", "~> 0.7" # libmagic-dev is dependency
 gem "gn_crossmap", "~> 1.0"
 gem "haml", "~> 4.0"
 gem "mysql2", "~> 0.4"
@@ -24,6 +23,7 @@ gem "zen-grids", "~> 1.4"
 
 group :development do
   gem "byebug", "~> 4.0"
+  gem "guard", "~> 2.14"
   gem "sinatra-reloader", "~> 1.0"
 end
 
@@ -33,7 +33,6 @@ group :test do
   gem "capybara-webkit", "~> 1.1"
   gem "capybara", "~> 2.4"
   gem "codeclimate-test-reporter", "~> 1.0"
-  gem "travis-lint", "~> 2.0"
   gem "launchy", "~> 2.4"
   gem "git", "~> 1.2"
   gem "rack-test", "~> 0.6"
