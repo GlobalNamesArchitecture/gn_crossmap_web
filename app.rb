@@ -25,6 +25,7 @@ require_relative "lib/gnc/data_source"
 require_relative "lib/gnc/crossmapper"
 require_relative "lib/gnc/job_logger"
 require_relative "lib/gnc/file_inspector"
+require_relative "lib/gnc/csv_sampler"
 
 Gnc.prepare_load_path
 Gnc.prepare_env

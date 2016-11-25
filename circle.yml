@@ -27,4 +27,4 @@ test:
     - docker-compose run app rake db:migrate RACK_ENV=test
   override:
     - docker-compose run app rake
-    - mv ./junit.xml $CIRCLE_TEST_REPORTS/rspec
+    # - mv ./junit.xml $CIRCLE_TEST_REPORTS/rspec

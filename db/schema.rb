@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 20150428033943) do
     t.string   "col_sep"
     t.boolean  "skip_original",  default: false
     t.string   "status",         default: "init"
+    t.jsonb    "params"
+    t.jsonb    "input_sample"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
   end

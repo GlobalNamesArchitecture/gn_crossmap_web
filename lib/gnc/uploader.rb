@@ -21,10 +21,12 @@ module Gnc
     private
 
     def save_db(col_sep, token)
+      sample = Gnc::CsvSampler.sample(Crossmap.input(token), col_sep)
       Crossmap.create(filename: @params.filename,
                       input: Crossmap.input(token),
                       output: Crossmap.output(token, @params.filename),
                       col_sep: col_sep,
+                      input_sample: sample,
                       token: token)
     end
   end

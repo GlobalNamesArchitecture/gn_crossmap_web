@@ -53,4 +53,3 @@ docker-compose run app bundle exec guard
 [deps-svg]: https://gemnasium.com/GlobalNamesArchitecture/gn_crossmap_web.svg
 [deps]: https://gemnasium.com/GlobalNamesArchitecture/gn_crossmap_web
 [Guard]: https://github.com/guard/guard
-
