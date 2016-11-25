@@ -13,17 +13,20 @@
 
 ActiveRecord::Schema.define(version: 20150428033943) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "crossmaps", force: :cascade do |t|
-    t.string   "filename",       limit: 255
-    t.string   "input",          limit: 255
-    t.string   "output",         limit: 255
-    t.string   "token",          limit: 255
-    t.integer  "data_source_id", limit: 4
-    t.string   "col_sep",        limit: 255
-    t.boolean  "skip_original",              default: false
-    t.string   "status",         limit: 255, default: "init"
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.string   "filename"
+    t.string   "input"
+    t.string   "output"
+    t.string   "token"
+    t.integer  "data_source_id"
+    t.string   "col_sep"
+    t.boolean  "skip_original",  default: false
+    t.string   "status",         default: "init"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
 end

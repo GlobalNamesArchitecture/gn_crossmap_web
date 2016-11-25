@@ -2,9 +2,11 @@ session_secret: <%= ENV["RACKAPP_SESSION_SECRET"] %>
 server: <%= ENV["RACKAPP_SERVER"] %>
 database:
   common: &common
-    adapter: mysql2
+    adapter: postgresql
     encoding: utf8
     reconnect: true
+    pool: 5
+    timeout: 5000
     host: <%= ENV["RACKAPP_DB_HOST"] %>
     username: <%= ENV["RACKAPP_DB_USERNAME"] %>
     password: <%= ENV["RACKAPP_DB_PASSWORD"] %>

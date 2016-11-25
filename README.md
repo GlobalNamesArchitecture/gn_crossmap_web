@@ -21,7 +21,7 @@ docker-compose run app rake
 
 ## Development
 
-We recommend to use docker container for development
+We recommend to use docker-compose for development
 
 To start the system use
 

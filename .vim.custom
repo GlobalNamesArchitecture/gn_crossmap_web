@@ -27,7 +27,7 @@ function! Layout()
     vertical resize 84
 
     tabe README.md
-    vsp term://docker-compose\ run\ app\ bundle\ exec\ guard
+    vsp term://docker-compose\ run\ app\ guard\ --no-bundler-warning
 
     tabfirst
 endfunction

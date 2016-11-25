@@ -1,7 +1,7 @@
 #!/bin/bash
 
-until [[ "$(mysqladmin status -u ${RACKAPP_DB_USERNAME} -h ${RACKAPP_DB_HOST} -p${RACKAPP_DB_PASSWORD})" =~ "Uptime" ]]; do
-  echo "Waiting for mysql to start..."
+while [[ "$(pg_isready -h ${RACKAPP_DB_HOST} -U ${RACKAPP_DB_USERNAME})" =~ "no response" ]]; do
+  echo "Waiting for postgresql to start..."
   sleep 1
 done
 

@@ -11,13 +11,9 @@ services:
     links:
       - db
   db:
-    image: gnames/mariadb:10.0
-    ports:
-      - "0.0.0.0:13306:3306"
-    environment:
-      - MDB_ADMIN_PASSWORD=admin
+    image: postgres:9.6
     volumes:
-      - mariadb:/var/lib/mysql
+      - pg:/var/lib/postgres/data
 volumes:
-  mariadb:
+  pg:
     external: false

@@ -11,7 +11,6 @@ machine:
 dependencies:
   override:
     - sudo pip install docker-compose
-    - cp config/env.sh .env.sh
 database:
   override:
     - echo "nothing needed"
@@ -22,8 +21,10 @@ notify:
 test:
   pre:
     - docker-compose up -d
-    - docker-compose run -e RACK_ENV=test app rake db:create
-    - docker-compose run -e RACK_ENV=test app rake db:migrate
+    - docker-compose run app rake db:drop
+    - docker-compose run app rake db:create
+    - docker-compose run app rake db:migrate
+    - docker-compose run app rake db:migrate RACK_ENV=test
   override:
     - docker-compose run app rake
     - mv ./junit.xml $CIRCLE_TEST_REPORTS/rspec
