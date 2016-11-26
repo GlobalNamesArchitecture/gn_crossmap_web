@@ -2,33 +2,11 @@
 
 %div{ id: :main }
 
-%ul
-  %li Step 1: Prepare CSV File
-  %li Step 2: Upload CSV File
-  %li Step 3: Map Terms to Columns
-  %li
-    Step 4:
-    %a{href: "/settings/#{params[:token]}"}
-      Select Data Source
-  %li Step 5: Receive a Crossmap
-
-%table
-  %tr
-    %th
-      List
-    %td= @crossmap.filename
-  %tr
-    %th
-      URL
-    %td http://#{Gnc.conf.server}/crossmaps/#{@crossmap.token}
-
-%table
-  - @crossmap.transpose(10).each do |row|
-    %tr
-      %th= row[0]
-      - row[1..-1].each do |data|
-        %td= data
-
 :javascript
   var node = document.getElementById("main");
-  var app = Elm.Main.embed(node);
+  var app = Elm.Main.embed(node, {
+    token : "#{@crossmap.token}",
+    server: "#{Gnc.conf.server}",
+    headers : #{@crossmap.input_sample["headers"].to_json},
+    rows : #{@crossmap.input_sample["rows"].to_json}
+  });
