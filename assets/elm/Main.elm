@@ -2,119 +2,34 @@ module Main exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (href)
-
-
-type alias Model =
-    { token : String
-    , server : String
-    , headers : Headers
-    , rows : Rows
-    }
-
-
-type alias Headers =
-    List String
-
-
-type alias Rows =
-    List Row
-
-
-type alias Row =
-    List RowEntry
-
-
-type alias RowEntry =
-    Maybe String
-
-
-type alias Flags =
-    { token : String
-    , server : String
-    , headers : Headers
-    , rows : Rows
-    }
-
-
-init : Flags -> ( Model, Cmd Msg )
-init flags =
-    ( Model
-        flags.token
-        flags.server
-        flags.headers
-        flags.rows
-    , Cmd.none
-    )
-
-
-type Msg
-    = NothingYet
-
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.none
+import Common exposing (..)
+import DwcaTerms as Dwca
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        Continue ->
+            ( { model | state = DataSourcesState }, Cmd.none )
 
 
 view : Model -> Html Msg
 view model =
-    let
-        token_url =
-            "http://" ++ model.server ++ "/crossmaps/" ++ model.token
-    in
-        div []
-            [ a [ href token_url ]
-                [ text token_url ]
-            , table []
-                ((viewHeaders model.headers)
-                    :: (viewRows model.rows)
-                )
-            ]
+    case model.state of
+        DwcaTermsState ->
+            Dwca.view model
 
+        DataSourcesState ->
+            p [] [ text "Next step" ]
 
-viewHeaders : Headers -> Html Msg
-viewHeaders headers =
-    tr [] (List.map viewHeaderEntry headers)
-
-
-viewHeaderEntry : String -> Html Msg
-viewHeaderEntry header =
-    th [] [ text header ]
-
-
-viewRows : Rows -> List (Html Msg)
-viewRows rows =
-    List.map viewRow rows
-
-
-viewRow : Row -> Html Msg
-viewRow row =
-    tr [] (List.map viewRowEntry row)
-
-
-viewRowEntry : RowEntry -> Html Msg
-viewRowEntry re =
-    let
-        val =
-            case re of
-                Just entry ->
-                    entry
-
-                Nothing ->
-                    ""
-    in
-        td [] [ text val ]
+        _ ->
+            Debug.crash "TMP"
 
 
 main =
     programWithFlags
-        { init = init
-        , subscriptions = subscriptions
+        { init = Dwca.init
+        , subscriptions = Dwca.subscriptions
         , update = update
         , view = view
         }

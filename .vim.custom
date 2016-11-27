@@ -27,6 +27,7 @@ function! Layout()
     vertical resize 84
 
     tabe assets/elm/Main.elm
+    vsp assets/elm/DwcaTerms.elm
     vsp term://docker-compose\ run\ app\ guard\ --no-bundler-warning
 
     tabfirst

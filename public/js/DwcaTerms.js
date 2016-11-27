@@ -12547,87 +12547,10 @@ var _user$project$DwcaTerms$init = function (flags) {
 	};
 };
 
-var _user$project$Main$view = function (model) {
-	var _p0 = model.state;
-	switch (_p0.ctor) {
-		case 'DwcaTermsState':
-			return _user$project$DwcaTerms$view(model);
-		case 'DataSourcesState':
-			return A2(
-				_elm_lang$html$Html$p,
-				{ctor: '[]'},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text('Next step'),
-					_1: {ctor: '[]'}
-				});
-		default:
-			return _elm_lang$core$Native_Utils.crashCase(
-				'Main',
-				{
-					start: {line: 18, column: 5},
-					end: {line: 26, column: 30}
-				},
-				_p0)('TMP');
-	}
-};
-var _user$project$Main$update = F2(
-	function (msg, model) {
-		var _p2 = msg;
-		return {
-			ctor: '_Tuple2',
-			_0: _elm_lang$core$Native_Utils.update(
-				model,
-				{state: _user$project$Common$DataSourcesState}),
-			_1: _elm_lang$core$Platform_Cmd$none
-		};
-	});
-var _user$project$Main$main = _elm_lang$html$Html$programWithFlags(
-	{init: _user$project$DwcaTerms$init, subscriptions: _user$project$DwcaTerms$subscriptions, update: _user$project$Main$update, view: _user$project$Main$view})(
-	A2(
-		_elm_lang$core$Json_Decode$andThen,
-		function (headers) {
-			return A2(
-				_elm_lang$core$Json_Decode$andThen,
-				function (rows) {
-					return A2(
-						_elm_lang$core$Json_Decode$andThen,
-						function (server) {
-							return A2(
-								_elm_lang$core$Json_Decode$andThen,
-								function (token) {
-									return _elm_lang$core$Json_Decode$succeed(
-										{headers: headers, rows: rows, server: server, token: token});
-								},
-								A2(_elm_lang$core$Json_Decode$field, 'token', _elm_lang$core$Json_Decode$string));
-						},
-						A2(_elm_lang$core$Json_Decode$field, 'server', _elm_lang$core$Json_Decode$string));
-				},
-				A2(
-					_elm_lang$core$Json_Decode$field,
-					'rows',
-					_elm_lang$core$Json_Decode$list(
-						_elm_lang$core$Json_Decode$list(
-							_elm_lang$core$Json_Decode$oneOf(
-								{
-									ctor: '::',
-									_0: _elm_lang$core$Json_Decode$null(_elm_lang$core$Maybe$Nothing),
-									_1: {
-										ctor: '::',
-										_0: A2(_elm_lang$core$Json_Decode$map, _elm_lang$core$Maybe$Just, _elm_lang$core$Json_Decode$string),
-										_1: {ctor: '[]'}
-									}
-								})))));
-		},
-		A2(
-			_elm_lang$core$Json_Decode$field,
-			'headers',
-			_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string))));
-
 var Elm = {};
-Elm['Main'] = Elm['Main'] || {};
-if (typeof _user$project$Main$main !== 'undefined') {
-    _user$project$Main$main(Elm['Main'], 'Main', {"types":{"unions":{"Common.Msg":{"args":[],"tags":{"Continue":[]}}},"aliases":{},"message":"Common.Msg"},"versions":{"elm":"0.18.0"}});
+Elm['DwcaTerms'] = Elm['DwcaTerms'] || {};
+if (typeof _user$project$DwcaTerms$main !== 'undefined') {
+    _user$project$DwcaTerms$main(Elm['DwcaTerms'], 'DwcaTerms', {"types":null,"versions":{"elm":"0.18.0"}});
 }
 
 if (typeof define === "function" && define['amd'])

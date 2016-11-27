@@ -27,14 +27,15 @@ group :development do
 end
 
 group :test do
-  gem "rspec", "~> 3.2"
-  gem "webmock", "~> 1.20"
-  gem "capybara-webkit", "~> 1.1"
   gem "capybara", "~> 2.4"
+  gem "capybara-webkit", "~> 1.1"
   gem "codeclimate-test-reporter", "~> 1.0"
-  gem "launchy", "~> 2.4"
-  gem "git", "~> 1.2"
-  gem "rack-test", "~> 0.6"
-  gem "rubocop", "~> 0.29"
   gem "factory_girl", "~> 4.5"
+  gem "git", "~> 1.2"
+  gem "launchy", "~> 2.4"
+  gem "rack-test", "~> 0.6"
+  gem "rspec", "~> 3.2"
+  gem "rspec_junit_formatter", "~> 0.2"
+  gem "rubocop", "~> 0.29"
+  gem "webmock", "~> 1.20"
 end

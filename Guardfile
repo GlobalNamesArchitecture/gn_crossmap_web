@@ -24,9 +24,9 @@
 toggle = true
 
 guard :shell do
-  watch(%r{assets/elm/(.*).elm$}) do |m|
-    elm = "#{m[1]}.elm"
-    js = "../../public/js/#{m[1]}.js"
+  watch(%r{assets/elm/(.*).elm$}) do
+    elm = "Main.elm"
+    js = "../../public/js/Main.js"
     `cd assets/elm && elm-make #{elm} --output "#{js}" --debug`
     toggle = !toggle
   end
