@@ -4,7 +4,7 @@ module Gnc
   # DataSource gets data about data resources from resolver
   module DataSource
     def self.fetch
-      url = "http://resolver.globalnames.org/data_sources.json"
+      url = "#{Gnc.conf.resolver_url}/data_sources.json"
       res = JSON.parse(RestClient.get(url))
       res.map { |ds| OpenStruct.new(ds) }.sort_by(&:title)
     end

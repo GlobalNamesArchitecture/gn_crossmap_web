@@ -1,19 +1,31 @@
 module Common exposing (..)
 
+import Html exposing (..)
+import Html.Attributes exposing (href, type_, value)
+import Html.Events exposing (onClick)
+import Http
+
 
 type alias Model =
     { state : State
+    , resolverUrl : ResolverUrl
     , token : String
     , server : String
     , headers : Headers
     , rows : Rows
+    , dataSources : List DataSource
+    , selectedDataSource : Int
     }
+
+
+type alias ResolverUrl =
+    String
 
 
 type State
     = DwcaTermsState
     | DataSourcesState
-    | ReconciliationState
+    | ResolutionState
 
 
 type alias Headers =
@@ -33,12 +45,20 @@ type alias RowEntry =
 
 
 type alias Flags =
-    { token : String
+    { resolverUrl : ResolverUrl
+    , token : String
     , server : String
     , headers : Headers
     , rows : Rows
     }
 
 
+type alias DataSource =
+    { id : Int, title : String, desc : Maybe String }
+
+
 type Msg
-    = Continue
+    = ToDataSources
+    | ToResolver
+    | AllDataSources (Result Http.Error (List DataSource))
+    | SelectDataSource Int

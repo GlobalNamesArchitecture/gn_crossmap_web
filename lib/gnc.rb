@@ -73,7 +73,9 @@ module Gnc
       OpenStruct.new(
         session_secret:   conf["session_secret"],
         database:         conf["database"],
-        server:           conf["server"]
+        server:           conf["server"],
+        resolver_url:     conf["resolver_url"] ||
+          "http://resolver.globalnames.org"
       )
     end
 

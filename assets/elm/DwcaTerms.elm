@@ -1,4 +1,4 @@
-module DwcaTerms exposing (..)
+module DwcaTerms exposing (init, view)
 
 import Html exposing (..)
 import Html.Attributes exposing (href, type_, value)
@@ -10,24 +10,15 @@ init : Flags -> ( Model, Cmd Msg )
 init flags =
     ( Model
         DwcaTermsState
+        flags.resolverUrl
         flags.token
         flags.server
         flags.headers
         flags.rows
+        []
+        1
     , Cmd.none
     )
-
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.none
-
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        Continue ->
-            ( { model | state = DataSourcesState }, Cmd.none )
 
 
 view : Model -> Html Msg
@@ -40,7 +31,7 @@ view model =
             [ a [ href token_url ]
                 [ text token_url ]
             , div []
-                [ button [ onClick Continue ] [ text "Continue" ]
+                [ button [ onClick ToDataSources ] [ text "Continue" ]
                 ]
             , table []
                 ((viewHeaders model.headers)
