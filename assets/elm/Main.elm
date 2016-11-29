@@ -6,6 +6,7 @@ import Http
 import Common exposing (..)
 import DwcaTerms as Dwca
 import DataSources as DS
+import Resolver as R
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -16,11 +17,6 @@ update msg model =
             , DS.getDataSources model.resolverUrl
             )
 
-        ToResolver ->
-            ( { model | state = ResolutionState }
-            , Cmd.none
-            )
-
         AllDataSources (Ok ds) ->
             ( { model | dataSources = DS.prepareDataSources ds }, Cmd.none )
 
@@ -29,6 +25,17 @@ update msg model =
 
         SelectDataSource dsId ->
             ( { model | selectedDataSource = dsId }, Cmd.none )
+
+        ToResolver ->
+            ( { model | state = ResolutionState }
+            , R.startResolution model.token
+            )
+
+        ResolutionStarted (Ok _) ->
+            ( Debug.log "OK" model, Cmd.none )
+
+        ResolutionStarted (Err _) ->
+            ( Debug.log "ERR" model, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
@@ -46,7 +53,7 @@ view model =
             DS.view model
 
         ResolutionState ->
-            Html.text <| toString model.selectedDataSource
+            R.view model
 
 
 main =

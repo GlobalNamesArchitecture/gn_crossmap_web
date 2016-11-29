@@ -16,6 +16,7 @@ require "csv"
 require "rest_client"
 require "fileutils"
 require "gn_crossmap"
+require "sucker_punch"
 
 require_relative "lib/gnc"
 require_relative "lib/gnc/errors"
@@ -26,6 +27,7 @@ require_relative "lib/gnc/crossmapper"
 require_relative "lib/gnc/job_logger"
 require_relative "lib/gnc/file_inspector"
 require_relative "lib/gnc/csv_sampler"
+require_relative "lib/gnc/resolver"
 
 Gnc.prepare_load_path
 Gnc.prepare_env

@@ -14,6 +14,7 @@ class CreateCrossmaps < ActiveRecord::Migration
       t.string :status, default: :init
       t.jsonb :params
       t.jsonb :input_sample
+      t.jsonb :stats
 
       t.timestamps null: false
     end

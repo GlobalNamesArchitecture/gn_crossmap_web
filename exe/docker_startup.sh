@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sleep 3
+
 while [[ "$(pg_isready -h ${RACKAPP_DB_HOST} -U ${RACKAPP_DB_USERNAME})" =~ "no response" ]]; do
   echo "Waiting for postgresql to start..."
   sleep 1

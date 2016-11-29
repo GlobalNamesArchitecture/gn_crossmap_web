@@ -62,3 +62,4 @@ type Msg
     | ToResolver
     | AllDataSources (Result Http.Error (List DataSource))
     | SelectDataSource Int
+    | ResolutionStarted (Result Http.Error String)

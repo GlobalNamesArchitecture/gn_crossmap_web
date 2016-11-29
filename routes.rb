@@ -22,6 +22,14 @@ module Gnc
       haml :crossmap
     end
 
+    get "/resolver/:token" do
+      content_type :json
+      Gnc::Resolver.perform_async(params[:token])
+      { status: "OK" }.to_json
+    end
+
+    # DEPRECATED BELOW
+
     get "/settings/:token" do
       @data_sources = Gnc::DataSource.fetch
       haml :settings

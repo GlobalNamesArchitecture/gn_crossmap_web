@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20150428033943) do
     t.string   "status",         default: "init"
     t.jsonb    "params"
     t.jsonb    "input_sample"
+    t.jsonb    "stats"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
   end
