@@ -23,6 +23,10 @@ module Gnc
       cmap = Crossmap.find_by_token(token)
       GnCrossmap.run(cmap.input,
                      cmap.output, cmap.data_source_id, true) do |stats|
+        %i(ingestion_start resolution_start
+           resolution_stop ingestion_span resolution_span).each do |t|
+          stats[t] = stats[t].to_f unless stats[t].nil?
+        end
         cmap.update(stats: stats)
       end
     end

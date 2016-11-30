@@ -22,6 +22,14 @@ module Gnc
       haml :crossmap
     end
 
+    put "/crossmaps" do
+      params = JSON.parse(request.body.read, symbolize_names: true)
+      logger.info params
+      crossmap = Crossmap.find_by_token(params[:token])
+      crossmap.update(data_source_id: params[:data_source_id])
+      crossmap.save ? "OK" : nil
+    end
+
     get "/resolver/:token" do
       content_type :json
       Gnc::Resolver.perform_async(params[:token])
@@ -33,12 +41,6 @@ module Gnc
     get "/settings/:token" do
       @data_sources = Gnc::DataSource.fetch
       haml :settings
-    end
-
-    post "/crossmaps" do
-      crossmap = Crossmap.find_by_token(params[:token])
-      crossmap.update(data_source_id: params[:data_source_id])
-      redirect "/resolver/#{params[:token]}"
     end
 
     get "/resolver/:token" do

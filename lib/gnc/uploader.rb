@@ -25,6 +25,7 @@ module Gnc
       Crossmap.create(filename: @params.filename,
                       input: Crossmap.input(token),
                       output: Crossmap.output(token, @params.filename),
+                      data_source_id: 1, # TODO: brittle
                       col_sep: col_sep,
                       input_sample: sample,
                       token: token)

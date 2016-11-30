@@ -25,7 +25,15 @@ update msg model =
             ( model, Cmd.none )
 
         SelectDataSource dsId ->
-            ( { model | selectedDataSource = dsId }, Cmd.none )
+            ( { model | selectedDataSource = dsId }
+            , DS.saveDataSource model.token dsId
+            )
+
+        SaveDataSource (Ok _) ->
+            ( model, Cmd.none )
+
+        SaveDataSource (Err _) ->
+            ( model, Cmd.none )
 
         ToResolver ->
             ( { model | state = ResolutionState }

@@ -1,10 +1,17 @@
-module DataSources exposing (view, getDataSources, prepareDataSources)
+module DataSources
+    exposing
+        ( view
+        , getDataSources
+        , saveDataSource
+        , prepareDataSources
+        )
 
 import Html exposing (..)
 import Html.Attributes exposing (href, type_, name, value, checked)
 import Html.Events exposing (onClick)
 import Http
 import Json.Decode as Decode
+import Json.Encode as Encode
 import Common exposing (..)
 
 
@@ -75,6 +82,38 @@ includeDataSource ds =
                 ++ [ 177, 179, 180 ]
     in
         List.member ds.id visibleDataSources
+
+
+saveDataSource : String -> Int -> Cmd Msg
+saveDataSource token dataSourceId =
+    let
+        url =
+            "/crossmaps"
+    in
+        Http.send SaveDataSource
+            (put url <| body token dataSourceId)
+
+
+put : String -> Http.Body -> Http.Request ()
+put url body =
+    Http.request
+        { method = "PUT"
+        , headers = []
+        , url = url
+        , body = body
+        , expect = Http.expectStringResponse (\_ -> Ok ())
+        , timeout = Nothing
+        , withCredentials = False
+        }
+
+
+body : String -> Int -> Http.Body
+body token dataSourceId =
+    Http.jsonBody <|
+        Encode.object
+            [ ( "token", Encode.string token )
+            , ( "data_source_id", Encode.int dataSourceId )
+            ]
 
 
 

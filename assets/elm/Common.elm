@@ -60,7 +60,41 @@ type alias DataSource =
 
 
 type alias Stats =
-    String
+    { status : String
+    , totalRecords : Int
+    , ingestion : IngestionStats
+    , resolution : ResolutionStats
+    , lastBatchesTime :
+        List Float
+    , matches : Matches
+    , fails : Int
+    }
+
+
+type alias IngestionStats =
+    { ingestedRecords : Int
+    , ingestionStart : Maybe Float
+    , ingestionSpan : Maybe Float
+    }
+
+
+type alias ResolutionStats =
+    { resolvedRecords : Int
+    , resolutionStart : Maybe Float
+    , resolutionStop : Maybe Float
+    , resolutionSpan : Maybe Float
+    }
+
+
+type alias Matches =
+    { noMatch : Int
+    , exactString : Int
+    , exactCanonical : Int
+    , fuzzy : Int
+    , partial : Int
+    , partialFuzzy : Int
+    , genusOnly : Int
+    }
 
 
 type Msg
@@ -68,6 +102,7 @@ type Msg
     | ToResolver
     | AllDataSources (Result Http.Error (List DataSource))
     | SelectDataSource Int
+    | SaveDataSource (Result Http.Error ())
     | LaunchResolution (Result Http.Error String)
     | QueryResolutionProgress Time
     | ResolutionProgress (Result Http.Error Stats)
