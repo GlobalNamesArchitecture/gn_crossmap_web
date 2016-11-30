@@ -17,6 +17,7 @@ init flags =
         flags.rows
         []
         1
+        Nothing
     , Cmd.none
     )
 

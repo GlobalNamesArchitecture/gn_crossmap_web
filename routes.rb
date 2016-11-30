@@ -47,5 +47,11 @@ module Gnc
       @outfile = crossmapper.run
       haml :resolver
     end
+
+    get "/stats/:token" do
+      content_type :json
+      cm = Crossmap.find_by_token(params[:token])
+      cm.stats.to_json
+    end
   end
 end

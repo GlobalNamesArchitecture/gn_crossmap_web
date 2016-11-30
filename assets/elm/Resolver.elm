@@ -1,4 +1,4 @@
-module Resolver exposing (view, startResolution)
+module Resolver exposing (view, startResolution, queryResolutionProgress)
 
 import Html exposing (..)
 import Http
@@ -8,7 +8,12 @@ import Common exposing (..)
 
 view : Model -> Html Msg
 view model =
-    Html.text "hi"
+    case model.stats of
+        Nothing ->
+            Html.text "resolution"
+
+        Just stats ->
+            Html.text stats
 
 
 startResolution : String -> Cmd Msg
@@ -17,4 +22,21 @@ startResolution token =
         url =
             "/resolver/" ++ token
     in
-        Http.send ResolutionStarted (Http.get url (Decode.field "status" Decode.string))
+        Http.send LaunchResolution
+            (Http.get url
+                (Decode.field "status" Decode.string)
+            )
+
+
+queryResolutionProgress : String -> Cmd Msg
+queryResolutionProgress token =
+    let
+        url =
+            "/stats/" ++ token
+    in
+        Http.send ResolutionProgress (Http.get url resolutionStatsDecoder)
+
+
+resolutionStatsDecoder : Decode.Decoder Stats
+resolutionStatsDecoder =
+    Decode.field "status" Decode.string

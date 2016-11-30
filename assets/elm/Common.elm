@@ -4,6 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (href, type_, value)
 import Html.Events exposing (onClick)
 import Http
+import Time exposing (Time)
 
 
 type alias Model =
@@ -15,6 +16,7 @@ type alias Model =
     , rows : Rows
     , dataSources : List DataSource
     , selectedDataSource : Int
+    , stats : Maybe Stats
     }
 
 
@@ -57,9 +59,15 @@ type alias DataSource =
     { id : Int, title : String, desc : Maybe String }
 
 
+type alias Stats =
+    String
+
+
 type Msg
     = ToDataSources
     | ToResolver
     | AllDataSources (Result Http.Error (List DataSource))
     | SelectDataSource Int
-    | ResolutionStarted (Result Http.Error String)
+    | LaunchResolution (Result Http.Error String)
+    | QueryResolutionProgress Time
+    | ResolutionProgress (Result Http.Error Stats)

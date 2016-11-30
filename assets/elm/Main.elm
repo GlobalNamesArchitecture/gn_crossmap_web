@@ -3,6 +3,7 @@ module Main exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (href)
 import Http
+import Time exposing (Time, second)
 import Common exposing (..)
 import DwcaTerms as Dwca
 import DataSources as DS
@@ -31,16 +32,30 @@ update msg model =
             , R.startResolution model.token
             )
 
-        ResolutionStarted (Ok _) ->
-            ( Debug.log "OK" model, Cmd.none )
+        LaunchResolution (Ok _) ->
+            ( model, Cmd.none )
 
-        ResolutionStarted (Err _) ->
-            ( Debug.log "ERR" model, Cmd.none )
+        LaunchResolution (Err _) ->
+            ( model, Cmd.none )
+
+        QueryResolutionProgress _ ->
+            ( model, R.queryResolutionProgress model.token )
+
+        ResolutionProgress (Ok stats) ->
+            ( { model | stats = Just stats }, Cmd.none )
+
+        ResolutionProgress (Err _) ->
+            ( model, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    case model.state of
+        ResolutionState ->
+            Time.every second QueryResolutionProgress
+
+        _ ->
+            Sub.none
 
 
 view : Model -> Html Msg
