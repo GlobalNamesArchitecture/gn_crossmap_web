@@ -67,8 +67,16 @@ type alias Stats =
     , lastBatchesTime :
         List Float
     , matches : Matches
-    , fails : Int
+    , fails : Float
     }
+
+
+type Status
+    = StatusPending
+    | StatusIngestion
+    | StatusResolution
+    | StatusDone
+    | StatusUnknown
 
 
 type alias IngestionStats =
@@ -87,13 +95,13 @@ type alias ResolutionStats =
 
 
 type alias Matches =
-    { noMatch : Int
-    , exactString : Int
-    , exactCanonical : Int
-    , fuzzy : Int
-    , partial : Int
-    , partialFuzzy : Int
-    , genusOnly : Int
+    { noMatch : Float
+    , exactString : Float
+    , exactCanonical : Float
+    , fuzzy : Float
+    , partial : Float
+    , partialFuzzy : Float
+    , genusOnly : Float
     }
 
 
@@ -106,3 +114,14 @@ type Msg
     | LaunchResolution (Result Http.Error String)
     | QueryResolutionProgress Time
     | ResolutionProgress (Result Http.Error Stats)
+
+
+type alias PieData =
+    List PieDatum
+
+
+type alias PieDatum =
+    { color : String
+    , value : Float
+    , legend : String
+    }

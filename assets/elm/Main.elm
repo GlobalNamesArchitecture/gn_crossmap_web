@@ -60,7 +60,7 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     case model.state of
         ResolutionState ->
-            Time.every second QueryResolutionProgress
+            Time.every (second * 2) QueryResolutionProgress
 
         _ ->
             Sub.none
