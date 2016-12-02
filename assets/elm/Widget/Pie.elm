@@ -1,4 +1,4 @@
-module Pie exposing (pie)
+module Widget.Pie exposing (pie)
 
 {-| An SVG chart library.
 

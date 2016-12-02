@@ -13,6 +13,10 @@ class Crossmap < ActiveRecord::Base
     File.join(match_dir, "#{match}#{filename}")
   end
 
+  def output_url
+    output.gsub(%r{^.*/public}, "")
+  end
+
   def transpose(rows_num = 3)
     csv = CSV.open(input, "r:utf-8", col_sep: ";")
     rows = []

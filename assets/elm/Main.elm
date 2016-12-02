@@ -7,7 +7,7 @@ import Time exposing (Time, second)
 import Common exposing (..)
 import DwcaTerms as Dwca
 import DataSources as DS
-import Resolver as R
+import Page.Resolver as R
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

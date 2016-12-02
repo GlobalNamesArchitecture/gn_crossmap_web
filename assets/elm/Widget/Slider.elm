@@ -1,4 +1,4 @@
-module Slider exposing (Datum, slider)
+module Widget.Slider exposing (Datum, slider)
 
 import Html
 import Svg exposing (..)

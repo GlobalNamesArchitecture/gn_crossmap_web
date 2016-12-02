@@ -78,7 +78,7 @@ includeDataSource : DataSource -> Bool
 includeDataSource ds =
     let
         visibleDataSources =
-            [ 1, 2, 3, 4, 5, 8, 9, 11, 12, 167, 169, 172, 173, 174, 175 ]
+            [ 1, 132, 2, 3, 4, 5, 8, 9, 11, 12, 167, 169, 172, 173, 174, 175 ]
                 ++ [ 177, 179, 180 ]
     in
         List.member ds.id visibleDataSources

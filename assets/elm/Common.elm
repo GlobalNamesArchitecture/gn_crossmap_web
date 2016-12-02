@@ -12,6 +12,7 @@ type alias Model =
     , resolverUrl : ResolverUrl
     , token : String
     , server : String
+    , output : String
     , headers : Headers
     , rows : Rows
     , dataSources : List DataSource
@@ -49,6 +50,7 @@ type alias RowEntry =
 type alias Flags =
     { resolverUrl : ResolverUrl
     , token : String
+    , output : String
     , server : String
     , headers : Headers
     , rows : Rows

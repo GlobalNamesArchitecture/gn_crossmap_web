@@ -13,6 +13,7 @@ init flags =
         flags.resolverUrl
         flags.token
         flags.server
+        flags.output
         flags.headers
         flags.rows
         []

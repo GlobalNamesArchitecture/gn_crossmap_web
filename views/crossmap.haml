@@ -6,6 +6,7 @@
   var node = document.getElementById("main");
   var app = Elm.Main.embed(node, {
     resolverUrl: "#{Gnc.conf.resolver_url}",
+    output: "#{@crossmap.output_url}",
     token : "#{@crossmap.token}",
     server: "#{Gnc.conf.server}",
     headers : #{@crossmap.input_sample["headers"].to_json},

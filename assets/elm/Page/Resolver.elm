@@ -1,12 +1,14 @@
-module Resolver exposing (view, startResolution, queryResolutionProgress)
+module Page.Resolver exposing (view, startResolution, queryResolutionProgress)
 
 import Html exposing (..)
+import Html.Attributes as HA exposing (style, href, alt)
 import Http
-import Json.Decode as JD
 import Maybe exposing (withDefault)
 import Common exposing (..)
-import Pie
-import Slider
+import Widget.Pie as Pie
+import Widget.Slider as Slider
+import Helper.TimeEst as TE
+import Decoder.Resolver exposing (..)
 
 
 view : Model -> Html Msg
@@ -16,7 +18,36 @@ view model =
         , viewIngestionStage model
         , viewResolutinStage model
         , viewGraph model
+        , viewDownload model
         ]
+
+
+viewDownload : Model -> Html Msg
+viewDownload model =
+    case (status model) of
+        StatusDone ->
+            div
+                [ HA.style
+                    [ ( "clear", "left" )
+                    , ( "padding", "2em" )
+                    , ( "background-color", "#afa" )
+                    , ( "color", "#2c2" )
+                    ]
+                ]
+                [ a
+                    [ href (Debug.log "output" model.output)
+                    , alt "Download result"
+                    , HA.style
+                        [ ( "font-size"
+                          , "1.5em"
+                          )
+                        ]
+                    ]
+                    [ Html.text "Download crossmapping results" ]
+                ]
+
+        _ ->
+            div [] []
 
 
 viewIngestionStage : Model -> Html Msg
@@ -28,15 +59,47 @@ viewIngestionStage model =
                     "Pending"
 
                 StatusIngestion ->
-                    "In Progress"
+                    "In Progress " ++ (eta model True)
 
                 _ ->
-                    "Done"
+                    "Done " ++ (timeSummary model True)
     in
         div []
-            [ div [] [ Html.text <| "Ingestion Status: " ++ ingStatus ]
+            [ div []
+                [ Html.text <|
+                    "Ingestion Status: "
+                        ++ ingStatus
+                ]
             , Slider.slider (ingestedSliderData model)
             ]
+
+
+timeSummary : Model -> Bool -> String
+timeSummary model isResolution =
+    case model.stats of
+        Nothing ->
+            ""
+
+        Just s ->
+            TE.summaryString <| timeEstInput s isResolution
+
+
+eta : Model -> Bool -> String
+eta model isResolution =
+    case model.stats of
+        Nothing ->
+            ""
+
+        Just s ->
+            TE.etaString <| TE.estimate <| timeEstInput s isResolution
+
+
+timeEstInput : Stats -> Bool -> TE.Input
+timeEstInput stats isResolution =
+    if isResolution then
+        TE.ingestionInput stats
+    else
+        TE.resolutionInput stats
 
 
 ingestedSliderData : Model -> Slider.Datum
@@ -114,13 +177,17 @@ viewResolutinStage model =
                     "Pending"
 
                 StatusResolution ->
-                    "In Progress"
+                    "In Progress " ++ (eta model False)
 
                 _ ->
-                    "Done"
+                    "Done " ++ (timeSummary model False)
     in
         div []
-            [ div [] [ Html.text <| "ResolutionStatus: " ++ resStatus ]
+            [ div []
+                [ Html.text <|
+                    "ResolutionStatus: "
+                        ++ resStatus
+                ]
             , Slider.slider (resolutionSliderData model)
             ]
 
@@ -149,7 +216,7 @@ viewGraph : Model -> Html Msg
 viewGraph model =
     case (chartData model) of
         Nothing ->
-            div [] [ Html.text "Graph will be here" ]
+            div [] [ Html.text "" ]
 
         Just m ->
             Pie.pie 200 m
@@ -196,7 +263,7 @@ matchesList total matches fails =
         [ ( "#a00", m.noMatch, "No match" )
         , ( "#0a0", m.exactString, "Identical" )
         , ( "#0f0", m.exactCanonical, "Canonical match" )
-        , ( "#3fa", m.fuzzy, "Fuzzy match" )
+        , ( "#3f0", m.fuzzy, "Fuzzy match" )
         , ( "#8f0", m.partial, "Partial match" )
         , ( "#af0", m.partialFuzzy, "Partial fuzzy match" )
         , ( "#df0", m.genusOnly, "Genus-only match" )
@@ -233,9 +300,7 @@ startResolution token =
             "/resolver/" ++ token
     in
         Http.send LaunchResolution
-            (Http.get url
-                (JD.field "status" JD.string)
-            )
+            (Http.get url statusDecoder)
 
 
 queryResolutionProgress : String -> Cmd Msg
@@ -245,7 +310,7 @@ queryResolutionProgress token =
             "/stats/" ++ token
     in
         Http.send ResolutionProgress
-            (Http.get url resolutionStatsDecoder)
+            (Http.get url statsDecoder)
 
 
 dataSource : List DataSource -> Int -> Maybe DataSource
@@ -275,58 +340,3 @@ setStatus s =
         StatusDone
     else
         StatusUnknown
-
-
-
--- DECODERS
-
-
-resolutionStatsDecoder : JD.Decoder Stats
-resolutionStatsDecoder =
-    JD.map7 Stats
-        (JD.at [ "status" ] JD.string)
-        (JD.at [ "total_records" ] JD.int)
-        ingestion
-        resolution
-        lastBatchesTime
-        matches
-        fails
-
-
-lastBatchesTime : JD.Decoder (List Float)
-lastBatchesTime =
-    (JD.at [ "last_batches_time" ] (JD.list JD.float))
-
-
-ingestion : JD.Decoder IngestionStats
-ingestion =
-    JD.map3 IngestionStats
-        (JD.at [ "ingested_records" ] JD.int)
-        (JD.at [ "ingestion_start" ] (JD.nullable JD.float))
-        (JD.at [ "ingestion_span" ] (JD.nullable JD.float))
-
-
-resolution : JD.Decoder ResolutionStats
-resolution =
-    JD.map4 ResolutionStats
-        (JD.at [ "resolved_records" ] JD.int)
-        (JD.at [ "resolution_start" ] (JD.nullable JD.float))
-        (JD.at [ "resolution_stop" ] (JD.nullable JD.float))
-        (JD.at [ "resolution_span" ] (JD.nullable JD.float))
-
-
-matches : JD.Decoder Matches
-matches =
-    JD.map7 Matches
-        (JD.at [ "matches", "0" ] JD.float)
-        (JD.at [ "matches", "1" ] JD.float)
-        (JD.at [ "matches", "2" ] JD.float)
-        (JD.at [ "matches", "3" ] JD.float)
-        (JD.at [ "matches", "4" ] JD.float)
-        (JD.at [ "matches", "5" ] JD.float)
-        (JD.at [ "matches", "6" ] JD.float)
-
-
-fails : JD.Decoder Float
-fails =
-    (JD.at [ "matches", "7" ] JD.float)
