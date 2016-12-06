@@ -3,7 +3,9 @@ module DwcaTerms exposing (init, view)
 import Html exposing (..)
 import Html.Attributes exposing (href, type_, value)
 import Html.Events exposing (onClick)
+import Maybe exposing (withDefault)
 import Common exposing (..)
+import Helper.DataSource as HDS
 
 
 init : Flags -> ( Model, Cmd Msg )
@@ -16,11 +18,16 @@ init flags =
         flags.output
         flags.headers
         flags.rows
-        []
-        1
+        (dataSources flags.dataSourceIds)
+        (withDefault 1 <| List.head flags.dataSourceIds)
         Nothing
-    , Cmd.none
+    , HDS.getDataSources flags.resolverUrl
     )
+
+
+dataSources : List Int -> List DataSource
+dataSources dataSourceIds =
+    List.map (\id -> DataSource id Nothing Nothing) dataSourceIds
 
 
 view : Model -> Html Msg
@@ -33,13 +40,21 @@ view model =
             [ a [ href token_url ]
                 [ text token_url ]
             , div []
-                [ button [ onClick ToDataSources ] [ text "Continue" ]
+                [ button [ onClick (nextMsg model) ] [ text "Continue" ]
                 ]
             , table []
                 ((viewHeaders model.headers)
                     :: (viewRows model.rows)
                 )
             ]
+
+
+nextMsg : Model -> Msg
+nextMsg model =
+    if List.length model.dataSources > 1 then
+        ToDataSources
+    else
+        ToResolver
 
 
 viewHeaders : Headers -> Html Msg

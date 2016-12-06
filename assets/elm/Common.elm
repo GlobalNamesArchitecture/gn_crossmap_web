@@ -52,13 +52,14 @@ type alias Flags =
     , token : String
     , output : String
     , server : String
+    , dataSourceIds : List Int
     , headers : Headers
     , rows : Rows
     }
 
 
 type alias DataSource =
-    { id : Int, title : String, desc : Maybe String }
+    { id : Int, title : Maybe String, desc : Maybe String }
 
 
 type alias Stats =

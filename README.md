@@ -1,7 +1,7 @@
 # Global Names Crossmap Web Interface
 
-A web-based GUI to `gn_crossmap` gem. This gem allows comparison of one list of
-names against another.
+A web-based GUI for [gn_crossmap]. The [gn_crossmap] Ruby gem allows
+comparison of one list of names against another.
 
 [![Continuous Integration Status][ci-svg]][ci]
 [![Code Climate][code-svg]][code]
@@ -29,6 +29,10 @@ To start the system use
 docker-compose up
 ```
 
+Point your browser to http://0.0.0.0:9292
+
+For testing purposes you can use [this csv file][csv-file]
+
 To stop it run
 
 ```bash
@@ -53,3 +57,5 @@ docker-compose run app bundle exec guard
 [deps-svg]: https://gemnasium.com/GlobalNamesArchitecture/gn_crossmap_web.svg
 [deps]: https://gemnasium.com/GlobalNamesArchitecture/gn_crossmap_web
 [Guard]: https://github.com/guard/guard
+[gn_crossmap]: https://github.com/GlobalNamesArchitecture/gn_crossmap
+[csv-file]: https://github.com/GlobalNamesArchitecture/gn_crossmap_web/blob/master/spec/files/wellformed-semicolon.csv

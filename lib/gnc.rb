@@ -75,8 +75,19 @@ module Gnc
         database:         conf["database"],
         server:           conf["server"],
         resolver_url:     conf["resolver_url"] ||
-          "http://resolver.globalnames.org"
+          "http://resolver.globalnames.org",
+        data_sources:     read_data_sources(conf["data_sources"])
       )
+    end
+
+    def read_data_sources(json_value)
+      default = [1]
+      res = JSON.parse(json_value)
+      res.is_a?(Array) ? res : default
+    rescue TypeError
+      default
+    rescue JSON::ParserError
+      default
     end
 
     def read_env

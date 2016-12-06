@@ -261,12 +261,12 @@ matchesList total matches fails =
             matches
     in
         [ ( "#a00", m.noMatch, "No match" )
-        , ( "#0a0", m.exactString, "Identical" )
+        , ( "#080", m.exactString, "Identical" )
         , ( "#0f0", m.exactCanonical, "Canonical match" )
-        , ( "#3f0", m.fuzzy, "Fuzzy match" )
-        , ( "#8f0", m.partial, "Partial match" )
-        , ( "#af0", m.partialFuzzy, "Partial fuzzy match" )
-        , ( "#df0", m.genusOnly, "Genus-only match" )
+        , ( "#8f0", m.fuzzy, "Fuzzy match" )
+        , ( "#aa8", m.partial, "Partial match" )
+        , ( "#880", m.partialFuzzy, "Partial fuzzy match" )
+        , ( "#440", m.genusOnly, "Genus-only match" )
         , ( "#000", fails, "Resolver Errors" )
         ]
 
@@ -283,7 +283,7 @@ viewTitle model =
                     "Unknown"
 
                 Just dataSource ->
-                    dataSource.title
+                    withDefault "" dataSource.title
     in
         h3 []
             [ Html.text <|

@@ -6,23 +6,26 @@ import Http
 import Time exposing (Time, second)
 import Common exposing (..)
 import DwcaTerms as Dwca
-import DataSources as DS
+import Helper.DataSource as HDS
+import Page.DataSources as DS
 import Page.Resolver as R
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        ToDataSources ->
-            ( { model | state = DataSourcesState }
-            , DS.getDataSources model.resolverUrl
-            )
-
         AllDataSources (Ok ds) ->
-            ( { model | dataSources = DS.prepareDataSources ds }, Cmd.none )
+            ( { model | dataSources = HDS.prepareDataSources model ds }
+            , Cmd.none
+            )
 
         AllDataSources (Err _) ->
             ( model, Cmd.none )
+
+        ToDataSources ->
+            ( { model | state = DataSourcesState }
+            , Cmd.none
+            )
 
         SelectDataSource dsId ->
             ( { model | selectedDataSource = dsId }
