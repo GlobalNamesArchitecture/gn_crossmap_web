@@ -1,9 +1,8 @@
-module Widget.Slider exposing (Datum, slider)
+module Widgets.Slider exposing (Datum, slider)
 
 import Html
 import Svg exposing (..)
 import Svg.Attributes as SA exposing (..)
-import Common exposing (..)
 
 
 type alias Datum =
@@ -12,7 +11,7 @@ type alias Datum =
     }
 
 
-slider : Datum -> Html.Html Msg
+slider : Datum -> Html.Html msg
 slider data =
     let
         length =

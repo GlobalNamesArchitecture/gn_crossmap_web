@@ -1,4 +1,4 @@
-module DwcaTerms exposing (init, view)
+module Page.DwcaTerms exposing (init, view)
 
 import Html exposing (..)
 import Html.Attributes exposing (href, type_, value)

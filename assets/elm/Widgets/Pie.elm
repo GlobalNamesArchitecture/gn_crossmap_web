@@ -1,4 +1,4 @@
-module Widget.Pie exposing (pie)
+module Widgets.Pie exposing (pie, PieData, PieDatum)
 
 {-| An SVG chart library.
 
@@ -13,8 +13,16 @@ import Svg
 import Html exposing (..)
 import Html.Attributes as HA
 import Svg.Attributes
-import Common exposing (..)
 
+type alias PieData =
+    List PieDatum
+
+
+type alias PieDatum =
+    { color : String
+    , value : Float
+    , legend : String
+    }
 
 type alias ArcOutput =
     { id : Int
@@ -140,7 +148,7 @@ getArcs dataset =
 
     Pie.pie 300 [{color = "#0ff", value = 3}, {color = "purple", value = 27}]
 -}
-pie : Int -> PieData -> Html Msg
+pie : Int -> PieData -> Html msg
 pie diameter dataset =
     let
         diameterString =
@@ -170,12 +178,12 @@ pie diameter dataset =
             ]
 
 
-pieLegend : PieData -> List (Html Msg)
+pieLegend : PieData -> List (Html msg)
 pieLegend dataset =
     List.map legendDiv dataset
 
 
-legendDiv : PieDatum -> Html Msg
+legendDiv : PieDatum -> Html msg
 legendDiv datum =
     div
         [ HA.style [ ( "vertical-align", "middle" ) ] ]

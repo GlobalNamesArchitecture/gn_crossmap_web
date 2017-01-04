@@ -1,91 +1,29 @@
 module Main exposing (..)
 
-import Html exposing (..)
-import Html.Attributes exposing (href)
-import Http
-import Time exposing (Time, second)
-import Common exposing (..)
-import DwcaTerms as Dwca
-import Helper.DataSource as HDS
-import Page.DataSources as DS
-import Page.Resolver as R
+import Subscriptions exposing (subscriptions)
+import Models exposing (Model, Flags, initModel)
+import Messages exposing (Msg(..))
+import Update exposing (update)
+import View exposing (view)
+import Navigation exposing (Location)
+import Routing exposing (Route)
+import FileUpload.Ports as FUP
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        AllDataSources (Ok ds) ->
-            ( { model | dataSources = HDS.prepareDataSources model ds }
-            , Cmd.none
-            )
-
-        AllDataSources (Err _) ->
-            ( model, Cmd.none )
-
-        ToDataSources ->
-            ( { model | state = DataSourcesState }
-            , Cmd.none
-            )
-
-        SelectDataSource dsId ->
-            ( { model | selectedDataSource = dsId }
-            , DS.saveDataSource model.token dsId
-            )
-
-        SaveDataSource (Ok _) ->
-            ( model, Cmd.none )
-
-        SaveDataSource (Err _) ->
-            ( model, Cmd.none )
-
-        ToResolver ->
-            ( { model | state = ResolutionState }
-            , R.startResolution model.token
-            )
-
-        LaunchResolution (Ok _) ->
-            ( model, Cmd.none )
-
-        LaunchResolution (Err _) ->
-            ( model, Cmd.none )
-
-        QueryResolutionProgress _ ->
-            ( model, R.queryResolutionProgress model.token )
-
-        ResolutionProgress (Ok stats) ->
-            ( { model | stats = Just stats }, Cmd.none )
-
-        ResolutionProgress (Err _) ->
-            ( model, Cmd.none )
+init : Flags -> Location -> ( Model, Cmd Msg )
+init flags location =
+    let
+        currentRoute =
+            Routing.parseLocation location
+    in
+        ( initModel flags currentRoute, FUP.isUploadSupported () )
 
 
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    case model.state of
-        ResolutionState ->
-            Time.every (second * 2) QueryResolutionProgress
-
-        _ ->
-            Sub.none
-
-
-view : Model -> Html Msg
-view model =
-    case model.state of
-        DwcaTermsState ->
-            Dwca.view model
-
-        DataSourcesState ->
-            DS.view model
-
-        ResolutionState ->
-            R.view model
-
-
+main : Program Flags Model Msg
 main =
-    programWithFlags
-        { init = Dwca.init
-        , subscriptions = subscriptions
-        , update = update
+    Navigation.programWithFlags OnLocationChange
+        { init = init
         , view = view
+        , update = update
+        , subscriptions = subscriptions
         }

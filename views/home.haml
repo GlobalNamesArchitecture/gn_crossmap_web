@@ -1,34 +1,93 @@
-%h3 Overview
+%div{ id: :main } Please make JavaScript available in your browser
 
-%p
-  Global Names Crossmap Web application allows biologists to upload a
-  comma-delimited checklist, normalize it's columns according to Darwin Core
-  Standard, and then crossmap scientific names other lists and biological
-  databases. This process will allow you to check for misspelled, outdated or
-  wrong names in your data.  You will also be able to find out how much names
-  from your list are known by other data sources.
+:javascript
+  var $node = document.getElementById("main");
+  $node.textContent = "";
+  var app = Elm.Main.embed($node, {
+    resolverUrl: "#{Gnc.conf.resolver_url}",
+    localDomain: "#{Gnc.conf.server}",
+    dataSourcesIds: #{Gnc.conf.data_sources.to_json},
+  });
 
-%h3 Step 1
+  var xhr = new XMLHttpRequest();
+  var file = null;
 
-%p
-  If your names list is in Excel or similar format &ndash; first save it as a
-  %b comma-separated
-  file. Most of popular programs like MS Excel, Google Sheets, LibreOffice Calc
-  have the ability to do such export.
+  app.ports.isUploadSupported.subscribe(function () {
+    var uploadable = (xhr && ("upload" in xhr));
+    app.ports.uploadIsSupported.send(uploadable);
+  });
 
-%p
-  Your name list can have information about hierarchy. It is important to
-  preserve headers of the columns &ndash; it will make normalization process
-  easier. Please note that columns do not have to correspond to Darwin Core
-  terms, they just have to be clearly understandable by you.
+  app.ports.fileSelected.subscribe(function (id) {
+    var $fileInput = document.getElementById(id);
+    if ($fileInput === null) {
+      app.ports.fileSelectedData.send(null);
+    }
 
-%h3 Step 2
+    file = $fileInput.files[0];
+      var portData = {
+        filename: file.name,
+        filetype: file.type,
+        size: file.size
+      };
+    app.ports.fileSelectedData.send(portData);
+  });
 
-%p
-  Upload resulting file:
+  app.ports.fileUpload.subscribe(function (id) {
+    var formData = new FormData();
+    var action = '/upload';
+    var $fileInput = document.getElementById(id);
+    var file = $fileInput.files[0];
 
-%form{ method: "post", enctype: "multipart/form-data" }
-  .item
-    %input{ type: "file", name: "name_list_file" }
-  .item
-    %input{ type: "submit", value: "Upload" }
+    function sendXHRequest(formData, uri) {
+      var xhr = new XMLHttpRequest();
+
+      xhr.upload.addEventListener('loadstart', onloadstartHandler, false);
+      xhr.upload.addEventListener('progress', onprogressHandler, false);
+      xhr.upload.addEventListener('load', onloadHandler, false);
+      xhr.addEventListener('readystatechange', onreadystatechangeHandler, false);
+
+      xhr.open('POST', uri, true);
+      xhr.send(formData);
+    }
+
+    // Handle the start of the transmission
+    function onloadstartHandler(evt) {
+      var div = document.getElementById('upload-status');
+      div.innerHTML = 'Upload started.';
+    }
+
+    // Handle the end of the transmission
+    function onloadHandler(evt) {
+      var div = document.getElementById('upload-status');
+      div.innerHTML += '<' + 'br>File uploaded. Waiting for response.';
+    }
+
+    // Handle the progress
+    function onprogressHandler(evt) {
+      var div = document.getElementById('progress');
+      var percent = evt.loaded/evt.total*100;
+      div.innerHTML = 'Progress: ' + percent + '%';
+    }
+
+    // Handle the response from the server
+    function onreadystatechangeHandler(evt) {
+      var status, text, readyState;
+
+      try {
+        readyState = evt.target.readyState;
+        text = evt.target.responseText;
+        status = evt.target.status;
+      }
+      catch(e) {
+        return;
+      }
+
+      if (readyState == 4 && status == '200' && evt.target.responseText) {
+        var uploadData = JSON.parse(evt.target.responseText);
+        app.ports.fileUploadResult.send(uploadData);
+      }
+    }
+
+    formData.append(id, file);
+    sendXHRequest(formData, action);
+  });

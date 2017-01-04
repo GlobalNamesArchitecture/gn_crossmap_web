@@ -28,7 +28,9 @@ function! Layout()
 
     tabe assets/elm/Main.elm
     vsp assets/elm/DwcaTerms.elm
-    vsp term://docker-compose\ run\ app\ guard\ --no-bundler-warning
+    vsp term://bash
+    wincmd l
+    "vsp term://docker-compose\ run\ app\ guard\ --no-bundler-warning
 
     tabfirst
 endfunction

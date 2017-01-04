@@ -11,10 +11,15 @@ module Gnc
       haml :home
     end
 
-    post "/" do
-      uploader = Gnc::Uploader.new(params["name_list_file"])
+    post "/upload" do
+      uploader = Gnc::Uploader.new(params["file-upload"])
       crossmap = uploader.save_list_file
-      redirect "crossmaps/#{crossmap.token}"
+      content_type :json
+      { token: crossmap.token,
+        filename: crossmap.filename,
+        output: crossmap.output_url,
+        headers: crossmap.input_sample["headers"],
+        rows: crossmap.input_sample["rows"] }.to_json
     end
 
     get "/crossmaps/:token" do
