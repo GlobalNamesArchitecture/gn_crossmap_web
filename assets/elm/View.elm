@@ -6,8 +6,8 @@ import Messages exposing (Msg(..))
 import Routing as R
 import FileUpload.View as FUV
 import Terms.View as TV
-import DataSource.View as DSV
-import DataSource.Helper as DSH
+import Target.View as DSV
+import Target.Helper as DSH
 import Resolver.View as RV
 
 
@@ -25,10 +25,10 @@ findRoute model =
         R.FileTerms token ->
             termsView model token
 
-        R.DataSources token ->
+        R.Target token ->
             dataSourceView model token
 
-        R.Resolution token ->
+        R.Resolver token ->
           resolverView model token
 
         R.NotFoundRoute ->
@@ -48,18 +48,18 @@ termsView model token =
 
         Just data ->
             Html.map TermsMsg
-                (TV.view model.dataSource.all data)
+                (TV.view model.target.all data)
 
 
 dataSourceView : Model -> String -> Html Msg
 dataSourceView model token =
-    Html.map DataSourceMsg
-        (DSV.view model.dataSource token)
+    Html.map TargetMsg
+        (DSV.view model.target token)
 
 
 resolverView : Model -> String -> Html Msg
 resolverView model token =
     Html.map ResolverMsg <|
-        RV.view model.resolver (DSH.currentDataSourceInfo model.dataSource) 
+        RV.view model.resolver (DSH.currentTarget model.target) 
           model.upload.uploadedFile
 

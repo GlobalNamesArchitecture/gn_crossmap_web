@@ -5,7 +5,7 @@ import Html.Events exposing (onClick)
 import FileUpload.Models as FUM
 import Terms.Models exposing (Terms)
 import Terms.Messages exposing (Msg(..))
-import DataSource.Models exposing (DataSources)
+import Target.Models exposing (DataSources)
 
 
 view : DataSources -> FUM.UploadedFileData -> Html Msg

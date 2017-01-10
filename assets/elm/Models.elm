@@ -4,7 +4,7 @@ import Maybe exposing (withDefault)
 import Routing
 import FileUpload.Models exposing (Upload, initUpload)
 import Terms.Models exposing (Terms, initTerms)
-import DataSource.Models exposing (DataSource, initDataSource)
+import Target.Models exposing (Target, initTarget)
 import Resolver.Models exposing (Resolver, initResolver)
 
 
@@ -15,7 +15,7 @@ type alias Model =
     , token : Maybe String
     , upload : Upload
     , terms : Terms
-    , dataSource : DataSource
+    , target : Target
     , resolver : Resolver
     }
 
@@ -35,5 +35,5 @@ initModel flags route =
         Nothing
         initUpload
         initTerms
-        (initDataSource flags.dataSourcesIds)
+        (initTarget flags.dataSourcesIds)
         initResolver

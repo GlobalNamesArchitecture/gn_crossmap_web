@@ -1,14 +1,14 @@
-module DataSource.Update exposing (update)
+module Target.Update exposing (update)
 
 import Navigation exposing (newUrl)
 import Json.Encode as Encode
 import Http
-import DataSource.Models exposing (DataSource)
-import DataSource.Messages exposing (Msg(..))
-import DataSource.Helper as HDS
+import Target.Models exposing (Target)
+import Target.Messages exposing (Msg(..))
+import Target.Helper as HDS
 
 
-update : Msg -> DataSource -> ( DataSource, Cmd Msg )
+update : Msg -> Target -> ( Target, Cmd Msg )
 update msg ds =
     case msg of
         AllDataSources (Ok dss) ->
@@ -22,23 +22,23 @@ update msg ds =
         ToResolver token ->
             ( ds, newUrl <| "/#resolver/" ++ token )
 
-        CurrentDataSource token current ->
-            ( { ds | current = current }, saveDataSource token current )
+        CurrentTarget token current ->
+            ( { ds | current = current }, saveTarget token current )
 
-        SaveDataSource (Ok _) ->
+        SaveTarget (Ok _) ->
             ( ds, Cmd.none )
 
-        SaveDataSource (Err _) ->
+        SaveTarget (Err _) ->
             ( ds, Cmd.none )
 
 
-saveDataSource : String -> Int -> Cmd Msg
-saveDataSource token dataSourceId =
+saveTarget : String -> Int -> Cmd Msg
+saveTarget token dataSourceId =
     let
         url =
             "/crossmaps"
     in
-        Http.send SaveDataSource
+        Http.send SaveTarget
             (put url <| body token dataSourceId)
 
 

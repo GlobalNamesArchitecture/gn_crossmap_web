@@ -14,7 +14,7 @@ subscriptions model =
     case model.route of
         FileUpload ->
             Sub.batch fileUploadSubs
-        Resolution _ ->
+        Resolver _ ->
             Sub.map ResolverMsg <|
               Time.every (second * 2) RM.QueryResolutionProgress 
 

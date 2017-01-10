@@ -11,8 +11,8 @@ type alias Token =
 type Route
     = FileUpload
     | FileTerms Token
-    | DataSources Token
-    | Resolution Token
+    | Target Token
+    | Resolver Token
     | NotFoundRoute
 
 
@@ -21,8 +21,8 @@ matchers =
     oneOf
         [ map FileUpload top
         , map FileTerms (s "terms" </> string)
-        , map DataSources (s "data_sources" </> string)
-        , map Resolution (s "resolver" </> string)
+        , map Target (s "target" </> string)
+        , map Resolver (s "resolver" </> string)
         ]
 
 

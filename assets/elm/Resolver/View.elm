@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing(style, alt, href)
 import Maybe exposing (withDefault)
 import FileUpload.Models exposing (UploadedFileData)
-import DataSource.Models exposing (DataSourceInfo)
+import Target.Models exposing (DataSource)
 import Resolver.Models
     exposing
         ( Resolver
@@ -20,7 +20,7 @@ import Widgets.Slider as Slider
 import Widgets.Pie as Pie
 
 
-view : Resolver -> DataSourceInfo -> Maybe UploadedFileData -> Html Msg
+view : Resolver -> DataSource -> Maybe UploadedFileData -> Html Msg
 view resolver ds uploadedFile =
     div []
         [ viewTitle resolver ds
@@ -31,7 +31,7 @@ view resolver ds uploadedFile =
         ]
 
 
-viewTitle : Resolver -> DataSourceInfo -> Html Msg
+viewTitle : Resolver -> DataSource -> Html Msg
 viewTitle model ds =
     h3 []
         [ Html.text <|

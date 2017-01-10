@@ -1,14 +1,14 @@
-module DataSource.Helper exposing (..)
+module Target.Helper exposing (..)
 
 import Http
 import Maybe exposing (withDefault)
-import DataSource.Messages exposing (Msg(..))
-import DataSource.Decoder exposing (..)
-import DataSource.Models
+import Target.Messages exposing (Msg(..))
+import Target.Decoder exposing (..)
+import Target.Models
     exposing
-        ( DataSource
+        ( Target
         , DataSources
-        , DataSourceInfo
+        , DataSource
         )
 
 
@@ -21,9 +21,9 @@ getDataSources url =
         Http.send AllDataSources (Http.get datasourceUrl dataSourceDecoder)
 
 
-prepareDataSources : DataSource -> DataSources -> DataSources
+prepareDataSources : Target -> DataSources -> DataSources
 prepareDataSources ds dss =
-    List.filter (includeDataSource (dataSourceIds ds.all)) dss
+    List.filter (includeTarget (dataSourceIds ds.all)) dss
 
 
 dataSourceIds : DataSources -> List Int
@@ -31,16 +31,16 @@ dataSourceIds dss =
     List.map (\ds -> ds.id) dss
 
 
-includeDataSource : List Int -> DataSourceInfo -> Bool
-includeDataSource dsIds ds =
+includeTarget : List Int -> DataSource -> Bool
+includeTarget dsIds ds =
     List.member ds.id dsIds
 
 
-currentDataSourceInfo : DataSource -> DataSourceInfo
-currentDataSourceInfo ds =
+currentTarget: Target -> DataSource
+currentTarget ds =
     let
         default =
-            DataSourceInfo 0 Nothing Nothing
+            DataSource 0 Nothing Nothing
     in
         withDefault default <|
             List.head <|

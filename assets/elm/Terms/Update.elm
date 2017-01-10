@@ -9,7 +9,7 @@ update : Msg -> Terms -> ( Terms, Cmd Msg )
 update msg terms =
     case msg of
         ToDataSources token ->
-            ( terms, newUrl <| "/#data_sources/" ++ token )
+            ( terms, newUrl <| "/#target/" ++ token )
 
         ToResolver token ->
             ( terms, newUrl <| "/#resolver/" ++ token )

@@ -1,10 +1,10 @@
-module Decoder.DataSource exposing (dataSourceDecoder)
+module Target.Decoder exposing (dataSourceDecoder)
 
 import Json.Decode exposing (Decoder, field, list, map3, int, string, nullable)
-import Common exposing (DataSource)
+import Target.Models exposing (DataSources, DataSource)
 
 
-dataSourceDecoder : Decoder (List DataSource)
+dataSourceDecoder : Decoder DataSources
 dataSourceDecoder =
     list (map3 DataSource id title desc)
 

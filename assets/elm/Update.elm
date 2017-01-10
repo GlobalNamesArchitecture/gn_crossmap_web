@@ -9,9 +9,9 @@ import FileUpload.Messages as FUM
 import FileUpload.Update as FUU
 import Terms.Messages as TM
 import Terms.Update as TU
-import DataSource.Messages as DSM
-import DataSource.Update as DSU
-import DataSource.Helper as DSH
+import Target.Messages as DSM
+import Target.Update as DSU
+import Target.Helper as DSH
 import Resolver.Messages as RM
 import Resolver.Update as RU
 import Resolver.Helper as RH
@@ -29,8 +29,8 @@ update msg model =
         TermsMsg msg ->
             updateTerms msg model
 
-        DataSourceMsg msg ->
-            updateDataSource msg model
+        TargetMsg msg ->
+            updateTarget msg model
 
         ResolverMsg msg ->
             updateResolver msg model
@@ -51,10 +51,10 @@ updateRoute location model =
 routingCommand : Model -> Route -> Cmd Msg
 routingCommand model route =
     case route of
-        DataSources _ ->
-            Cmd.map DataSourceMsg <| DSH.getDataSources model.resolverUrl
+        Target _ ->
+            Cmd.map TargetMsg <| DSH.getDataSources model.resolverUrl
 
-        Resolution token ->
+        Resolver token ->
             Cmd.map ResolverMsg <| RH.startResolution token
 
         _ ->
@@ -79,14 +79,14 @@ updateTerms msg model =
         ( { model | terms = termsModel }, Cmd.map TermsMsg termsCmd )
 
 
-updateDataSource : DSM.Msg -> Model -> ( Model, Cmd Msg )
-updateDataSource msg model =
+updateTarget: DSM.Msg -> Model -> ( Model, Cmd Msg )
+updateTarget msg model =
     let
-        ( dataSourceModel, dataSourceCmd ) =
-            DSU.update msg model.dataSource
+        ( targetModel, targetCmd ) =
+            DSU.update msg model.target
     in
-        ( { model | dataSource = dataSourceModel }
-        , Cmd.map DataSourceMsg dataSourceCmd
+        ( { model | target = targetModel }
+        , Cmd.map TargetMsg targetCmd
         )
 
 
