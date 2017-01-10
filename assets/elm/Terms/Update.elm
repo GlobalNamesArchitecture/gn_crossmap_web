@@ -8,6 +8,8 @@ import Terms.Models exposing (Terms)
 update : Msg -> Terms -> ( Terms, Cmd Msg )
 update msg terms =
     case msg of
+        HeaderMap term ->
+          ( terms, Cmd.none)
         ToDataSources token ->
             ( terms, newUrl <| "/#target/" ++ token )
 

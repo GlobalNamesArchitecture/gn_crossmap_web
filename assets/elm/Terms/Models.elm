@@ -6,8 +6,14 @@ type alias Terms =
 
 
 type alias InputSample =
-    { headers : List String
+    { headers : List Header
     , rows : List String
+    }
+
+
+type alias Header =
+    { header : String
+    , term : Maybe String
     }
 
 
