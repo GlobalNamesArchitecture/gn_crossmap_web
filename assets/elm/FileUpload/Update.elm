@@ -1,6 +1,6 @@
 module FileUpload.Update exposing (update)
 
-import FileUpload.Models exposing (Upload, File, UploadedFileData)
+import FileUpload.Models exposing (Upload, File)
 import FileUpload.Messages exposing (Msg(..))
 import FileUpload.Ports exposing (..)
 import Navigation exposing (newUrl)
@@ -21,19 +21,19 @@ update msg upload =
         FileUpload ->
             ( upload, fileUpload upload.id )
 
-        FileUploadResult data ->
-            ( { upload | uploadedFile = data }
-            , tokenCmd data
+        FileUploadResult token ->
+            ( { upload | token = token }
+            , tokenCmd token
             )
 
 
-tokenCmd : Maybe UploadedFileData -> Cmd Msg
-tokenCmd data =
-    case data of
+tokenCmd : Maybe String -> Cmd Msg
+tokenCmd token =
+    case token of
         Nothing ->
             Cmd.none
 
-        Just d ->
+        Just t ->
             newUrl <|
                 "/#terms/"
-                    ++ d.token
+                    ++ t

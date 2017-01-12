@@ -22,7 +22,7 @@ findRoute model =
         R.FileUpload ->
             fileUploadView model
 
-        R.FileTerms token ->
+        R.Terms token ->
             termsView model token
 
         R.Target token ->
@@ -42,13 +42,13 @@ fileUploadView model =
 
 termsView : Model -> R.Token -> Html Msg
 termsView model token =
-    case model.upload.uploadedFile of
+  case model.terms.sampleData of
         Nothing ->
-            div [] []
+            div [] [text "Could not find uploaded Data"]
 
         Just data ->
             Html.map TermsMsg
-                (TV.view model.target.all data)
+                (TV.view model.target.all data token)
 
 
 dataSourceView : Model -> String -> Html Msg
@@ -61,5 +61,5 @@ resolverView : Model -> String -> Html Msg
 resolverView model token =
     Html.map ResolverMsg <|
         RV.view model.resolver (DSH.currentTarget model.target) 
-          model.upload.uploadedFile
+          model.terms.sampleData
 

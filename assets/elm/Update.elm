@@ -9,6 +9,7 @@ import FileUpload.Messages as FUM
 import FileUpload.Update as FUU
 import Terms.Messages as TM
 import Terms.Update as TU
+import Terms.Helper as TH
 import Target.Messages as DSM
 import Target.Update as DSU
 import Target.Helper as DSH
@@ -57,6 +58,9 @@ routingCommand model route =
         Resolver token ->
             Cmd.map ResolverMsg <| RH.startResolution token
 
+        Terms token ->
+            Cmd.map TermsMsg <| TH.getTerms token
+
         _ ->
             Cmd.none
 
@@ -79,7 +83,7 @@ updateTerms msg model =
         ( { model | terms = termsModel }, Cmd.map TermsMsg termsCmd )
 
 
-updateTarget: DSM.Msg -> Model -> ( Model, Cmd Msg )
+updateTarget : DSM.Msg -> Model -> ( Model, Cmd Msg )
 updateTarget msg model =
     let
         ( targetModel, targetCmd ) =
@@ -94,12 +98,12 @@ updateResolver : RM.Msg -> Model -> ( Model, Cmd Msg )
 updateResolver msg model =
     let
         token =
-            case model.upload.uploadedFile of
+            case model.upload.token of
                 Nothing ->
                     ""
 
-                Just f ->
-                    f.token
+                Just t ->
+                    t
 
         ( resolverModel, resolverCmd ) =
             RU.update msg model.resolver token

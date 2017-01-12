@@ -10,7 +10,7 @@ type alias Token =
 
 type Route
     = FileUpload
-    | FileTerms Token
+    | Terms Token
     | Target Token
     | Resolver Token
     | NotFoundRoute
@@ -20,7 +20,7 @@ matchers : Parser (Route -> a) a
 matchers =
     oneOf
         [ map FileUpload top
-        , map FileTerms (s "terms" </> string)
+        , map Terms (s "terms" </> string)
         , map Target (s "target" </> string)
         , map Resolver (s "resolver" </> string)
         ]

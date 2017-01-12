@@ -3,7 +3,7 @@ module Resolver.View exposing (view)
 import Html exposing (..)
 import Html.Attributes exposing(style, alt, href)
 import Maybe exposing (withDefault)
-import FileUpload.Models exposing (UploadedFileData)
+import Terms.Models exposing (SampleData)
 import Target.Models exposing (DataSource)
 import Resolver.Models
     exposing
@@ -20,14 +20,14 @@ import Widgets.Slider as Slider
 import Widgets.Pie as Pie
 
 
-view : Resolver -> DataSource -> Maybe UploadedFileData -> Html Msg
-view resolver ds uploadedFile =
+view : Resolver -> DataSource -> Maybe SampleData -> Html Msg
+view resolver ds sample =
     div []
         [ viewTitle resolver ds
         , viewIngestionStage resolver
         , viewResolutinStage resolver
         , viewGraph resolver
-        , viewDownload resolver uploadedFile
+        , viewDownload resolver sample
         ]
 
 
@@ -286,23 +286,23 @@ matchesList total matches fails =
         ]
 
 
-viewDownload : Resolver -> Maybe UploadedFileData -> Html Msg
-viewDownload resolver uploadedFile =
+viewDownload : Resolver -> Maybe SampleData -> Html Msg
+viewDownload resolver sample =
     case (status resolver) of
         Done ->
-            showOutput uploadedFile
+            showOutput sample
 
         _ ->
             div [] []
 
 
-showOutput : Maybe UploadedFileData -> Html Msg
-showOutput uploadedFile =
-    case uploadedFile of
+showOutput : Maybe SampleData -> Html Msg
+showOutput sample =
+    case sample of
         Nothing ->
             div [] []
 
-        Just uf ->
+        Just sd ->
             div
                 [ style
                     [ ( "clear", "left" )
@@ -312,7 +312,7 @@ showOutput uploadedFile =
                     ]
                 ]
                 [ a
-                    [ href <| uf.output
+                    [ href <| sd.output
                     , alt "Download result"
                     , style
                         [ ( "font-size"

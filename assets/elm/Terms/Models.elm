@@ -2,19 +2,25 @@ module Terms.Models exposing (..)
 
 
 type alias Terms =
-    { inputSample : Maybe InputSample }
+    { sampleData : Maybe SampleData }
 
 
-type alias InputSample =
-    { headers : List Header
-    , rows : List String
+type alias SampleData =
+    { fileName : String
+    , output : String
+    , headers : List Header
+    , rows : List Row
     }
 
 
 type alias Header =
-    { header : String
+    { value : String
     , term : Maybe String
     }
+
+type alias Row =
+    List (Maybe String)
+
 
 
 initTerms : Terms

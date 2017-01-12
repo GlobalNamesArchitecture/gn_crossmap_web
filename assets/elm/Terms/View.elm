@@ -5,8 +5,7 @@ import Html.Events exposing (onClick, on)
 import Html.Attributes exposing (class, value, id, name, list)
 import Maybe exposing (withDefault)
 import Json.Decode as J
-import FileUpload.Models as FUM
-import Terms.Models exposing (Terms)
+import Terms.Models exposing (Terms, SampleData, Header, Row)
 import Terms.Messages exposing (Msg(..))
 import Target.Models exposing (DataSources)
 
@@ -49,10 +48,10 @@ allFields =
     coreFields ++ rankFields
 
 
-view : DataSources -> FUM.UploadedFileData -> Html Msg
-view ds data =
+view : DataSources -> SampleData -> String -> Html Msg
+view ds data token =
     div []
-        [ button [ onClick (nextMsg ds data.token) ] [ text "Continue" ]
+        [ button [ onClick (nextMsg ds token) ] [ text "Continue" ]
         , div [ (class "terms_table_container") ]
             [ table [ class "terms_table" ] <|
                 (viewHeaders data.headers)
@@ -69,12 +68,12 @@ nextMsg ds token =
         ToResolver token
 
 
-viewSelectors : FUM.Headers -> Html Msg
+viewSelectors : (List Header) -> Html Msg
 viewSelectors headers =
     tr [] (List.map viewSelector headers)
 
 
-viewSelector : String -> Html Msg
+viewSelector : Header -> Html Msg
 viewSelector _ =
     td []
         [ text "match with"
@@ -95,14 +94,14 @@ dropDownEntry field =
     option [ value field ] []
 
 
-viewHeaders : FUM.Headers -> Html Msg
+viewHeaders : (List Header) -> Html Msg
 viewHeaders headers =
     tr [] (List.map viewHeaderEntry headers)
 
 
-viewHeaderEntry : String -> Html Msg
+viewHeaderEntry : Header -> Html Msg
 viewHeaderEntry header =
-    th [ headerClass header ] [ text header ]
+    th [ headerClass header.value ] [ text header.value ]
 
 
 headerClass : String -> Attribute msg
@@ -138,17 +137,17 @@ normalize word =
         |> String.toLower
 
 
-viewRows : FUM.Rows -> List (Html Msg)
+viewRows : List Row -> List (Html Msg)
 viewRows rows =
     List.map viewRow rows
 
 
-viewRow : FUM.Row -> Html Msg
+viewRow : Row -> Html Msg
 viewRow row =
     tr [] (List.map viewRowEntry row)
 
 
-viewRowEntry : FUM.RowEntry -> Html Msg
+viewRowEntry : (Maybe String) -> Html Msg
 viewRowEntry re =
     let
         val =

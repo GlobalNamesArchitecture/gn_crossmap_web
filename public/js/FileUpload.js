@@ -72,8 +72,8 @@ app.ports.fileUpload.subscribe(function (id) {
     }
 
     if (readyState == 4 && status == '200' && evt.target.responseText) {
-      var uploadData = JSON.parse(evt.target.responseText);
-      app.ports.fileUploadResult.send(uploadData);
+      var token = evt.target.responseText
+      app.ports.fileUploadResult.send(token);
     }
   }
 
