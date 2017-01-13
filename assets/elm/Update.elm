@@ -59,7 +59,10 @@ routingCommand model route =
             Cmd.map ResolverMsg <| RH.startResolution token
 
         Terms token ->
-            Cmd.map TermsMsg <| TH.getTerms token
+            if List.isEmpty model.terms.headers then
+                Cmd.map TermsMsg <| TH.getTerms token
+            else
+                Cmd.none
 
         _ ->
             Cmd.none

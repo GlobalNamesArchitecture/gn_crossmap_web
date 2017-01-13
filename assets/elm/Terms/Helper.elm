@@ -1,9 +1,9 @@
 module Terms.Helper exposing (getTerms)
 
 import Http
-import Terms.Models exposing (SampleData)
+import Terms.Models exposing (Terms)
 import Terms.Messages exposing (Msg(..))
-import Terms.Decoder exposing (sampleDataDecoder)
+import Terms.Decoder exposing (termsDecoder)
 
 
 getTerms : String -> Cmd Msg
@@ -12,5 +12,5 @@ getTerms token =
         url =
             "/crossmaps/" ++ token
     in
-        Http.send GetSampleData
-            (Http.get url sampleDataDecoder)
+        Http.send GetTerms
+            (Http.get url termsDecoder)

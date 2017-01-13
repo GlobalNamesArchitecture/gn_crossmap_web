@@ -29,7 +29,7 @@ findRoute model =
             dataSourceView model token
 
         R.Resolver token ->
-          resolverView model token
+            resolverView model token
 
         R.NotFoundRoute ->
             text "404 Not found"
@@ -42,13 +42,8 @@ fileUploadView model =
 
 termsView : Model -> R.Token -> Html Msg
 termsView model token =
-  case model.terms.sampleData of
-        Nothing ->
-            div [] [text "Could not find uploaded Data"]
-
-        Just data ->
-            Html.map TermsMsg
-                (TV.view model.target.all data token)
+    Html.map TermsMsg
+        (TV.view model.target.all model.terms token)
 
 
 dataSourceView : Model -> String -> Html Msg
@@ -60,6 +55,6 @@ dataSourceView model token =
 resolverView : Model -> String -> Html Msg
 resolverView model token =
     Html.map ResolverMsg <|
-        RV.view model.resolver (DSH.currentTarget model.target) 
-          model.terms.sampleData
-
+        RV.view model.resolver
+            (DSH.currentTarget model.target)
+            model.terms

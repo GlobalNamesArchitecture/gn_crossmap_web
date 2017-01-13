@@ -1,9 +1,9 @@
 module Resolver.View exposing (view)
 
 import Html exposing (..)
-import Html.Attributes exposing(style, alt, href)
+import Html.Attributes exposing (style, alt, href)
 import Maybe exposing (withDefault)
-import Terms.Models exposing (SampleData)
+import Terms.Models exposing (Terms)
 import Target.Models exposing (DataSource)
 import Resolver.Models
     exposing
@@ -20,14 +20,14 @@ import Widgets.Slider as Slider
 import Widgets.Pie as Pie
 
 
-view : Resolver -> DataSource -> Maybe SampleData -> Html Msg
-view resolver ds sample =
+view : Resolver -> DataSource -> Terms -> Html Msg
+view resolver ds terms =
     div []
         [ viewTitle resolver ds
         , viewIngestionStage resolver
         , viewResolutinStage resolver
         , viewGraph resolver
-        , viewDownload resolver sample
+        , viewDownload resolver terms
         ]
 
 
@@ -286,39 +286,34 @@ matchesList total matches fails =
         ]
 
 
-viewDownload : Resolver -> Maybe SampleData -> Html Msg
-viewDownload resolver sample =
+viewDownload : Resolver -> Terms -> Html Msg
+viewDownload resolver terms =
     case (status resolver) of
         Done ->
-            showOutput sample
+            showOutput terms
 
         _ ->
             div [] []
 
 
-showOutput : Maybe SampleData -> Html Msg
-showOutput sample =
-    case sample of
-        Nothing ->
-            div [] []
-
-        Just sd ->
-            div
-                [ style
-                    [ ( "clear", "left" )
-                    , ( "padding", "2em" )
-                    , ( "background-color", "#afa" )
-                    , ( "color", "#2c2" )
-                    ]
+showOutput : Terms -> Html Msg
+showOutput terms =
+    div
+        [ style
+            [ ( "clear", "left" )
+            , ( "padding", "2em" )
+            , ( "background-color", "#afa" )
+            , ( "color", "#2c2" )
+            ]
+        ]
+        [ a
+            [ href <| terms.output
+            , alt "Download result"
+            , style
+                [ ( "font-size"
+                  , "1.5em"
+                  )
                 ]
-                [ a
-                    [ href <| sd.output
-                    , alt "Download result"
-                    , style
-                        [ ( "font-size"
-                          , "1.5em"
-                          )
-                        ]
-                    ]
-                    [ Html.text "Download crossmapping results" ]
-                ]
+            ]
+            [ Html.text "Download crossmapping results" ]
+        ]

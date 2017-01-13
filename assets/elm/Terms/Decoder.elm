@@ -1,32 +1,40 @@
 module Terms.Decoder exposing (..)
 
+import Result
 import Terms.Models
     exposing
-        ( SampleData
+        ( Terms
         , Header
         , Row
         )
 import Json.Decode as J
 
 
-sampleDataDecoder : J.Decoder SampleData
-sampleDataDecoder =
-    J.map4 SampleData
-      (J.at ["filename"] J.string)
-      (J.at ["output"] J.string)
-      headers 
-      rows
+termsDecoder : J.Decoder Terms
+termsDecoder =
+    J.map3 Terms
+        (J.at [ "output" ] J.string)
+        headers
+        rows
 
 
 headers : J.Decoder (List Header)
 headers =
-    J.at ["input_sample", "headers"] <|
-      J.list <| J.map (\header -> Header header Nothing) J.string
+    let
+        hDecoder =
+            J.at [ "input_sample", "headers" ] <| J.list J.string
+    in
+        hDecoder |> J.andThen indexHeaders
+
+
+indexHeaders : List String -> J.Decoder (List Header)
+indexHeaders headers =
+    J.succeed <| List.indexedMap (\i h -> Header (i + 1) h Nothing) headers
 
 
 rows : J.Decoder (List Row)
 rows =
-    J.at ["input_sample", "rows"] <| J.list row
+    J.at [ "input_sample", "rows" ] <| J.list row
 
 
 row : J.Decoder Row
