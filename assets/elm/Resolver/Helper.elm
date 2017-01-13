@@ -9,13 +9,14 @@ module Resolver.Helper
         , estimate
         , etaString
         , summaryString
+        , status
         )
 
 import Http
 import Maybe exposing (withDefault, andThen)
 import Resolver.Messages exposing (Msg(..))
 import Resolver.Decoder exposing (statusDecoder, statsDecoder)
-import Resolver.Models exposing (Stats)
+import Resolver.Models exposing (Resolver, Stats, Status(..))
 
 
 type alias Input =
@@ -230,3 +231,28 @@ splitEta eta span =
             rem eta span
     in
         ( spanUnits, reminder )
+
+status : Resolver -> Status
+status resolver =
+    case resolver.stats of
+        Nothing ->
+            Pending
+
+        Just st ->
+            setStatus st.status
+
+
+setStatus : String -> Status
+setStatus s =
+    if s == "init" then
+        Pending
+    else if s == "ingestion" then
+        InIngestion
+    else if s == "resolution" then
+        InResolution
+    else if s == "finish" then
+        Done
+    else
+        Unknown
+
+

@@ -45,7 +45,7 @@ viewIngestionStage : Resolver -> Html Msg
 viewIngestionStage resolver =
     let
         ingStatus =
-            case (status resolver) of
+            case (RH.status resolver) of
                 Pending ->
                     "Pending"
 
@@ -63,30 +63,6 @@ viewIngestionStage resolver =
                 ]
             , Slider.slider (ingestedSliderData resolver)
             ]
-
-
-status : Resolver -> Status
-status resolver =
-    case resolver.stats of
-        Nothing ->
-            Pending
-
-        Just st ->
-            setStatus st.status
-
-
-setStatus : String -> Status
-setStatus s =
-    if s == "init" then
-        Pending
-    else if s == "ingestion" then
-        InIngestion
-    else if s == "resolution" then
-        InResolution
-    else if s == "finish" then
-        Done
-    else
-        Unknown
 
 
 timeSummary : Resolver -> Bool -> String
@@ -121,7 +97,7 @@ ingestedSliderData : Resolver -> Slider.Datum
 ingestedSliderData resolver =
     let
         datum =
-            case (status resolver) of
+            case (RH.status resolver) of
                 Pending ->
                     ( 0, 1 )
 
@@ -184,7 +160,7 @@ viewResolutinStage : Resolver -> Html Msg
 viewResolutinStage resolver =
     let
         resStatus =
-            case (status resolver) of
+            case (RH.status resolver) of
                 Pending ->
                     "Pendig"
 
@@ -211,7 +187,7 @@ resolutionSliderData : Resolver -> Slider.Datum
 resolutionSliderData resolver =
     let
         datum =
-            case (status resolver) of
+            case (RH.status resolver) of
                 Pending ->
                     ( 0, 1 )
 
@@ -288,7 +264,7 @@ matchesList total matches fails =
 
 viewDownload : Resolver -> Terms -> Html Msg
 viewDownload resolver terms =
-    case (status resolver) of
+    case (RH.status resolver) of
         Done ->
             showOutput terms
 

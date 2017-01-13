@@ -6,7 +6,9 @@ import Models exposing (Model)
 import Routing exposing (Route(..))
 import FileUpload.Ports as FUP
 import FileUpload.Messages as FUM
+import Resolver.Models exposing (Status(Done))
 import Resolver.Messages as RM
+import Resolver.Helper as RH
 
 
 subscriptions : Model -> Sub Msg
@@ -15,8 +17,10 @@ subscriptions model =
         FileUpload ->
             Sub.batch fileUploadSubs
         Resolver _ ->
-            Sub.map ResolverMsg <|
-              Time.every (second * 2) RM.QueryResolutionProgress 
+            case RH.status model.resolver of
+              Done -> Sub.none
+              _ -> Sub.map ResolverMsg <|
+                  Time.every (second * 2) RM.QueryResolutionProgress 
 
         _ ->
             Sub.none
