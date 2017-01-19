@@ -1,42 +1,73 @@
-module Terms.Decoder exposing (..)
+module Terms.Decoder exposing (termsDecoder)
 
 import Result
+import Maybe exposing (withDefault)
 import Terms.Models
     exposing
         ( Terms
         , Header
         , Row
+        , allFields
         )
-import Json.Decode as J
+import Json.Decode exposing (..)
 
 
-termsDecoder : J.Decoder Terms
+termsDecoder : Decoder Terms
 termsDecoder =
-    J.map3 Terms
-        (J.at [ "output" ] J.string)
+    map3 Terms
+        (at [ "output" ] string)
         headers
         rows
 
 
-headers : J.Decoder (List Header)
+
+-- PRIVATE
+
+
+headers : Decoder (List Header)
 headers =
     let
         hDecoder =
-            J.at [ "input_sample", "headers" ] <| J.list J.string
+            at [ "input_sample", "headers" ] <| list string
     in
-        hDecoder |> J.andThen indexHeaders
+        hDecoder |> andThen indexHeaders
 
 
-indexHeaders : List String -> J.Decoder (List Header)
+indexHeaders : List String -> Decoder (List Header)
 indexHeaders headers =
-    J.succeed <| List.indexedMap (\i h -> Header (i + 1) h Nothing) headers
+    succeed <| List.indexedMap (\i h -> Header (i + 1) h <| matchTerm h) headers
 
 
-rows : J.Decoder (List Row)
+matchTerm : String -> Maybe String
+matchTerm header =
+    let
+        rank =
+            List.filter
+                (\r -> (normalize r) == (normalize header) && r /= "")
+                allFields
+    in
+        List.head rank
+
+
+normalize : String -> String
+normalize word =
+    word
+        |> String.split ":"
+        |> List.reverse
+        |> List.head
+        |> withDefault ""
+        |> String.split "/"
+        |> List.reverse
+        |> List.head
+        |> withDefault ""
+        |> String.toLower
+
+
+rows : Decoder (List Row)
 rows =
-    J.at [ "input_sample", "rows" ] <| J.list row
+    at [ "input_sample", "rows" ] <| list row
 
 
-row : J.Decoder Row
+row : Decoder Row
 row =
-    J.list (J.nullable J.string)
+    list (nullable string)

@@ -10,7 +10,7 @@ type alias Upload =
 
 
 initUpload =
-    Upload Nothing Nothing False "file-upload" 
+    Upload Nothing Nothing False "file-upload"
 
 
 type alias File =

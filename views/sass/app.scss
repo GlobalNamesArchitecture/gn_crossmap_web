@@ -377,12 +377,14 @@ dt:first-child:before { /* disable line break before the first <dt> */
 .terms_table {
   margin-top: 1em;
   border-collapse: collapse;
-  th { 
+  th {
     padding: 5px;
+    min-width: 250px;
     border: 1px solid $light_grey;
-  } 
+  }
   td {
-    padding: 5px; 
+    padding: 5px;
+    min-width: 250px;
     border: 1px solid $light_grey;
   }
 
@@ -391,3 +393,20 @@ dt:first-child:before { /* disable line break before the first <dt> */
   }
 }
 
+.terms_selector {
+  text-align: center;
+}
+
+.delete-button {
+  color: grey;
+  font-size: 1.2em;
+  margin: 0;
+  padding: 0;
+  padding-left: 0.2em;
+  vertical-align: middle;
+}
+
+.delete-button:hover { 
+  color: black;
+  cursor: default;
+}

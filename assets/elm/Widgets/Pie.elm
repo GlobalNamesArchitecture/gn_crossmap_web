@@ -14,6 +14,7 @@ import Html exposing (..)
 import Html.Attributes as HA
 import Svg.Attributes
 
+
 type alias PieData =
     List PieDatum
 
@@ -23,6 +24,7 @@ type alias PieDatum =
     , value : Float
     , legend : String
     }
+
 
 type alias ArcOutput =
     { id : Int

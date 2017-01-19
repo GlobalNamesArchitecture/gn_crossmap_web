@@ -2,50 +2,12 @@ module Terms.View exposing (view)
 
 import Html exposing (..)
 import Html.Events exposing (onClick, on, targetValue)
-import Html.Attributes exposing (class, value, id, name, list)
+import Html.Attributes exposing (class, value, id, name, list, type_)
 import Maybe exposing (withDefault)
 import Json.Decode as J
-import Terms.Models exposing (Terms, Header, Row)
+import Terms.Models exposing (Terms, Header, Row, allFields)
 import Terms.Messages exposing (Msg(..))
 import Target.Models exposing (DataSources)
-
-
-rankFields : List String
-rankFields =
-    [ "kingdom"
-    , "subKingdom"
-    , "phylum"
-    , "subPhylum"
-    , "superClass"
-    , "class"
-    , "subClass"
-    , "cohort"
-    , "superOrder"
-    , "order"
-    , "subOrder"
-    , "infraOrder"
-    , "superFamily"
-    , "family"
-    , "subFamily"
-    , "tribe"
-    , "subTribe"
-    , "genus"
-    , "subGenus"
-    , "section"
-    , "species"
-    , "subSpecies"
-    , "variety"
-    , "form"
-    ]
-
-
-coreFields : List String
-coreFields =
-    [ "taxonId", "scientificName", "scientificNameAuthorship" ]
-
-
-allFields =
-    coreFields ++ rankFields
 
 
 view : DataSources -> Terms -> String -> Html Msg
@@ -75,8 +37,8 @@ viewSelectors headers =
 
 viewSelector : Header -> Html Msg
 viewSelector header =
-    td []
-        [ text "match with"
+    td [ class "terms_selector" ]
+        [ text <| "match with"
         , br [] []
         , input
             [ list "terms"
@@ -87,6 +49,11 @@ viewSelector header =
             ]
             []
         , datalist [ id "terms" ] <| List.map dropDownEntry allFields
+        , span
+            [ class "delete-button"
+            , onClick (MapTerm header.id "")
+            ]
+            [ text "✖" ]
         ]
 
 
@@ -101,6 +68,7 @@ onInput msg =
     in
         on "input" <| J.andThen isTerm targetValue
 
+
 onChange : (String -> Msg) -> Attribute Msg
 onChange msg =
     let
@@ -111,6 +79,7 @@ onChange msg =
                 J.succeed <| msg ""
     in
         on "change" <| J.andThen isTerm targetValue
+
 
 dropDownEntry : String -> Html Msg
 dropDownEntry field =
@@ -124,40 +93,25 @@ viewHeaders headers =
 
 viewHeaderEntry : Header -> Html Msg
 viewHeaderEntry header =
-    th [ headerClass header.value ] [ text header.value ]
+    th [ headerClass header ]
+        [ text <|
+            case header.term of
+                Nothing ->
+                    header.value
+
+                Just term ->
+                    header.value ++ " → " ++ term
+        ]
 
 
-headerClass : String -> Attribute msg
+headerClass : Header -> Attribute msg
 headerClass header =
-    if (headerKnown header) then
-        class "dwca"
-    else
-        class "no_dwca"
+    case header.term of
+        Nothing ->
+            class "no_dwca"
 
-
-headerKnown : String -> Bool
-headerKnown header =
-    let
-        rank =
-            List.filter
-                (\r -> (normalize r) == (normalize header) && r /= "")
-                allFields
-    in
-        rank /= []
-
-
-normalize : String -> String
-normalize word =
-    word
-        |> String.split ":"
-        |> List.reverse
-        |> List.head
-        |> withDefault ""
-        |> String.split "/"
-        |> List.reverse
-        |> List.head
-        |> withDefault ""
-        |> String.toLower
+        _ ->
+            class "dwca"
 
 
 viewRows : List Row -> List (Html Msg)

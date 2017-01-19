@@ -36,7 +36,7 @@ includeTarget dsIds ds =
     List.member ds.id dsIds
 
 
-currentTarget: Target -> DataSource
+currentTarget : Target -> DataSource
 currentTarget ds =
     let
         default =

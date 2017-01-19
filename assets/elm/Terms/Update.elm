@@ -39,9 +39,10 @@ updateHeaders headers id term =
         )
         headers
 
+
 prepareTerm : String -> Maybe String
 prepareTerm term =
-  if String.isEmpty term then
-    Nothing
-  else
-    Just term
+    if String.isEmpty term then
+        Nothing
+    else
+        Just term

@@ -232,6 +232,7 @@ splitEta eta span =
     in
         ( spanUnits, reminder )
 
+
 status : Resolver -> Status
 status resolver =
     case resolver.stats of
@@ -254,5 +255,3 @@ setStatus s =
         Done
     else
         Unknown
-
-
