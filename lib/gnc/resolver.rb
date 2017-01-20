@@ -20,15 +20,23 @@ module Gnc
     private
 
     def resolve(token)
-      cmap = Crossmap.find_by_token(token)
-      GnCrossmap.run(cmap.input,
-                     cmap.output, cmap.data_source_id, true) do |stats|
+      cmap, opts = params(token)
+      GnCrossmap.run(opts) do |stats|
         %i(ingestion_start resolution_start
            resolution_stop ingestion_span resolution_span).each do |t|
           stats[t] = stats[t].to_f unless stats[t].nil?
         end
         cmap.update(stats: stats)
       end
+    end
+
+    def params(token)
+      cmap = Crossmap.find_by_token(token)
+      output = File.join(Gnc::App.public_folder, cmap.output)
+      alt_headers = cmap.alt_headers ? cmap.alt_headers : []
+      [cmap, { input: cmap.input, output: output,
+               data_source_id: cmap.data_source_id,
+               skip_original: false, alt_headers: alt_headers }]
     end
   end
 end

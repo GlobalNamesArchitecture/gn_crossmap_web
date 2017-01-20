@@ -33,13 +33,13 @@ update msg ds =
 
 
 saveTarget : String -> Int -> Cmd Msg
-saveTarget token dataSourceId =
+saveTarget token targetId =
     let
         url =
-            "/crossmaps"
+            "/target"
     in
         Http.send SaveTarget
-            (put url <| body token dataSourceId)
+            (put url <| body token targetId)
 
 
 put : String -> Http.Body -> Http.Request ()
@@ -56,9 +56,9 @@ put url body =
 
 
 body : String -> Int -> Http.Body
-body token dataSourceId =
+body token targetId =
     Http.jsonBody <|
         Encode.object
             [ ( "token", Encode.string token )
-            , ( "data_source_id", Encode.int dataSourceId )
+            , ( "data_source_id", Encode.int targetId )
             ]

@@ -10,12 +10,10 @@ module Gnc
 
     def run
       input = @data.input
-      output = @data.output
-      File.join(Gnc::App.root, @data.token, "output.csv")
+      output = File.join(Gnc::App.public_folder, @data.output)
       ds_id = @data.data_source_id || 1 # Catalogue of Life ID
       no_original = @data.skip_original || false
       GnCrossmap.run(input, output, ds_id, no_original)
-      output.gsub(Gnc::App.public_folder, "")
     end
   end
 end

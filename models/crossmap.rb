@@ -8,13 +8,10 @@ class Crossmap < ActiveRecord::Base
 
   def self.output(token, filename)
     match = filename.include?(" ") ? "match " : "match_"
-    match_dir = File.join(Gnc::App.settings.public_folder, "crossmaps", token)
+    match_url = File.join("/crossmaps", token)
+    match_dir = File.join(Gnc::App.public_folder, match_url)
     FileUtils.mkdir(match_dir) unless File.exist?(match_dir)
-    File.join(match_dir, "#{match}#{filename}")
-  end
-
-  def output_url
-    output.gsub(%r{^.*/public}, "")
+    File.join(match_url, "#{match}#{filename}")
   end
 
   def transpose(rows_num = 3)

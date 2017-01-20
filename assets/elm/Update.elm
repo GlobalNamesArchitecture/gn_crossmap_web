@@ -63,7 +63,6 @@ routingCommand model route =
                 Cmd.map TermsMsg <| TH.getTerms token
             else
                 Cmd.none
-
         _ ->
             Cmd.none
 

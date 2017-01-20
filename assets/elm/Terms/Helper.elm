@@ -1,7 +1,6 @@
 module Terms.Helper exposing (getTerms)
 
 import Http
-import Terms.Models exposing (Terms)
 import Terms.Messages exposing (Msg(..))
 import Terms.Decoder exposing (termsDecoder)
 

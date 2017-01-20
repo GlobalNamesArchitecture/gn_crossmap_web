@@ -7,5 +7,6 @@ import Terms.Models exposing (Terms)
 type Msg
     = ToDataSources String
     | ToResolver String
-    | MapTerm Int String
+    | MapTerm String Int String
     | GetTerms (Result Http.Error Terms)
+    | SaveTerms (Result Http.Error ())

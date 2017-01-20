@@ -17,7 +17,8 @@ view ds terms token =
         , div [ (class "terms_table_container") ]
             [ table [ class "terms_table" ] <|
                 (viewHeaders terms.headers)
-                    :: ((viewSelectors terms.headers) :: (viewRows terms.rows))
+                    :: ((viewSelectors token terms.headers) 
+                    :: (viewRows terms.rows))
             ]
         ]
 
@@ -30,13 +31,13 @@ nextMsg ds token =
         ToResolver token
 
 
-viewSelectors : List Header -> Html Msg
-viewSelectors headers =
-    tr [] (List.map viewSelector headers)
+viewSelectors : String -> List Header -> Html Msg
+viewSelectors token headers =
+    tr [] (List.map (viewSelector token) headers)
 
 
-viewSelector : Header -> Html Msg
-viewSelector header =
+viewSelector : String -> Header -> Html Msg
+viewSelector token header =
     td [ class "terms_selector" ]
         [ text <| "match with"
         , br [] []
@@ -44,14 +45,14 @@ viewSelector header =
             [ list "terms"
             , id <| "term_" ++ (toString header.id)
             , value <| withDefault "" header.term
-            , onInput <| MapTerm header.id
-            , onChange <| MapTerm header.id
+            , onInput <| MapTerm token header.id
+            , onChange <| MapTerm token header.id
             ]
             []
         , datalist [ id "terms" ] <| List.map dropDownEntry allFields
         , span
             [ class "delete-button"
-            , onClick (MapTerm header.id "")
+            , onClick (MapTerm token header.id "")
             ]
             [ text "✖" ]
         ]
