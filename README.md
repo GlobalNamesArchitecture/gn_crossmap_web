@@ -23,13 +23,20 @@ docker-compose run app rake
 
 We recommend to use docker-compose for development
 
-To start the system use
+To prepare the system if you run it first time or
+there was an update in the code:
+
+```bash
+docker-compose build
+```
+
+Start it all:
 
 ```bash
 docker-compose up
 ```
 
-Point your browser to http://0.0.0.0:9292
+Point your browser to `http://0.0.0.0:9292`
 
 For testing purposes you can use [this csv file][csv-file]
 
