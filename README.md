@@ -65,4 +65,4 @@ docker-compose run app bundle exec guard
 [deps]: https://gemnasium.com/GlobalNamesArchitecture/gn_crossmap_web
 [Guard]: https://github.com/guard/guard
 [gn_crossmap]: https://github.com/GlobalNamesArchitecture/gn_crossmap
-[csv-file]: https://github.com/GlobalNamesArchitecture/gn_crossmap_web/blob/master/spec/files/wellformed-semicolon.csv
+[csv-file]: https://raw.githubusercontent.com/GlobalNamesArchitecture/gn_crossmap_web/master/spec/files/wellformed-semicolon.csv
