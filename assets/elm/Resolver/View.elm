@@ -251,14 +251,14 @@ matchesList total matches fails =
         m =
             matches
     in
-        [ ( "#a00", m.noMatch, "No match" )
-        , ( "#080", m.exactString, "Identical" )
+        [ ( "#080", m.exactString, "Identical" )
         , ( "#0f0", m.exactCanonical, "Canonical match" )
         , ( "#8f0", m.fuzzy, "Fuzzy match" )
         , ( "#aa8", m.partial, "Partial match" )
         , ( "#880", m.partialFuzzy, "Partial fuzzy match" )
         , ( "#440", m.genusOnly, "Genus-only match" )
         , ( "#000", fails, "Resolver Errors" )
+        , ( "#a00", m.noMatch, "No match" )
         ]
 
 
