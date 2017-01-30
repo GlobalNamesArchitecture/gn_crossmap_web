@@ -9,3 +9,5 @@ type Msg
     = LaunchResolution (Result Http.Error String)
     | QueryResolutionProgress Time.Time
     | ResolutionProgress (Result Http.Error Stats)
+    | SendStopResolution
+    | StopResolution (Result Http.Error ())

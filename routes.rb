@@ -40,6 +40,14 @@ module Gnc
       crossmap.save ? "OK" : nil
     end
 
+    put "/resolver" do
+      params = JSON.parse(request.body.read, symbolize_names: true)
+      logger.info params
+      crossmap = Crossmap.find_by_token(params[:token])
+      crossmap.update(stop_trigger: params[:stop_trigger])
+      crossmap.save ? "OK" : nil
+    end
+
     get "/resolver/:token" do
       content_type :json
       Gnc::Resolver.perform_async(params[:token])

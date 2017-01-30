@@ -17,8 +17,9 @@ view ds terms token =
         , div [ (class "terms_table_container") ]
             [ table [ class "terms_table" ] <|
                 (viewHeaders terms.headers)
-                    :: ((viewSelectors token terms.headers) 
-                    :: (viewRows terms.rows))
+                    :: ((viewSelectors token terms.headers)
+                            :: (viewRows terms.rows)
+                       )
             ]
         ]
 

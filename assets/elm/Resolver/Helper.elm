@@ -10,10 +10,12 @@ module Resolver.Helper
         , etaString
         , summaryString
         , status
+        , sendStopResolution
         )
 
 import Http
 import Maybe exposing (withDefault, andThen)
+import Json.Encode as Encode
 import Resolver.Messages exposing (Msg(..))
 import Resolver.Decoder exposing (statusDecoder, statsDecoder)
 import Resolver.Models exposing (Resolver, Stats, Status(..))
@@ -45,6 +47,38 @@ startResolution token =
     in
         Http.send LaunchResolution
             (Http.get url statusDecoder)
+
+
+sendStopResolution : String -> Cmd Msg
+sendStopResolution token =
+    let
+        url =
+            "/resolver"
+    in
+        Http.send StopResolution
+            (put url <| body token)
+
+
+put : String -> Http.Body -> Http.Request ()
+put url body =
+    Http.request
+        { method = "PUT"
+        , headers = []
+        , url = url
+        , body = body
+        , expect = Http.expectStringResponse (\_ -> Ok ())
+        , timeout = Nothing
+        , withCredentials = False
+        }
+
+
+body : String -> Http.Body
+body token =
+    Http.jsonBody <|
+        Encode.object
+            [ ( "token", Encode.string token )
+            , ( "stop_trigger", Encode.bool True )
+            ]
 
 
 type alias WaitTime =
@@ -113,15 +147,21 @@ ingestionInput s =
         Input total processed timeSpan [ vel ]
 
 
-summaryString : Input -> String
-summaryString input =
+summaryString : Input -> Bool -> String
+summaryString input stopped =
     let
         hms =
             hrMinSec <| hmsEta input.timeSpan [ 3600, 60, 1 ] []
+
+        total =
+            if (stopped) then
+                input.processed
+            else
+                input.total
     in
         "("
             ++ "Processed "
-            ++ (toString input.total)
+            ++ (toString total)
             ++ " names in "
             ++ (toString hms.h)
             ++ "h, "

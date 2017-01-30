@@ -27,6 +27,7 @@ To prepare the system if you run it first time or
 there was an update in the code:
 
 ```bash
+docker-compose down # if it is running
 docker-compose build
 ```
 
@@ -46,14 +47,6 @@ To stop it run
 docker-compose down
 ```
 
-### Automatic compiling of Elm scripts
-
-If you are changing Elm scripts and want to compile them automatically
-start [Guard] in a separate terminal window with
-
-```bash
-docker-compose run app bundle exec guard
-```
 
 [ci-svg]: https://circleci.com/gh/GlobalNamesArchitecture/gn_crossmap_web.svg?style=shield
 [ci]: https://circleci.com/gh/GlobalNamesArchitecture/gn_crossmap_web

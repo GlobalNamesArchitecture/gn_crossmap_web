@@ -27,6 +27,7 @@ module Gnc
           stats[t] = stats[t].to_f unless stats[t].nil?
         end
         cmap.update(stats: stats)
+        "STOP" if Crossmap.find_by_token(token).stop_trigger
       end
     end
 

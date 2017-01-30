@@ -22,3 +22,12 @@ update msg resolver token =
 
         ResolutionProgress (Err _) ->
             ( resolver, Cmd.none )
+
+        SendStopResolution ->
+            ( resolver, RH.sendStopResolution token )
+
+        StopResolution (Ok _) ->
+            ( { resolver | stopTrigger = True }, Cmd.none )
+
+        StopResolution (Err _) ->
+            ( resolver, Cmd.none )

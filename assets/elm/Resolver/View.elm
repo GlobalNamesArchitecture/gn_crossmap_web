@@ -2,6 +2,7 @@ module Resolver.View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (style, alt, href)
+import Html.Events exposing (onClick)
 import Maybe exposing (withDefault)
 import Terms.Models exposing (Terms)
 import Target.Models exposing (DataSource)
@@ -34,7 +35,7 @@ view resolver ds terms =
 viewTitle : Resolver -> DataSource -> Html Msg
 viewTitle model ds =
     h3 []
-        [ Html.text <|
+        [ text <|
             "Crossmapping your file against \""
                 ++ (withDefault "Unknown" ds.title)
                 ++ "\" data"
@@ -57,9 +58,7 @@ viewIngestionStage resolver =
     in
         div []
             [ div []
-                [ Html.text <|
-                    "Ingestion Status: "
-                        ++ ingStatus
+                [ text <| "Ingestion Status: " ++ ingStatus
                 ]
             , Slider.slider (ingestedSliderData resolver)
             ]
@@ -72,7 +71,11 @@ timeSummary resolver isResolution =
             ""
 
         Just s ->
-            RH.summaryString <| timeEstInput s isResolution
+            let
+                input =
+                    timeEstInput s isResolution
+            in
+                RH.summaryString input resolver.stopTrigger
 
 
 eta : Resolver -> Bool -> String
@@ -175,9 +178,7 @@ viewResolutinStage resolver =
     in
         div []
             [ div []
-                [ Html.text <|
-                    "ResolutionStatus: "
-                        ++ resStatus
+                [ text <| "ResolutionStatus: " ++ resStatus
                 ]
             , Slider.slider (resolutionSliderData resolver)
             ]
@@ -254,9 +255,9 @@ matchesList total matches fails =
         [ ( "#080", m.exactString, "Identical" )
         , ( "#0f0", m.exactCanonical, "Canonical match" )
         , ( "#8f0", m.fuzzy, "Fuzzy match" )
-        , ( "#aa8", m.partial, "Partial match" )
-        , ( "#880", m.partialFuzzy, "Partial fuzzy match" )
-        , ( "#440", m.genusOnly, "Genus-only match" )
+        , ( "#8f8", m.partial, "Partial match" )
+        , ( "#888", m.partialFuzzy, "Partial fuzzy match" )
+        , ( "#daa", m.genusOnly, "Genus-only match" )
         , ( "#000", fails, "Resolver Errors" )
         , ( "#a00", m.noMatch, "No match" )
         ]
@@ -266,30 +267,50 @@ viewDownload : Resolver -> Terms -> Html Msg
 viewDownload resolver terms =
     case (RH.status resolver) of
         Done ->
-            showOutput terms
+            showOutput terms resolver.stopTrigger
+
+        InResolution ->
+            div
+                [ style
+                    [ ( "clear", "left" )
+                    , ( "padding", "2em" )
+                    ]
+                ]
+                [ button
+                    [ onClick SendStopResolution ]
+                    [ text "Cancel" ]
+                , text " (with download of a partial result)"
+                ]
 
         _ ->
             div [] []
 
 
-showOutput : Terms -> Html Msg
-showOutput terms =
-    div
-        [ style
-            [ ( "clear", "left" )
-            , ( "padding", "2em" )
-            , ( "background-color", "#afa" )
-            , ( "color", "#2c2" )
-            ]
-        ]
-        [ a
-            [ href <| terms.output
-            , alt "Download result"
-            , style
-                [ ( "font-size"
-                  , "1.5em"
-                  )
+showOutput : Terms -> Bool -> Html Msg
+showOutput terms stopped =
+    let
+        msg =
+            if (stopped) then
+                "Download partial crossmapping results"
+            else
+                "Download crossmapping results"
+    in
+        div
+            [ style
+                [ ( "clear", "left" )
+                , ( "padding", "2em" )
+                , ( "background-color", "#afa" )
+                , ( "color", "#2c2" )
                 ]
             ]
-            [ Html.text "Download crossmapping results" ]
-        ]
+            [ a
+                [ href <| terms.output
+                , alt msg
+                , style
+                    [ ( "font-size"
+                      , "1.5em"
+                      )
+                    ]
+                ]
+                [ text msg ]
+            ]

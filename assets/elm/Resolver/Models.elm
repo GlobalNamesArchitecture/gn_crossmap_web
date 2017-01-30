@@ -3,6 +3,7 @@ module Resolver.Models exposing (..)
 
 type alias Resolver =
     { status : Status
+    , stopTrigger : Bool
     , stats : Maybe Stats
     }
 
@@ -55,4 +56,4 @@ type alias Matches =
 
 initResolver : Resolver
 initResolver =
-    Resolver Pending Nothing
+    Resolver Pending False Nothing
