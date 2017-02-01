@@ -19,7 +19,6 @@ module Gnc
 
     get "/crossmaps/:token" do
       content_type :json
-      require "byebug"; byebug
       crossmap = Crossmap.find_by_token(params[:token]).to_json
       puts crossmap
       crossmap

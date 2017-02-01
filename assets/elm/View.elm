@@ -9,11 +9,15 @@ import Terms.View as TV
 import Target.View as DSV
 import Target.Helper as DSH
 import Resolver.View as RV
+import Widgets.BreadCrumbs as BC
 
 
 view : Model -> Html Msg
 view model =
-    div [] [ findRoute model ]
+    div [] 
+    [ BC.view model
+    , findRoute model
+    ]
 
 
 findRoute : Model -> Html Msg
