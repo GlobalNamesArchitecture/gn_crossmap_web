@@ -55,7 +55,7 @@ rankFields =
 
 coreFields : List String
 coreFields =
-    [ "taxonId", "scientificName", "scientificNameAuthorship" ]
+    [ "taxonId", "taxonrank", "scientificName", "scientificNameAuthorship" ]
 
 
 allFields =

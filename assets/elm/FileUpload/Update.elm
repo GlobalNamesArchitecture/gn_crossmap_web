@@ -28,12 +28,12 @@ update msg upload =
 
 
 tokenCmd : Maybe String -> Cmd Msg
-tokenCmd token =
-    case token of
+tokenCmd mbToken =
+    case mbToken of
         Nothing ->
             Cmd.none
 
-        Just t ->
+        Just token ->
             newUrl <|
                 "/#terms/"
-                    ++ t
+                    ++ token

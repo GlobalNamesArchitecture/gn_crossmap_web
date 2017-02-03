@@ -9,7 +9,7 @@ module Gnc
         headers, rows = traverse_csv(csv)
         { headers: headers, rows: rows.sort_by { |r| r.compact.size }.
           reverse[0..9] }
-      rescue MalformedCSVError
+      rescue CSV::MalformedCSVError
         { headers: [], rows: [] }
       end
 
@@ -19,7 +19,7 @@ module Gnc
         headers = nil
         rows = []
         csv.each_with_index do |r, i|
-          i.zero? ? headers = r.map(&:strip) : rows << r
+          i.zero? ? headers = r.map(&:to_s).map(&:strip) : rows << r
           break if i > 499
         end
         [headers, rows]
