@@ -6,6 +6,7 @@ import FileUpload.Models exposing (Upload, initUpload)
 import Terms.Models exposing (Terms, initTerms)
 import Target.Models exposing (Target, initTarget)
 import Resolver.Models exposing (Resolver, initResolver)
+import Errors exposing (Errors, Error)
 
 
 type alias Model =
@@ -17,6 +18,7 @@ type alias Model =
     , terms : Terms
     , target : Target
     , resolver : Resolver
+    , errors : Errors
     }
 
 
@@ -37,3 +39,4 @@ initModel flags route =
         initTerms
         (initTarget flags.dataSourcesIds)
         initResolver
+        Nothing

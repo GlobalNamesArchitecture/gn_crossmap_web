@@ -13,3 +13,4 @@ type Msg
     | TermsMsg Terms.Messages.Msg
     | TargetMsg Target.Messages.Msg
     | ResolverMsg Resolver.Messages.Msg
+    | EmptyErrors

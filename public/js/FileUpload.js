@@ -27,16 +27,26 @@ app.ports.fileUpload.subscribe(function (id) {
   var $fileInput = document.getElementById(id);
   var file = $fileInput.files[0];
 
+  function sendFail() {
+    app.ports.fileUploadResult.send(null);
+  }
+
   function sendXHRequest(formData, uri) {
     var xhr = new XMLHttpRequest();
 
     xhr.upload.addEventListener('loadstart', onloadstartHandler, false);
     xhr.upload.addEventListener('progress', onprogressHandler, false);
     xhr.upload.addEventListener('load', onloadHandler, false);
+    xhr.addEventListener("error", onFailHandler, false);
     xhr.addEventListener('readystatechange', onreadystatechangeHandler, false);
 
-    xhr.open('POST', uri, true);
-    xhr.send(formData);
+    try {
+      xhr.open('POST', uri, true);
+      xhr.send(formData);
+    }
+    catch(e) {
+      sendFail();
+    }
   }
 
   // Handle the start of the transmission
@@ -54,8 +64,12 @@ app.ports.fileUpload.subscribe(function (id) {
   // Handle the progress
   function onprogressHandler(evt) {
     var div = document.getElementById('progress');
-    var percent = evt.loaded/evt.total*100;
+    var percent = evt.loaded / evt.total * 100;
     div.innerHTML = 'Progress: ' + percent + '%';
+  }
+
+  function onFailHandler(evt) {
+    sendFail();
   }
 
   // Handle the response from the server
@@ -68,12 +82,16 @@ app.ports.fileUpload.subscribe(function (id) {
       status = evt.target.status;
     }
     catch(e) {
-      return;
+      sendFail();
     }
 
     if (readyState == 4 && status == '200' && evt.target.responseText) {
       var token = evt.target.responseText
-      app.ports.fileUploadResult.send(token);
+      if (token != "FAIL") {
+        app.ports.fileUploadResult.send(token);
+      } else {
+        sendFail();
+      }
     }
   }
 

@@ -12,9 +12,13 @@ module Gnc
     end
 
     post "/upload" do
-      uploader = Gnc::Uploader.new(params["file-upload"])
-      crossmap = uploader.save_list_file
-      crossmap.token
+      begin
+        uploader = Gnc::Uploader.new(params["file-upload"])
+        crossmap = uploader.save_list_file
+        crossmap.token
+      rescue GncFileTypeError
+        "FAIL"
+      end
     end
 
     get "/crossmaps/:token" do

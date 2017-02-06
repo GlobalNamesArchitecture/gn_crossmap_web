@@ -36,6 +36,9 @@ update msg model =
         ResolverMsg msg ->
             updateResolver msg model
 
+        EmptyErrors ->
+            emptyErrors model
+
 
 updateRoute : Location -> Model -> ( Model, Cmd Msg )
 updateRoute location model =
@@ -114,3 +117,8 @@ updateResolver msg model =
         ( { model | resolver = resolverModel }
         , Cmd.map ResolverMsg resolverCmd
         )
+
+
+emptyErrors : Model -> ( Model, Cmd Msg )
+emptyErrors model =
+    updateUpload FUM.EmptyErrors model

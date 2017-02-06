@@ -474,3 +474,14 @@ dt:first-child:before { /* disable line break before the first <dt> */
 .breadcrumb li:last-child a::after { 
   border: 0; 
 }
+
+.errors {
+  border: 1px solid #faa;
+  background-color: #fdd;
+  padding: 0.5em;
+}
+
+.error {
+  border-bottom: 1px solid #faa;
+  margin-bottom: 0.5em
+}

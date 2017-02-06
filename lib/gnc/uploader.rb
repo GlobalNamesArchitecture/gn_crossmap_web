@@ -10,7 +10,7 @@ module Gnc
 
     def save_list_file
       res = FileInspector.inspect(@params.tempfile)
-      return unless res[:is_csv]
+      raise(GncFileTypeError, "Not a CSV file") unless res[:is_csv]
       token = Gnc.token
       open(Crossmap.input(token), "w") do |f|
         f.write(@params.tempfile.read)

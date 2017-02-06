@@ -16,12 +16,8 @@ module Gnc
       private
 
       def inspect_content(file)
-        if !(`file #{file.path}` =~ /text/).nil?
-          csv_properties(file)
-        else
-          ["", 0]
-        end
-      rescue MalformedCSVError
+        `file #{file.path}` =~ /text/ ? csv_properties(file) : ["", 0]
+      rescue CSV::MalformedCSVError, ArgumentError
         ["", 0]
       end
 
