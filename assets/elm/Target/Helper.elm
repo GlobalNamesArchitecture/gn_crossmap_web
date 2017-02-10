@@ -1,6 +1,7 @@
 module Target.Helper exposing (..)
 
 import Http
+import Dict
 import Maybe exposing (withDefault)
 import Target.Messages exposing (Msg(..))
 import Target.Decoder exposing (..)
@@ -10,6 +11,20 @@ import Target.Models
         , DataSources
         , DataSource
         )
+
+
+abbreviation : Dict.Dict Int String
+abbreviation =
+    let
+        abbr =
+            [ ( 8, "IRMNG" )
+            , ( 9, "WoRMS" )
+            , ( 167, "IPNI" )
+            , ( 172, "PaleoBioDb" )
+            , ( 179, "OTT" )
+            ]
+    in
+        Dict.fromList abbr
 
 
 getDataSources : String -> Cmd Msg
@@ -23,7 +38,29 @@ getDataSources url =
 
 prepareDataSources : Target -> DataSources -> DataSources
 prepareDataSources ds dss =
-    List.filter (includeTarget (dataSourceIds ds.all)) dss
+    dss
+        |> List.filter (includeTarget (dataSourceIds ds.all))
+        |> List.map appendDataSource
+
+
+appendDataSource : DataSource -> DataSource
+appendDataSource ds =
+    case (Dict.get ds.id abbreviation) of
+        Nothing ->
+            ds
+
+        Just a ->
+            { ds | title = composeTitle a ds.title }
+
+
+composeTitle : String -> Maybe String -> Maybe String
+composeTitle abbr title =
+    case title of
+        Nothing ->
+            Just abbr
+
+        Just t ->
+            Just <| abbr ++ " (" ++ t ++ ")"
 
 
 dataSourceIds : DataSources -> List Int

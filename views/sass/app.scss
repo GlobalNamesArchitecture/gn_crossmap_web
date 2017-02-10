@@ -485,3 +485,16 @@ dt:first-child:before { /* disable line break before the first <dt> */
   border-bottom: 1px solid #faa;
   margin-bottom: 0.5em
 }
+
+input.target-search {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border: 3px solid #ddd;
+  border-radius: 8px;
+  padding: 0.2em;
+  font-size: 1.4em;
+}
+
+input:focus.target-search {
+  outline-color: hsla(0,0%,0%,0);
+}

@@ -6,6 +6,7 @@ import Maybe exposing (withDefault)
 type alias Target =
     { all : DataSources
     , current : Int
+    , filter : String
     }
 
 
@@ -26,4 +27,4 @@ initTarget dss =
         infos =
             List.map (\id -> DataSource id Nothing Nothing) dss
     in
-        Target infos current
+        Target infos current ""

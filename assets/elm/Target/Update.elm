@@ -31,6 +31,9 @@ update msg ds =
         SaveTarget (Err _) ->
             ( ds, Cmd.none )
 
+        FilterTarget f ->
+            ( { ds | filter = f }, Cmd.none )
+
 
 saveTarget : String -> Int -> Cmd Msg
 saveTarget token targetId =

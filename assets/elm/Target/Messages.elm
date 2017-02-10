@@ -9,3 +9,4 @@ type Msg
     | SaveTarget (Result Http.Error ())
     | AllDataSources (Result Http.Error DataSources)
     | ToResolver String
+    | FilterTarget String
