@@ -20,15 +20,16 @@ view : Model -> Html Msg
 view model =
     div []
         [ BC.view model
-        , viewBody model
+        , viewErr model
+        , findRoute model
         ]
 
 
-viewBody : Model -> Html Msg
-viewBody model =
+viewErr : Model -> Html Msg
+viewErr model =
     case (errors model) of
         Nothing ->
-            findRoute model
+            div [] []
 
         Just _ ->
             viewErrors model
@@ -82,7 +83,8 @@ errors : Model -> Errors
 errors model =
     let
         errors =
-            List.filter (\l -> l /= Nothing) [ model.upload.errors ]
+            List.filter (\l -> l /= Nothing)
+              [ model.upload.errors, model.resolver.errors ]
     in
         if List.isEmpty errors then
             Nothing

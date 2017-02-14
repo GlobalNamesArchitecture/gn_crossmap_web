@@ -23,11 +23,15 @@ docker-compose run app rake
 
 We recommend to use docker-compose for development
 
-To prepare the system if you run it first time or
-there was an update in the code:
+To prepare the system (if you run it first time or
+there was an update in the code) go to the project's
+root and then
 
 ```bash
 docker-compose down # if it is running
+
+sudo chown -R `whoami` # for linux only (Windows, Mac do it for you)
+
 docker-compose build
 ```
 

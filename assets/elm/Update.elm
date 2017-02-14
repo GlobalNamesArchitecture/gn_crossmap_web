@@ -121,4 +121,9 @@ updateResolver msg model =
 
 emptyErrors : Model -> ( Model, Cmd Msg )
 emptyErrors model =
-    updateUpload FUM.EmptyErrors model
+    let upload = .upload <| Tuple.first (updateUpload FUM.EmptyErrors model)
+        resolver = .resolver <| Tuple.first (updateResolver RM.EmptyErrors model) 
+    in
+        ({ model | upload = upload, resolver = resolver }, Cmd.none)
+
+

@@ -1,10 +1,12 @@
 module Resolver.Models exposing (..)
 
+import Errors exposing (Errors)
 
 type alias Resolver =
     { status : Status
     , stopTrigger : Bool
     , stats : Maybe Stats
+    , errors : Errors
     }
 
 
@@ -56,4 +58,4 @@ type alias Matches =
 
 initResolver : Resolver
 initResolver =
-    Resolver Pending False Nothing
+    Resolver Pending False Nothing Nothing

@@ -1,6 +1,7 @@
 module Resolver.Decoder exposing (statusDecoder, statsDecoder)
 
 import Json.Decode exposing (..)
+import Errors exposing (Errors, Error)
 import Resolver.Models exposing (..)
 
 
@@ -9,9 +10,27 @@ statusDecoder =
     field "status" string
 
 
-statsDecoder : Decoder Stats
+statsDecoder : Decoder (Stats, Errors)
 statsDecoder =
-    map7 Stats
+  map2 (,) stats errors
+
+--PRIVATE
+
+errors : Decoder Errors
+errors =
+   map (\l -> 
+     if List.length l == 0 then
+       Nothing
+     else
+       Just l) <| field "errors" <| list error
+
+error : Decoder Error
+error =
+  map (Error "A problem with the CSV content") string
+
+stats : Decoder Stats
+stats =
+      map7 Stats
         (at [ "status" ] string)
         (at [ "total_records" ] int)
         ingestion
@@ -19,11 +38,6 @@ statsDecoder =
         lastBatchesTime
         matches
         fails
-
-
-
---PRIVATE
-
 
 lastBatchesTime : Decoder (List Float)
 lastBatchesTime =
