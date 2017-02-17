@@ -2,6 +2,7 @@ module Resolver.Models exposing (..)
 
 import Errors exposing (Errors)
 
+
 type alias Resolver =
     { status : Status
     , stopTrigger : Bool

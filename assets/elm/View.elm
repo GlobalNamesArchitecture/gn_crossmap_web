@@ -84,7 +84,7 @@ errors model =
     let
         errors =
             List.filter (\l -> l /= Nothing)
-              [ model.upload.errors, model.resolver.errors ]
+                [ model.upload.errors, model.resolver.errors ]
     in
         if List.isEmpty errors then
             Nothing

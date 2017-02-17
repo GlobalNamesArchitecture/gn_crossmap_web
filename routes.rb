@@ -28,27 +28,14 @@ module Gnc
       crossmap
     end
 
-    put "/target" do
+    put "/crossmaps" do
       params = JSON.parse(request.body.read, symbolize_names: true)
       logger.info params
       crossmap = Crossmap.find_by_token(params[:token])
-      crossmap.update(data_source_id: params[:data_source_id])
-      crossmap.save ? "OK" : nil
-    end
-
-    put "/terms" do
-      params = JSON.parse(request.body.read, symbolize_names: true)
-      logger.info params
-      crossmap = Crossmap.find_by_token(params[:token])
-      crossmap.update(alt_headers: params[:terms])
-      crossmap.save ? "OK" : nil
-    end
-
-    put "/resolver" do
-      params = JSON.parse(request.body.read, symbolize_names: true)
-      logger.info params
-      crossmap = Crossmap.find_by_token(params[:token])
-      crossmap.update(stop_trigger: params[:stop_trigger])
+      crossmap_params = params.select do |k, _|
+        %i(data_source_id alt_headers stop_trigger).include? k
+      end
+      crossmap.update(crossmap_params)
       crossmap.save ? "OK" : nil
     end
 

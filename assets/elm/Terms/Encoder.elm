@@ -7,7 +7,7 @@ termsBodyEncoder : String -> List String -> Value
 termsBodyEncoder token terms =
     object
         [ ( "token", string token )
-        , ( "terms", termsEncoder terms )
+        , ( "alt_headers", termsEncoder terms )
         ]
 
 

@@ -3,6 +3,7 @@ module Terms.Update exposing (update)
 import Navigation exposing (newUrl)
 import Maybe exposing (withDefault)
 import Http
+import Helper exposing (put)
 import Terms.Messages exposing (Msg(..))
 import Terms.Models exposing (Terms, Header)
 import Terms.Encoder exposing (termsBodyEncoder)
@@ -64,23 +65,10 @@ saveTerms : String -> List String -> Cmd Msg
 saveTerms token terms =
     let
         url =
-            "/terms"
+            "/crossmaps"
     in
         Http.send SaveTerms
             (put url <| body token terms)
-
-
-put : String -> Http.Body -> Http.Request ()
-put url body =
-    Http.request
-        { method = "PUT"
-        , headers = []
-        , url = url
-        , body = body
-        , expect = Http.expectStringResponse (\_ -> Ok ())
-        , timeout = Nothing
-        , withCredentials = False
-        }
 
 
 body : String -> List String -> Http.Body

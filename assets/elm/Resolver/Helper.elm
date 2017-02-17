@@ -16,6 +16,7 @@ module Resolver.Helper
 import Http
 import Maybe exposing (withDefault, andThen)
 import Json.Encode as Encode
+import Helper exposing (put)
 import Resolver.Messages exposing (Msg(..))
 import Resolver.Decoder exposing (statusDecoder, statsDecoder)
 import Resolver.Models exposing (Resolver, Stats, Status(..))
@@ -53,23 +54,10 @@ sendStopResolution : String -> Cmd Msg
 sendStopResolution token =
     let
         url =
-            "/resolver"
+            "/crossmaps"
     in
         Http.send StopResolution
             (put url <| body token)
-
-
-put : String -> Http.Body -> Http.Request ()
-put url body =
-    Http.request
-        { method = "PUT"
-        , headers = []
-        , url = url
-        , body = body
-        , expect = Http.expectStringResponse (\_ -> Ok ())
-        , timeout = Nothing
-        , withCredentials = False
-        }
 
 
 body : String -> Http.Body

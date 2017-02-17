@@ -17,9 +17,13 @@ update msg resolver token =
         QueryResolutionProgress _ ->
             ( resolver, RH.queryResolutionProgress token )
 
-        ResolutionProgress (Ok (stats, errors)) ->
-            ( { resolver | stats = Just stats, 
-                           errors = errors }, Cmd.none )
+        ResolutionProgress (Ok ( stats, errors )) ->
+            ( { resolver
+                | stats = Just stats
+                , errors = errors
+              }
+            , Cmd.none
+            )
 
         ResolutionProgress (Err _) ->
             ( resolver, Cmd.none )
@@ -32,5 +36,6 @@ update msg resolver token =
 
         StopResolution (Err _) ->
             ( resolver, Cmd.none )
+
         EmptyErrors ->
-          ( { resolver | errors = Nothing }, Cmd.none )
+            ( { resolver | errors = Nothing }, Cmd.none )

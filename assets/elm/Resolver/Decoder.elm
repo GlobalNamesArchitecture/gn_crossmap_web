@@ -10,27 +10,37 @@ statusDecoder =
     field "status" string
 
 
-statsDecoder : Decoder (Stats, Errors)
+statsDecoder : Decoder ( Stats, Errors )
 statsDecoder =
-  map2 (,) stats errors
+    map2 (,) stats errors
+
+
 
 --PRIVATE
 
+
 errors : Decoder Errors
 errors =
-   map (\l -> 
-     if List.length l == 0 then
-       Nothing
-     else
-       Just l) <| field "errors" <| list error
+    map
+        (\l ->
+            if List.length l == 0 then
+                Nothing
+            else
+                Just l
+        )
+    <|
+        field "errors" <|
+            list error
+
 
 error : Decoder Error
 error =
-  map (Error "A problem with the CSV content") string
+    map (Error "A problem with the CSV content") string
+
 
 stats : Decoder Stats
 stats =
-      map7 Stats
+    map7 Stats
         (at [ "status" ] string)
         (at [ "total_records" ] int)
         ingestion
@@ -38,6 +48,7 @@ stats =
         lastBatchesTime
         matches
         fails
+
 
 lastBatchesTime : Decoder (List Float)
 lastBatchesTime =

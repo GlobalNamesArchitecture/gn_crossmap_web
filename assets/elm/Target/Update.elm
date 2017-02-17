@@ -3,6 +3,7 @@ module Target.Update exposing (update)
 import Navigation exposing (newUrl)
 import Json.Encode as Encode
 import Http
+import Helper exposing (put)
 import Target.Models exposing (Target)
 import Target.Messages exposing (Msg(..))
 import Target.Helper as HDS
@@ -39,23 +40,10 @@ saveTarget : String -> Int -> Cmd Msg
 saveTarget token targetId =
     let
         url =
-            "/target"
+            "/crossmaps"
     in
         Http.send SaveTarget
             (put url <| body token targetId)
-
-
-put : String -> Http.Body -> Http.Request ()
-put url body =
-    Http.request
-        { method = "PUT"
-        , headers = []
-        , url = url
-        , body = body
-        , expect = Http.expectStringResponse (\_ -> Ok ())
-        , timeout = Nothing
-        , withCredentials = False
-        }
 
 
 body : String -> Int -> Http.Body

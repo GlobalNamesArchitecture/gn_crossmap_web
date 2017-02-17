@@ -40,8 +40,9 @@ view target token =
 
 normalize : String -> String
 normalize str =
-  str |> String.trim |> String.toLower 
-  
+    str |> String.trim |> String.toLower
+
+
 onInput : (String -> Msg) -> Attribute Msg
 onInput msg =
     on "input" <| J.andThen (\t -> J.succeed <| msg (normalize t)) targetValue
@@ -49,23 +50,25 @@ onInput msg =
 
 selectTarget : Target -> String -> Html Msg
 selectTarget target token =
-  let
-      match t =
-        case t.title of
-          Nothing -> False
-          Just title ->
-            String.contains target.filter <| normalize title
+    let
+        match t =
+            case t.title of
+                Nothing ->
+                    False
 
-      sources =
-        if target.filter == "" then
-          target.all
-        else
-          List.filter match target.all
-  in 
-    sources
-      |> List.map (dataSourceRender token target.current)
-      |> div [] 
-            
+                Just title ->
+                    String.contains target.filter <| normalize title
+
+        sources =
+            if target.filter == "" then
+                target.all
+            else
+                List.filter match target.all
+    in
+        sources
+            |> List.map (dataSourceRender token target.current)
+            |> div []
+
 
 dataSourceRender : String -> Int -> DataSource -> Html Msg
 dataSourceRender token current dsi =
