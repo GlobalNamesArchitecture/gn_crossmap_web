@@ -3,10 +3,10 @@ module Terms.Update exposing (update)
 import Navigation exposing (newUrl)
 import Maybe exposing (withDefault)
 import Http
-import Helper exposing (put)
+import Helper as H
 import Terms.Messages exposing (Msg(..))
 import Terms.Models exposing (Terms, Header)
-import Terms.Encoder exposing (termsBodyEncoder)
+import Terms.Encoder as TE
 
 
 update : Msg -> Terms -> ( Terms, Cmd Msg )
@@ -68,9 +68,4 @@ saveTerms token terms =
             "/crossmaps"
     in
         Http.send SaveTerms
-            (put url <| body token terms)
-
-
-body : String -> List String -> Http.Body
-body token terms =
-    Http.jsonBody <| termsBodyEncoder token terms
+            (H.put url <| TE.body token terms)

@@ -15,11 +15,11 @@ module Resolver.Helper
 
 import Http
 import Maybe exposing (withDefault, andThen)
-import Json.Encode as Encode
-import Helper exposing (put)
+import Helper as H
 import Resolver.Messages exposing (Msg(..))
 import Resolver.Decoder exposing (statusDecoder, statsDecoder)
 import Resolver.Models exposing (Resolver, Stats, Status(..))
+import Resolver.Encoder as RE
 
 
 type alias Input =
@@ -57,16 +57,7 @@ sendStopResolution token =
             "/crossmaps"
     in
         Http.send StopResolution
-            (put url <| body token)
-
-
-body : String -> Http.Body
-body token =
-    Http.jsonBody <|
-        Encode.object
-            [ ( "token", Encode.string token )
-            , ( "stop_trigger", Encode.bool True )
-            ]
+            (H.put url <| RE.body token)
 
 
 type alias WaitTime =

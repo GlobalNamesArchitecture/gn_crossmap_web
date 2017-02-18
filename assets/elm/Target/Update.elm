@@ -3,10 +3,11 @@ module Target.Update exposing (update)
 import Navigation exposing (newUrl)
 import Json.Encode as Encode
 import Http
-import Helper exposing (put)
+import Helper as H
 import Target.Models exposing (Target)
 import Target.Messages exposing (Msg(..))
 import Target.Helper as HDS
+import Target.Encoder as TE
 
 
 update : Msg -> Target -> ( Target, Cmd Msg )
@@ -43,7 +44,7 @@ saveTarget token targetId =
             "/crossmaps"
     in
         Http.send SaveTarget
-            (put url <| body token targetId)
+            (H.put url <| TE.body token targetId)
 
 
 body : String -> Int -> Http.Body

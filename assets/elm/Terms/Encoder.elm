@@ -1,14 +1,16 @@
-module Terms.Encoder exposing (termsBodyEncoder)
+module Terms.Encoder exposing (body)
 
 import Json.Encode exposing (..)
+import Http
 
 
-termsBodyEncoder : String -> List String -> Value
-termsBodyEncoder token terms =
-    object
-        [ ( "token", string token )
-        , ( "alt_headers", termsEncoder terms )
-        ]
+body : String -> List String -> Http.Body
+body token terms =
+    Http.jsonBody <|
+        object
+            [ ( "token", string token )
+            , ( "alt_headers", termsEncoder terms )
+            ]
 
 
 termsEncoder : List String -> Value
