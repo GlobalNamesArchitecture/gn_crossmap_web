@@ -80,10 +80,10 @@ module Gnc
       )
     end
 
-    def read_data_sources(json_value)
+    def read_data_sources(data_sources)
       default = [1]
-      res = JSON.parse(json_value)
-      res.is_a?(Array) ? res : default
+      data_sources = JSON.parse(data_sources) if data_sources.is_a?(String)
+      data_sources.is_a?(Array) ? data_sources : default
     rescue TypeError
       default
     rescue JSON::ParserError
