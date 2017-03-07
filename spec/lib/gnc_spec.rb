@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
+
 describe Gnc do
   describe ".version" do
     it "returns current version" do
@@ -71,3 +73,5 @@ describe Gnc do
     end
   end
 end
+
+# rubocop:enable all

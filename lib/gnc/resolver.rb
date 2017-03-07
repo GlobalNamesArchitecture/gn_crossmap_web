@@ -35,9 +35,12 @@ module Gnc
       cmap = Crossmap.find_by_token(token)
       output = File.join(Gnc::App.public_folder, cmap.output)
       alt_headers = cmap.alt_headers ? cmap.alt_headers : []
-      [cmap, { input: cmap.input, output: output,
+      opts = { input: cmap.input, output: output,
                data_source_id: cmap.data_source_id,
-               skip_original: false, alt_headers: alt_headers }]
+               resolver_url: Gnc.conf.resolver_url + "/name_resolvers.json",
+               skip_original: false, alt_headers: alt_headers }
+      logger.error opts
+      [cmap, opts]
     end
   end
 end

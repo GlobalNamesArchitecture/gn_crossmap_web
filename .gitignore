@@ -5,6 +5,7 @@ elm-stuff
 elm-package.json
 /public/js/*
 /node_modules
+.byebug_history
 
 ## General
 *.gem
