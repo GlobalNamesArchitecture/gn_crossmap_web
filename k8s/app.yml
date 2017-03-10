@@ -7,6 +7,7 @@ metadata:
     app: gnbulk
     tier: backend
 spec:
+  type: NodePort
   ports:
     - port: 5432
       targetPort: 5432
@@ -33,16 +34,24 @@ spec:
             claimName: gnbulk-pv-claim
       containers:
         - name: gnbulk-db
-          image: postgres:9.6.2
+          image: gnames/postgres-solo
           env:
-            - name: POSTGRESS_USER
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: gn-secret
-                  key: gnbulk.user
-            - name: POSTGRESS_PASSWORD
-              value: ""
-            - name: POSTGRESS_DB
+                  key: gnbulk.root.password
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: gn-secret
+                  key: gnbulk.db.user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: gn-secret
+                  key: gnbulk.db.password
+            - name: DB_DATABASE
               valueFrom:
                 configMapKeyRef:
                   name: gn-config
@@ -88,6 +97,8 @@ spec:
       containers:
         - name: gnbulk
           image: gnames/gn_bulk_resolve
+          args:
+            - /app/exe/production.sh
           env:
             - name: CODECLIMATE_REPO_TOKEN
               valueFrom:
@@ -100,9 +111,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: gn-secret
-                  key: gnbulk.user
+                  key: gnbulk.db.user
             - name: RACKAPP_DB_PASSWORD
-              value: ""
+              valueFrom:
+                secretKeyRef:
+                  name: gn-secret
+                  key: gnbulk.db.password
             - name: RACKAPP_RESOLVER_URL
               valueFrom:
                 configMapKeyRef:
@@ -134,7 +148,7 @@ spec:
                   name: gn-config
                   key: gnbulk.data.sources
             - name: RACK_ENV
-              value: development
+              value: production
           ports:
             - containerPort: 9292
               name: http
