@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: gnlist
-          image: gnames/gn_bulk_resolve
+          image: gnames/listresolver:0.1.0
           args:
             - /app/exe/production.sh
           env:
@@ -52,11 +52,16 @@ spec:
                 secretKeyRef:
                   name: gnlist
                   key: db.user.password
-            - name: RACKAPP_RESOLVER_URL
+            - name: RACKAPP_RESOLVER_URL_CLIENT
               valueFrom:
                 configMapKeyRef:
                   name: gnlist
                   key: resolver.url
+            - name: RACKAPP_RESOLVER_URL_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: gnlist
+                  key: resolver.internal.url
             - name: RACKAPP_SERVER
               valueFrom:
                 configMapKeyRef:

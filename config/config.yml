@@ -1,7 +1,8 @@
 session_secret: <%= ENV["RACKAPP_SESSION_SECRET"] %>
 server: <%= ENV["RACKAPP_SERVER"] %>
 data_sources: <%= ENV["RACKAPP_DATA_SOURCES"] %>
-resolver_url: <%= ENV["RACKAPP_RESOLVER_URL"] %>
+resolver_url: <%= ENV["RACKAPP_RESOLVER_URL_CLIENT"] %>
+internal_resolver_url: <%= ENV["RACKAPP_RESOLVER_URL_SERVER"] %>
 database:
   common: &common
     adapter: postgresql

@@ -67,6 +67,7 @@ module Gnc
       ENV.keys.select { |k| k =~ /RACKAPP_/ }.empty?
     end
 
+    # rubocop:disable Metrics/MethodLength
     def init_conf
       raw_conf = File.read(File.join(ROOT_PATH, "config", "config.yml"))
       conf = YAML.load(ERB.new(raw_conf).result)
@@ -76,9 +77,12 @@ module Gnc
         server:           conf["server"],
         resolver_url:     conf["resolver_url"] ||
           "http://resolver.globalnames.org",
+        internal_resolver_url:     conf["internal_resolver_url"] ||
+          "http://resolver.globalnames.org",
         data_sources:     read_data_sources(conf["data_sources"])
       )
     end
+    # rubocop:enable Metrics/MethodLength
 
     def read_data_sources(data_sources)
       default = [1]

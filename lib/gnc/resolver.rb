@@ -37,7 +37,8 @@ module Gnc
       alt_headers = cmap.alt_headers ? cmap.alt_headers : []
       opts = { input: cmap.input, output: output,
                data_source_id: cmap.data_source_id,
-               resolver_url: Gnc.conf.resolver_url + "/name_resolvers.json",
+               resolver_url: Gnc.conf.internal_resolver_url +
+                             "/name_resolvers.json",
                skip_original: false, alt_headers: alt_headers }
       logger.error opts
       [cmap, opts]
