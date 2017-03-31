@@ -2,100 +2,35 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: gnbulk-db
+  name: gnlist
   labels:
-    app: gnbulk
-    tier: backend
-spec:
-  type: NodePort
-  ports:
-    - port: 5432
-      targetPort: 5432
-  selector:
-    app: gnbulk
-    tier: backend
----
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: gnbulk-db
-spec:
-  replicas: 1
-  template:
-    metadata:
-      name: gnbulk
-      labels:
-        app: gnbulk
-        tier: backend
-    spec:
-      volumes:
-        - name: gnbulk-vol
-          persistentVolumeClaim:
-            claimName: gnbulk-pv-claim
-      containers:
-        - name: gnbulk-db
-          image: gnames/postgres-solo
-          env:
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: gn-secret
-                  key: gnbulk.root.password
-            - name: DB_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: gn-secret
-                  key: gnbulk.db.user
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: gn-secret
-                  key: gnbulk.db.password
-            - name: DB_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: gn-config
-                  key: gnbulk.db
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
-          ports:
-            - containerPort: 5432
-              name: psql
-          volumeMounts:
-            - mountPath: /var/lib/postgresql/data
-              name: gnbulk-vol
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: gnbulk
-  labels:
-    app: gnbulk
+    app: gnlist
     tier: frontend
 spec:
   type: NodePort
   ports:
     - port: 9292
       targetPort: 9292
+      nodePort: 30838
   selector:
-    app: gnbulk
+    app: gnlist
     tier: frontend
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: gnbulk
+  name: gnlist
 spec:
-  replicas: 1
+  replicas: 2
   template:
     metadata:
-      name: gnbulk
+      name: gnlist
       labels:
-        app: gnbulk
+        app: gnlist
         tier: frontend
     spec:
       containers:
-        - name: gnbulk
+        - name: gnlist
           image: gnames/gn_bulk_resolve
           args:
             - /app/exe/production.sh
@@ -103,52 +38,55 @@ spec:
             - name: CODECLIMATE_REPO_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: gn-secret
-                  key: gnbulk.password
+                  name: gnlist
+                  key: session.secret
             - name: RACKAPP_DB_HOST
-              value: gnbulk-db
+              value: gnlist-db
             - name: RACKAPP_DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: gn-secret
-                  key: gnbulk.db.user
+                  name: gnlist
+                  key: db.user
             - name: RACKAPP_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: gn-secret
-                  key: gnbulk.db.password
+                  name: gnlist
+                  key: db.user.password
             - name: RACKAPP_RESOLVER_URL
               valueFrom:
                 configMapKeyRef:
-                  name: gn-config
-                  key: gnbulk.resolver.url
+                  name: gnlist
+                  key: resolver.url
             - name: RACKAPP_SERVER
               valueFrom:
                 configMapKeyRef:
-                  name: gn-config
-                  key: gnbulk.server
+                  name: gnlist
+                  key: server
             - name: RACKAPP_SESSION_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: gn-secret
-                  key: gnbulk.session.secret
+                  name: gnlist
+                  key: session.secret
             - name: RACKAPP_UNICORN_WORKERS
-              valueFrom: 
+              valueFrom:
                 configMapKeyRef:
-                  name: gn-config
-                  key: gnbulk.unicorn.workers
+                  name: gnlist
+                  key: unicorn.workers
             - name: RACKAPP_ASYC_WORKERS
               valueFrom:
                 configMapKeyRef:
-                  name: gn-config
-                  key: gnbulk.async.workers
+                  name: gnlist
+                  key: async.workers
             - name: RACKAPP_DATA_SOURCES
               valueFrom:
                 configMapKeyRef:
-                  name: gn-config
-                  key: gnbulk.data.sources
+                  name: gnlist
+                  key: data.sources
             - name: RACK_ENV
-              value: production
+              valueFrom:
+                configMapKeyRef:
+                  name: gnlist
+                  key: env
           ports:
             - containerPort: 9292
               name: http
