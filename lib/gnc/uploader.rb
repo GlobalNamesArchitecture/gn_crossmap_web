@@ -12,13 +12,19 @@ module Gnc
       res = FileInspector.inspect(@params.tempfile)
       raise(GncFileTypeError, "Not a CSV file") unless res[:is_csv]
       token = Gnc.token
-      open(Crossmap.input(token), "w") do |f|
-        f.write(@params.tempfile.read)
-      end
+      copy_file(token, res[:encoding])
       save_db(res[:col_sep], token)
     end
 
     private
+
+    def copy_file(token, enc)
+      open(Crossmap.input(token), "w") do |input|
+        f = open(@params.tempfile.path, encoding: enc)
+        input.write(f.read)
+        f.close
+      end
+    end
 
     def save_db(col_sep, token)
       sample = Gnc::CsvSampler.sample(Crossmap.input(token), col_sep)

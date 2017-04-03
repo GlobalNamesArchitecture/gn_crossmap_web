@@ -15,6 +15,7 @@ require "active_record"
 require "csv"
 require "rest_client"
 require "fileutils"
+require "filemagic"
 require "gn_crossmap"
 require "sucker_punch"
 
