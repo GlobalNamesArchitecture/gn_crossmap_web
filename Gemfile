@@ -3,6 +3,7 @@
 source "https://rubygems.org"
 
 gem "activerecord", "~> 4.2.7.1"
+gem "axlsx", "~> 2.0"
 gem "childprocess", "~> 0.6"
 gem "compass", "~> 1.0"
 gem "gn_crossmap", "~> 3.0"

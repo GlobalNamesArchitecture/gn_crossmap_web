@@ -10,6 +10,7 @@ module Gnc
       ActiveRecord::Base.connection_pool.with_connection do
         begin
           resolve(token)
+          make_excel_output(token)
           logger.info "Success crossmapping with #{token}"
         rescue GnCrossmapError => e
           logger.error e.message
@@ -21,6 +22,7 @@ module Gnc
 
     def resolve(token)
       cmap, opts = params(token)
+      @output = opts[:output]
       GnCrossmap.run(opts) do |stats|
         %i(ingestion_start resolution_start
            resolution_stop ingestion_span resolution_span).each do |t|
@@ -42,6 +44,11 @@ module Gnc
                skip_original: false, alt_headers: alt_headers }
       logger.error opts
       [cmap, opts]
+    end
+
+    def make_excel_output(token)
+      _, opts = params(token)
+      Gnc::ExcelBuilder.new(opts[:output]).build
     end
   end
 end

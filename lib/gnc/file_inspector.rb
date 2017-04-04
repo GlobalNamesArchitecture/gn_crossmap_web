@@ -42,7 +42,7 @@ module Gnc
 
       def encoding(inspect_result)
         case inspect_result
-        when /UTF-8/
+        when /UTF-8|ASCII/
           "UTF-8"
         when /UTF-16/
           "UTF-16:UTF-8"

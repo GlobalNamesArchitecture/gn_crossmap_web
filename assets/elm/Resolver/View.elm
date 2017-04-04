@@ -291,26 +291,34 @@ showOutput terms stopped =
     let
         msg =
             if (stopped) then
-                "Download partial crossmapping results"
+                "Download partial crossmapping results: "
             else
-                "Download crossmapping results"
+                "Download crossmapping results: "
+
+        excelOutput =
+            (String.slice 0 -3 terms.output) ++ "xlsx"
     in
         div
             [ style
                 [ ( "clear", "left" )
-                , ( "padding", "2em" )
+                , ( "padding", "1em" )
                 , ( "background-color", "#afa" )
-                , ( "color", "#2c2" )
                 ]
             ]
-            [ a
+            [ text msg
+            , a
                 [ href <| terms.output
-                , alt msg
+                , alt "CSV file"
                 , style
-                    [ ( "font-size"
-                      , "1.5em"
-                      )
-                    ]
+                    [ ( "color", "#22c" ) ]
                 ]
-                [ text msg ]
+                [ text "CSV" ]
+            , text " "
+            , a
+                [ href <| excelOutput
+                , alt "XSLX"
+                , style
+                    [ ( "color", "#22c" ) ]
+                ]
+                [ text "XSLX" ]
             ]
