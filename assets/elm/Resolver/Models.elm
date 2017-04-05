@@ -27,6 +27,7 @@ type Status
     = Pending
     | InIngestion
     | InResolution
+    | InExcelBuild
     | Done
     | Unknown
 

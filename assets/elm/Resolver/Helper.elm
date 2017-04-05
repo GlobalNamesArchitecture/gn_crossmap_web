@@ -271,6 +271,8 @@ setStatus s =
     else if s == "resolution" then
         InResolution
     else if s == "finish" then
+        InExcelBuild
+    else if s == "done" then
         Done
     else
         Unknown

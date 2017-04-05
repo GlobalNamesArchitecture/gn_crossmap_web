@@ -47,8 +47,10 @@ module Gnc
     end
 
     def make_excel_output(token)
-      _, opts = params(token)
+      cmap, opts = params(token)
       Gnc::ExcelBuilder.new(opts[:output]).build
+      stats = cmap.stats.merge(status: "done")
+      cmap.update(stats: stats)
     end
   end
 end
