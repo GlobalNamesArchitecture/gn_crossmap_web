@@ -32,6 +32,12 @@ spec:
       containers:
         - name: gnlist
           image: gnames/listresolver:0.1.2
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 9292
+            initialDelaySeconds: 60
+            timeoutSeconds: 3
           args:
             - /app/exe/production.sh
           env:
