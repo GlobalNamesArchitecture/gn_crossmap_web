@@ -21,7 +21,7 @@ gem "sinatra-flash", "~> 0.3"
 gem "sinatra-redirect-with-flash", "~> 0.2",
     require: "sinatra/redirect_with_flash"
 gem "sucker_punch", "~> 2.0"
-gem "unicorn", "~> 5.1"
+gem "puma", "~> 3.8"
 gem "zen-grids", "~> 1.4"
 
 group :development do

@@ -1,12 +1,16 @@
+---
+apiVersion: v1
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: gn-config
-  namespace: default
+  name: gnlist
+  namespace: gn
 data:
-  gnlist.db: gnc
-  gnlist.resolver.url: "http://resolver.globalnames.org"
-  gnlist.server: 0.0.0.0:9292
-  gnlist.unicorn.workers: "1"
-  gnlist.async.workers: "4"
-  gnlist.data.sources: "[1,2,3,4,5,8,9,11,12,165,167,169,172,173,174,175,177,179,180]"
+  env: production
+  db: gnc
+  resolver.internal.url: "http://resolver.globalnames.org"
+  resolver.url: "http://resolver.globalnames.org"
+  server: 0.0.0.0:9292
+  async.workers: "4"
+  data.sources: "[1,2,3,4,5,8,9,11,12,165,167,169,172,173,174,175,177,179,180]"
+  puma.workers: "4"

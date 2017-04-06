@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: gnlist
-          image: gnames/listresolver:0.1.3
+          image: gnames/listresolver:0.1.5
           livenessProbe:
             httpGet:
               path: /
@@ -78,11 +78,11 @@ spec:
                 secretKeyRef:
                   name: gnlist
                   key: session.secret
-            - name: RACKAPP_UNICORN_WORKERS
+            - name: RACKAPP_PUMA_WORKERS
               valueFrom:
                 configMapKeyRef:
                   name: gnlist
-                  key: unicorn.workers
+                  key: puma.workers
             - name: RACKAPP_ASYC_WORKERS
               valueFrom:
                 configMapKeyRef:
