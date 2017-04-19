@@ -21,7 +21,7 @@ kind: Deployment
 metadata:
   name: gnlist
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       name: gnlist

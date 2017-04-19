@@ -16,7 +16,7 @@ stages : List ( Int, String )
 stages =
     [ ( 0, "Upload a File" )
     , ( 1, "Map Headers" )
-    , ( 2, "Pick Referene Data" )
+    , ( 2, "Pick Reference Data" )
     , ( 3, "Crossmap Names" )
     ]
 

@@ -14,10 +14,11 @@ import Json.Decode exposing (..)
 
 termsDecoder : Decoder Terms
 termsDecoder =
-    map3 Terms
+    map4 Terms
         (at [ "output" ] string)
         headers
         rows
+        (succeed Nothing)
 
 
 

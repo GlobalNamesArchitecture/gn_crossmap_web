@@ -5,6 +5,7 @@ type alias Terms =
     { output : String
     , headers : List Header
     , rows : List Row
+    , headerState: Maybe HeaderState
     }
 
 
@@ -18,10 +19,16 @@ type alias Header =
 type alias Row =
     List (Maybe String)
 
+type alias HeaderState =
+  { uniqScientificName : Bool
+  , uniqueCladeName: Bool
+  , snAuthorship: Bool
+  , uniqueSNAuthorship: Bool
+  }
 
 initTerms : Terms
 initTerms =
-    Terms "Unknown" [] []
+    Terms "Unknown" [] [] Nothing
 
 
 rankFields : List String
