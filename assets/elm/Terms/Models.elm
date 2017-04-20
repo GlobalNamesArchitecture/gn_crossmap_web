@@ -1,11 +1,13 @@
 module Terms.Models exposing (..)
 
+import Errors exposing (Errors)
 
 type alias Terms =
     { output : String
     , headers : List Header
     , rows : List Row
     , headerState: Maybe HeaderState
+    , errors : Errors
     }
 
 
@@ -28,7 +30,7 @@ type alias HeaderState =
 
 initTerms : Terms
 initTerms =
-    Terms "Unknown" [] [] Nothing
+    Terms "Unknown" [] [] Nothing Nothing
 
 
 rankFields : List String

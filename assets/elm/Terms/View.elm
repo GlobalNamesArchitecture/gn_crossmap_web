@@ -2,18 +2,19 @@ module Terms.View exposing (view)
 
 import Html exposing (..)
 import Html.Events exposing (onClick, on, targetValue)
-import Html.Attributes exposing (class, value, id, name, list, type_)
+import Html.Attributes exposing (class, value, id, name, list, type_, disabled)
 import Maybe exposing (withDefault)
 import Json.Decode as J
 import Terms.Models exposing (Terms, Header, Row, allFields)
 import Terms.Messages exposing (Msg(..))
 import Target.Models exposing (DataSources)
 
-
 view : DataSources -> Terms -> String -> Html Msg
 view ds terms token =
     div []
-        [ button [ onClick (nextMsg ds token) ] [ text "Continue" ]
+        [ button [ onClick (nextMsg ds token), disabled (noGoodHeaders (Debug.log "terms" terms))]
+        [ text "Continue" ]
+        , div [class "info"] [text "Set some headers. For a simple list of names a scientificName is all you need."]
         , div [ (class "terms_table_container") ]
             [ table [ class "terms_table" ] <|
                 (viewHeaders terms.headers)
@@ -23,6 +24,11 @@ view ds terms token =
             ]
         ]
 
+noGoodHeaders: Terms -> Bool
+noGoodHeaders terms =
+  case terms.headerState of
+    Nothing -> True
+    Just _ -> False
 
 nextMsg : DataSources -> String -> Msg
 nextMsg ds token =

@@ -33,6 +33,11 @@ html, button, input, select, textarea {
   text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
 }
 
+button:disabled {
+  color: $light-grey;
+  border: 1px solid $light-grey;
+}
+
 a {
   color: #30659b;
   text-decoration: none;
