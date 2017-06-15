@@ -3,14 +3,16 @@ kind: PersistentVolumeClaim
 metadata:
   name: gnlist-pv-claim
   namespace: gn
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "fast"
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 10Gi
-  selector:
-    matchLabels:
-      name: gnlist-pv
+  # selector:
+  #   matchLabels:
+  #     name: gnlist-pv
 
 
