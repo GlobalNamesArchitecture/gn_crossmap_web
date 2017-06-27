@@ -8,7 +8,7 @@ RUN apt-get update && \
     apt-add-repository ppa:brightbox/ruby-ng && \
     apt-get update && \
     apt-get install -y ruby2.3 ruby2.3-dev build-essential git vim \
-    qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base \
+    qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base locales \
     gstreamer1.0-tools gstreamer1.0-x npm nodejs nodejs-legacy\
     libpq-dev postgresql-client dnsutils libmagic-dev && \
     apt-get clean && \

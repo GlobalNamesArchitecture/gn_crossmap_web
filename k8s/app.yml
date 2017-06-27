@@ -9,9 +9,8 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 9292
+    - port: 80
       targetPort: 9292
-      nodePort: 30838
   selector:
     app: gnlist
     tier: frontend
@@ -31,7 +30,7 @@ spec:
     spec:
       containers:
         - name: gnlist
-          image: gnames/listresolver:0.1.5
+          image: gnames/listresolver:2017-07-26-1
           livenessProbe:
             httpGet:
               path: /
