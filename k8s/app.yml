@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: gnlist
+  name: -prototype
   labels:
-    app: gnlist
+    app: gnlist-prototype
     tier: frontend
 spec:
   type: NodePort
@@ -12,25 +12,25 @@ spec:
     - port: 80
       targetPort: 9292
   selector:
-    app: gnlist
+    app: gnlist-prototype
     tier: frontend
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: gnlist
+  name: gnlist-prototype
 spec:
   replicas: 1
   template:
     metadata:
-      name: gnlist
+      name: gnlist-prototype
       labels:
-        app: gnlist
+        app: gnlist-prototype
         tier: frontend
     spec:
       containers:
-        - name: gnlist
-          image: gnames/listresolver:2017-07-26-1
+        - name: gnlist-prototype
+          image: gnames/listresolver:2017-07-05-1
           livenessProbe:
             httpGet:
               path: /
@@ -43,59 +43,59 @@ spec:
             - name: CODECLIMATE_REPO_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: gnlist
+                  name: gnlist-prototype
                   key: session.secret
             - name: RACKAPP_DB_HOST
-              value: gnlist-db
+              value: gnlist-prototype-db
             - name: RACKAPP_DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: gnlist
+                  name: gnlist-prototype
                   key: db.user
             - name: RACKAPP_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: gnlist
+                  name: gnlist-prototype
                   key: db.user.password
             - name: RACKAPP_RESOLVER_URL_CLIENT
               valueFrom:
                 configMapKeyRef:
-                  name: gnlist
+                  name: gnlist-prototype
                   key: resolver.url
             - name: RACKAPP_RESOLVER_URL_SERVER
               valueFrom:
                 configMapKeyRef:
-                  name: gnlist
+                  name: gnlist-prototype
                   key: resolver.internal.url
             - name: RACKAPP_SERVER
               valueFrom:
                 configMapKeyRef:
-                  name: gnlist
+                  name: gnlist-prototype
                   key: server
             - name: RACKAPP_SESSION_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: gnlist
+                  name: gnlist-prototype
                   key: session.secret
             - name: RACKAPP_PUMA_WORKERS
               valueFrom:
                 configMapKeyRef:
-                  name: gnlist
+                  name: gnlist-prototype
                   key: puma.workers
             - name: RACKAPP_ASYC_WORKERS
               valueFrom:
                 configMapKeyRef:
-                  name: gnlist
+                  name: gnlist-prototype
                   key: async.workers
             - name: RACKAPP_DATA_SOURCES
               valueFrom:
                 configMapKeyRef:
-                  name: gnlist
+                  name: gnlist-prototype
                   key: data.sources
             - name: RACK_ENV
               valueFrom:
                 configMapKeyRef:
-                  name: gnlist
+                  name: gnlist-prototype
                   key: env
           ports:
             - containerPort: 9292

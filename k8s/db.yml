@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: gnlist-db
+  name: gnlist-prototype-db
   labels:
-    app: gnlist
+    app: gnlist-prototype
     tier: backend
 spec:
   type: NodePort
@@ -11,49 +11,49 @@ spec:
     - port: 5432
       targetPort: 5432
   selector:
-    app: gnlist
+    app: gnlist-prototype
     tier: backend
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: gnlist-db
+  name: gnlist-prototype-db
 spec:
   replicas: 1
   template:
     metadata:
-      name: gnlist
+      name: gnlist-prototype
       labels:
-        app: gnlist
+        app: gnlist-prototype
         tier: backend
     spec:
       volumes:
-        - name: gnlist-vol
+        - name: gnlist-prototype-vol
           persistentVolumeClaim:
-            claimName: gnlist-pv-claim
+            claimName: gnlist-prototype-pvc
       containers:
-        - name: gnlist-db
+        - name: gnlist-prototype-db
           image: gnames/postgres-solo
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: gnlist
+                  name: gnlist-prototype
                   key: root.password
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: gnlist
+                  name: gnlist-prototype
                   key: db.user
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: gnlist
+                  name: gnlist-prototype
                   key: db.user.password
             - name: DB_DATABASE
               valueFrom:
                 configMapKeyRef:
-                  name: gnlist
+                  name: gnlist-prototype
                   key: db
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
@@ -62,4 +62,4 @@ spec:
               name: psql
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: gnlist-vol
+              name: gnlist-prototype-vol
