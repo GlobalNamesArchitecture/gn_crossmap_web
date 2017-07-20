@@ -26,6 +26,7 @@ elm-package.json
 .env.sh
 .coveralls.yml
 tags
+.nvimlog
 
 ## Specific to RubyMotion:
 .dat*
